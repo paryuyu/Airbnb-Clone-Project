@@ -17,8 +17,8 @@ import Link from 'next/link';
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [modalopen, setModalOpen] = React.useState<boolean>(false);
-
-  //메뉴
+ 
+  //메뉴  
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -32,6 +32,7 @@ export default function Header() {
   const handleModalClose = () => {
     setModalOpen(false)
   }
+
   const { data, status } = useSession();
  
 
@@ -39,7 +40,7 @@ export default function Header() {
   const handleMoveModal = () => {
 
   }
-
+  let url = process.env.NEXTAUTH_URL;
   React.useEffect(() => {
 
     !async function () {
@@ -67,7 +68,7 @@ export default function Header() {
 
           <Box display={"flex"} flexDirection={"row"}>
             {status === 'authenticated' &&
-              <Link href={"http://localhost:3000/become-a-host"} >
+              <Link href={url+"/become-a-host"} >
                 <Button variant="outlined">호스트 되기</Button>
               </Link>
             }

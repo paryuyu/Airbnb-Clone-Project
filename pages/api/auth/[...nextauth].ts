@@ -29,7 +29,7 @@ export const authOption: NextAuthOptions = {
             async authorize(credentials, req) {
                 console.log(credentials, "credentials");
                 console.log(req, "req");
-                const one = await user.findOne({ email: credentials!.email });
+                const one = await user.findOne({ email: credentials!.email }) as any
 
                 if (!one || !(await compare(credentials!.password, one.password))) {
                     throw new Error(`invalid email/password`)
@@ -69,14 +69,14 @@ export const authOption: NextAuthOptions = {
                 //여기서 에러 페이지(독립)으로 가면...회원가입을 여기서 해야함
                 //독립페이지는 그냥 새로 만들자.
 
-
+                let url = process.env.NEXTAUTH_URL;
                 let urlparams = new URLSearchParams();
                 urlparams.append("lastname", params.profile.given_name)
                 urlparams.append("firstname", params.profile.family_name)
                 urlparams.append("provider", params.account.provider)
                 urlparams.append("providerAccountId", params.account.providerAccountId)
                 urlparams.append("email", params.user.email)
-                return "http://localhost:3000/auth/error?error=Duplicated&" + urlparams;
+                return url+"/auth/error?error=Duplicated&" + urlparams;
             }
 
             //여기서 return을 true로 보내면 바로 로그인 인증으로

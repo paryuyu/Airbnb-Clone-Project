@@ -29,7 +29,7 @@ type SignupProps = {
 
 
 export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) => {
-
+    let url = process.env.NEXTAUTH_URL;
     const [emailtest, setEmailtest] = React.useState<string>("")
     const [error, setError] = React.useState(false)
     const [movechk, setMoveChk] = React.useState(null)
@@ -87,7 +87,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         let left = screenY + screen.width / 2 - 550 / 2;
 
         //팝업창으로 띄우기
-        window.open("http://localhost:3000/popup/g-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
+        window.open(url+"/popup/g-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
         onModal(false);
     }
 
@@ -97,7 +97,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         let left = screenY + screen.width / 2 - 550 / 2;
 
         //팝업창으로 띄우기
-        window.open("http://localhost:3000/popup/k-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
+        window.open(url+"/popup/k-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
 
         //타입넣기
         onModal(false);
