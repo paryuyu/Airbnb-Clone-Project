@@ -40,7 +40,7 @@ export default function Header() {
   const handleMoveModal = () => {
 
   }
-  let url = process.env.NEXTAUTH_URL;
+  let url = process.env.NEXT_PUBLIC_SERVER_URL;
   React.useEffect(() => {
 
     !async function () {

@@ -69,7 +69,7 @@ export const authOption: NextAuthOptions = {
                 //여기서 에러 페이지(독립)으로 가면...회원가입을 여기서 해야함
                 //독립페이지는 그냥 새로 만들자.
 
-                let url = process.env.NEXTAUTH_URL;
+                let url = process.env.NEXT_PUBLIC_SERVER_URL;
                 let urlparams = new URLSearchParams();
                 urlparams.append("lastname", params.profile.given_name)
                 urlparams.append("firstname", params.profile.family_name)
