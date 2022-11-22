@@ -29,7 +29,7 @@ type SignupProps = {
 
 
 export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) => {
-    let url = process.env.NEXTAUTH_URL;
+    let url = process.env.NEXT_PUBLIC_SERVER_URL;
     const [emailtest, setEmailtest] = React.useState<string>("")
     const [error, setError] = React.useState(false)
     const [movechk, setMoveChk] = React.useState(null)
