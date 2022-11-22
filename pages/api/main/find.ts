@@ -7,6 +7,7 @@ async function handler(req:NextApiRequest,res:NextApiResponse) {
 
 try{
   let found =  await accomodation.find({});
+  console.log(found)
   if(found !==null){
     return res.status(200).json({result:true, data:found})
   }else{
