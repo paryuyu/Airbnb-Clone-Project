@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
 import Footer from "./footer";
 import Header from "./header";
+import MainPage from "./Main";
 import Nav from "./nav";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -24,8 +25,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </nav>
 
             <main>
-                {children}
-                <Typography fontSize={18}>{status} - {JSON.stringify(data?.user)}</Typography>
+                <MainPage/>
             </main>
 
             <footer>
