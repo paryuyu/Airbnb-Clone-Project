@@ -1,0 +1,39 @@
+{
+  "name": "airbnb-clone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@googlemaps/react-wrapper": "^1.1.35",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/joy": "^5.0.0-alpha.54",
+    "@mui/material": "^5.10.12",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/formidable": "^2.0.5",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
+    "bcryptjs": "^2.4.3",
+    "eslint": "8.26.0",
+    "eslint-config-next": "13.0.1",
+    "firebase": "^9.14.0",
+    "formidable": "^2.0.1",
+    "mongoose": "^6.7.0",
+    "next": "13.0.1",
+    "next-auth": "^4.15.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0",
+    "typescript": "4.8.4"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.50.5"
+  }
+}
