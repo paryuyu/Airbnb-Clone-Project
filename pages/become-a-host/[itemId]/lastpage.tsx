@@ -60,7 +60,7 @@ export default function LastPage() {
     }
 
     const NextHandle = () => {
-        //등록...날짜...
+        
         LastPageApi()
     }
 
