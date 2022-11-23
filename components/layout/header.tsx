@@ -69,7 +69,7 @@ export default function Header() {
 
           <Box display={"flex"} flexDirection={"row"}>
             {status === 'authenticated' &&
-              <Link href={url + "/become-a-host"} >
+              <Link href={"/become-a-host"} >
                 <Button variant="outlined" sx={[{backgroundColor:'white',color:'black',borderColor:'black',borderWidth:1, borderRadius:5},{'&:hover':{color:'#333',borderColor:'#333',borderWidth:2,backgroundColor:'white'}}]}>호스트 되기</Button>
               </Link>
             }
