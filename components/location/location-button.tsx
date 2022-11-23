@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/router";
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { LocationCtx } from "../../context/location-context";
 
 function MoveButton() {
@@ -8,9 +8,9 @@ function MoveButton() {
     const { itemId } = router.query;
     const ctx = useContext(LocationCtx);
     console.log(ctx,'여기서는 나오니')
-
+    const [bt,setBt] =useState<boolean>(true);
     async function locationUpdate() {
-
+        setBt(true)
         let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
             body: JSON.stringify({ location: ctx.mapNew }), //바디
@@ -21,11 +21,16 @@ function MoveButton() {
         console.log(json, "location last-update result")
         if(json.result){
             router.push("/become-a-host/" + itemId + "/floor-plan")
+            setBt(false)
         }
     }
 
 
-
+    useEffect(()=>{
+        if(ctx.mapNew){
+            setBt(false)
+        }
+    },[ctx.mapNew])
 
 
     const handleNext = ()=>{
@@ -39,12 +44,26 @@ function MoveButton() {
 
 
     return (<>
-    <Box sx={{ position: 'absolute', bottom: 0, left: 50 }}>
-        <Button variant="contained" sx={[{ width: 10, mt: 5, mb: 5, bgcolor: 'black' }, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={BackHandle}>뒤로</Button>
-    </Box>
-    <Box sx={{ position: 'absolute', bottom: 0, left: 450 }}>
-        <Button variant="contained" sx={[{ width: 10, mt: 5, mb: 5, bgcolor: 'black' }, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={handleNext}>다음</Button>   
-    </Box></>);
+    <Box sx={{...buttonBox}}>
+        <Button variant="contained" sx={[{ ...button }, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={BackHandle}>뒤로</Button>
+    
+        <Button variant="contained" sx={[{...button}, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={handleNext} disabled={bt}>다음</Button>   
+        </Box>
+    </>);
 }
 
 export default MoveButton;
+
+
+const buttonBox = {
+    display: 'flex', justifyContent: 'space-between', ml: 5, mr: 5
+
+}
+
+const button = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 50,
+    fontSize: 12,
+    mt: 2
+}

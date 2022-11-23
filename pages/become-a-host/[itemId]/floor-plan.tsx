@@ -1,14 +1,15 @@
-import { Box, Button, Checkbox, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Grid, IconButton, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { CheckBox } from "@mui/icons-material";
 import { useState } from 'react';
+import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 
 
 
 const boxStyle = {
-    display: 'flex', justifyContent: 'space-around', alignItems: 'center', bgcolor: 'white', mb: 6
+    display: 'flex', justifyContent: 'space-around', alignItems: 'center', bgcolor: 'white', mb: 4, border: '1px solid #ddd', borderRadius: 4, width: 400, pt: 1, pb: 1
 }
 
 const textStyle = {
@@ -17,24 +18,29 @@ const textStyle = {
 }
 
 const iconStyle = {
-    color: '#333',
-    fontSize: 20
+    color: 'grey',
+    fontSize: 25
 }
 
 const buttonBox = {
-    display: 'flex', justifyContent: 'space-between'
-
+    display: 'flex', justifyContent: 'space-between',
+    ml: 5, mr: 5
 }
 
 const button = {
-    width: 10, mt: 5, mb: 5, bgcolor: 'black',
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 50,
+    fontSize: 12,
+    mt: 2,
     '&:hover': { 'backgroundColor': '#333' }
 }
 
 const numStyle = {
-    fontWeight: '400',
+    fontWeight: 'bold',
     fontSize: 15,
-    color: '#333'
+    color: '#333',
+
 
 }
 
@@ -56,32 +62,32 @@ export default function Privacy() {
 
     //fetch update시키기
 
-    async function floorPlanUpdate (){
+    async function floorPlanUpdate() {
         console.log("...")
         let floor = {
-            guest:guest, bed:bed,bedroom:bedroom,bathroom:bathroom
+            guest: guest, bed: bed, bedroom: bedroom, bathroom: bathroom
         }
-            let res = await fetch('/api/accomodation/newUpdate?_id='+itemId,{
-                method:'post',
-                body: JSON.stringify({floorPlan:floor}),
-                headers:{'Content-type':'application/json'}
-            })
+        let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
+            method: 'post',
+            body: JSON.stringify({ floorPlan: floor }),
+            headers: { 'Content-type': 'application/json' }
+        })
 
-            let json = await res.json();
-            console.log(json)
-            if(json.result){
-                router.push("/become-a-host/" + itemId + "/amenities")
-            }
-    
+        let json = await res.json();
+        console.log(json)
+        if (json.result) {
+            router.push("/become-a-host/" + itemId + "/amenities")
+        }
+
     }
 
 
     const NextHandle = () => {
-     if(guest !==0){
-        console.log("...!")
-        floorPlanUpdate()
-     }
-      
+        if (guest !== 0) {
+            console.log("...!")
+            floorPlanUpdate()
+        }
+
     }
 
     const BackHandle = () => {
@@ -129,84 +135,103 @@ export default function Privacy() {
         }
     }
 
+    const [open, setOpen] = useState<boolean>(false)
+    const exitHandle = () => {
+
+        setOpen(true)
+    }
 
 
 
-    return (<Grid component={"main"} container  >
+    return (
+        <>
 
-        <Grid item sx={{ display: "flex", flex: 1, bgcolor: "black", color: "white", height: '100vh', alignItems: "center", justifyContent: "center" }}
-        >
-            <Typography component="h1" variant="h5" textAlign={"center"}>
-                숙소에서 맞이할 최대 인원수를 알려주세요.
-            </Typography>
-        </Grid>
-
-        <Grid item sx={{ display: "flex", flex: 1, flexDirection: "column", height: '100vh', pr: 10, pl: 10, justifyContent: "center" }}>
-
-            <Box sx={{ ...boxStyle }}>
-
-                <Typography sx={{ ...textStyle }}>게스트</Typography>
-                <Box sx={{ ...numboxStyle }}>
-                    <IconButton onClick={handleMinusGuest}>
-                        <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
-                    </IconButton>
-                    <Typography sx={{ ...numStyle }}>{guest}</Typography>
-                    <IconButton onClick={handlePlusGuest}>
-                        <ControlPointIcon sx={{ ...iconStyle }} />
-                    </IconButton>
-                </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
+                <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
             </Box>
+            <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>숙소에서 맞이할 최대 인원수를 알려주세요.</Typography>
+            <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Box sx={{ ...boxStyle }}>
 
-            <Box sx={{ ...boxStyle }}>
-
-                <Typography sx={{ ...textStyle }}>침대</Typography>
-                <Box sx={{ ...numboxStyle }}>
-                    <IconButton onClick={handleMinusBed}>
-                        <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
-                    </IconButton>
-                    <Typography sx={{ ...numStyle }}>{bed}</Typography>
-                    <IconButton onClick={handlePlusBed}>
-                        <ControlPointIcon sx={{ ...iconStyle }} />
-                    </IconButton>
+                    <Typography sx={{ ...textStyle }}>게스트</Typography>
+                    <Box sx={{ ...numboxStyle }}>
+                        <IconButton onClick={handleMinusGuest}>
+                            <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                        <Typography sx={{ ...numStyle }}>{guest}</Typography>
+                        <IconButton onClick={handlePlusGuest}>
+                            <ControlPointIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                    </Box>
                 </Box>
-            </Box>
 
-            <Box sx={{ ...boxStyle }}>
+                <Box sx={{ ...boxStyle }}>
 
-                <Typography sx={{ ...textStyle }}>침실</Typography>
-                <Box sx={{ ...numboxStyle }}>
-                    <IconButton onClick={handleMinusBedroom}>
-                        <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
-                    </IconButton>
-                    <Typography sx={{ ...numStyle }}>{bedroom}</Typography>
-                    <IconButton onClick={handlePlusBedroom}>
-                        <ControlPointIcon sx={{ ...iconStyle }} />
-                    </IconButton>
+                    <Typography sx={{ ...textStyle }}>침대</Typography>
+                    <Box sx={{ ...numboxStyle }}>
+                        <IconButton onClick={handleMinusBed}>
+                            <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                        <Typography sx={{ ...numStyle }}>{bed}</Typography>
+                        <IconButton onClick={handlePlusBed}>
+                            <ControlPointIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                    </Box>
                 </Box>
-            </Box>
 
+                <Box sx={{ ...boxStyle }}>
 
-            <Box sx={{ ...boxStyle }}>
-
-                <Typography sx={{ ...textStyle }}>욕실</Typography>
-                <Box sx={{ ...numboxStyle }}>
-                    <IconButton onClick={handleMinusBathroom}>
-                        <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
-                    </IconButton>
-                    <Typography sx={{ ...numStyle }}>{bathroom}</Typography>
-                    <IconButton onClick={handlePlusBathroom}>
-                        <ControlPointIcon sx={{ ...iconStyle }} />
-                    </IconButton>
+                    <Typography sx={{ ...textStyle }}>침실</Typography>
+                    <Box sx={{ ...numboxStyle }}>
+                        <IconButton onClick={handleMinusBedroom}>
+                            <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                        <Typography sx={{ ...numStyle }}>{bedroom}</Typography>
+                        <IconButton onClick={handlePlusBedroom}>
+                            <ControlPointIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                    </Box>
                 </Box>
+
+                <Box sx={{ ...boxStyle }}>
+
+                    <Typography sx={{ ...textStyle }}>욕실</Typography>
+                    <Box sx={{ ...numboxStyle }}>
+                        <IconButton onClick={handleMinusBathroom}>
+                            <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                        <Typography sx={{ ...numStyle }}>{bathroom}</Typography>
+                        <IconButton onClick={handlePlusBathroom}>
+                            <ControlPointIcon sx={{ ...iconStyle }} />
+                        </IconButton>
+                    </Box>
+                </Box>
+
+
             </Box>
-
-
             <Box sx={{ ...buttonBox }}>
                 <Button variant="contained" sx={{ ...button }} onClick={BackHandle}>뒤로</Button>
                 <Button variant="contained" sx={{ ...button }} onClick={NextHandle}>다음</Button>
             </Box>
 
-        </Grid>
-    </Grid>);
+            <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false)
+                }
+                }>
+                <HostingModal onModal={() => { setOpen(false) }} />
+            </Modal>
+        </>);
 }
 
+
+
+
+const buttonSt = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 110,
+    fontSize: 12,
+    mb: 2
+}

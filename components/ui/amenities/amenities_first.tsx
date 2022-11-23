@@ -154,11 +154,16 @@ const text = {
 }
 
 const buttonBox = {
-    display: 'flex', justifyContent: 'space-between'
-
+    display: 'flex', justifyContent: 'space-between',
+    ml: 5, mr: 5
 }
 
 const button = {
-    width: 10, mt: 5, mb: 5, bgcolor: 'black',
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 50,
+    fontSize: 12,
+    mt: 2,
+    mb:2,
     '&:hover': { 'backgroundColor': '#333' }
 }

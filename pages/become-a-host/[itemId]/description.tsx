@@ -1,10 +1,11 @@
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Modal } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Textarea } from '@mui/joy';
 import { useRouter } from "next/router";
 import ToggleButton from '@mui/material/ToggleButton';
 import DescriptionList from "../../../components/ui/description/description-list";
 import { Grid } from "@mui/material";
+import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 export default function () {
   const [description, setDescription] = useState<string[]>([]);
 
@@ -45,48 +46,74 @@ export default function () {
   }
 
   let des = ['평화로움', '독특함', '가족이 지내기에 적합', '세련됨', '중심부에 위치', '넓은 공간'];
+  const [open, setOpen] = useState<boolean>(false)
+  const exitHandle = () => {
 
-  return (<Grid component={"main"} container  >
-
-    <Grid item sx={{ display: "flex", flex: 1, bgcolor: "black", color: "white", height: '100vh', alignItems: "center", justifyContent: "center" }}
-    >
-      <Typography component="h1" variant="h5" textAlign={"center"}>
-      숙소의 특징이 잘 드러나는 문구를 선택해주세요. 
-      </Typography>
-    </Grid>
+    setOpen(true)
+  }
 
 
-    <Grid item sx={{ display: "flex", flex: 1, flexDirection: "column", height: '100vh', pr: 10, pl: 10, justifyContent: "center" }}>
-      <Box sx={{...outlineBox}}>
-        {des.map((one, index) => {
-          return (
-            <DescriptionList item={one} key={index} onDes={handleDescriptionList} des={description} />
-          )
-        })}
-</Box>
-      <Box sx={{...buttonBox}}>
-        <Button variant="contained" onClick={BackHandle} sx={{...button}}>뒤로</Button>
-        <Button variant="contained" onClick={NextHandle} disabled={description.length === 0}  sx={{...button}}>다음</Button>
-      </Box>
-    </Grid>
-  </Grid>);
+  return (<>
+
+    <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
+      <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
+    </Box>
+
+    <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
+      숙소의 특징이 잘 드러나는 문구를 선택해주세요.
+    </Typography>
+    <Box sx={{ ...outlineBox }}>
+      {des.map((one, index) => {
+        return (
+          <DescriptionList item={one} key={index} onDes={handleDescriptionList} des={description} />
+        )
+      })}
+    </Box>
+    <Box sx={{ ...buttonBox }}>
+      <Button variant="contained" onClick={BackHandle} sx={{ ...button }}>뒤로</Button>
+      <Button variant="contained" onClick={NextHandle} disabled={description.length === 0} sx={{ ...button }}>다음</Button>
+    </Box>
+    <Modal
+      open={open}
+      onClose={() => {
+        setOpen(false)
+      }
+      }>
+      <HostingModal onModal={() => { setOpen(false) }} />
+    </Modal>
+  </>);
 }
 
 
+const buttonBox = {
+  display: 'flex', justifyContent: 'space-between',
+  ml: 5, mr: 5
+}
+
+const button = {
+  bgcolor: 'black',
+  borderRadius: 5,
+  width: 50,
+  fontSize: 12,
+  mt: 2, mb: 2,
+  '&:hover': { 'backgroundColor': '#333' }
+}
 const outlineBox = {
   display: 'flex',
   flexWrap: 'wrap',
   width: '100%',
-  gap: 2
+  gap: 2,
+  padding: 2
 }
 
 
-const button = {
-  width: 10, mt: 5, mb: 5, bgcolor: 'black',
-  '&:hover': { 'backgroundColor': '#333' }
-}
 
-const buttonBox = {
-  display: 'flex', justifyContent: 'space-around'
 
+
+const buttonSt = {
+  bgcolor: 'black',
+  borderRadius: 5,
+  width: 110,
+  fontSize: 12,
+  mb: 2
 }

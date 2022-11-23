@@ -7,10 +7,11 @@ import AddIcon from '@mui/icons-material/Add';
 type props={
     target:File[];
     onFile:(file:any)=>void;
-    onDel:(t:any)=>void
+    onDel:(t:any)=>void;
+    onLoading:()=>void
 }
 
-export default function PreviewPhotoBox({ target, onFile ,onDel }:props) {
+export default function PreviewPhotoBox({ target, onFile ,onDel ,onLoading }:props) {
 
     const [emptyBox, setEmptyBox] = useState(false);
 
@@ -29,7 +30,6 @@ export default function PreviewPhotoBox({ target, onFile ,onDel }:props) {
         const arr2 = Array.from(evt.target.files!)
         onFile((current:any) => [...current, ...arr2]);
     }
-
     return (
         <Box sx={{
             display: 'flex', gap: 2, felxWrap: 'wrap'

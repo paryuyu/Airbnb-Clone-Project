@@ -43,7 +43,9 @@ export default function () {
     router.push('/become-a-host/' + itemId + '/photos')
   }
 
-  return (<Box sx={{ ...outlineBox}}>
+  return (
+    <Box>
+  <Box sx={{ ...outlineBox}}>
 
       <Typography sx={{ fontSize: 25, fontWeight: 'bold' ,textAlign:'center',mb:3 }}>이제 place에 이름을 지⁠어⁠주⁠세⁠요
         숙소 이름은 짧을수록 효과적입니다.
@@ -65,14 +67,29 @@ export default function () {
       />
  <Typography sx={{ fontSize: 13, fontWeight: '100', color: 'grey',mt:1 , textAlign:'end'}}>32글자를 초과할 수 없습니다.
       </Typography>
-    <Box>
-      <Button onClick={BackHandle} >뒤로</Button>
-      <Button onClick={NextHandle} disabled={title.length === 0}>다음</Button>
+
+      </Box>
+    <Box sx={{...buttonBox}}>
+      <Button onClick={BackHandle} variant='contained' sx={{...button}}>뒤로</Button>
+      <Button onClick={NextHandle}  variant='contained' sx={{...button}} disabled={title.length === 0}>다음</Button>
     </Box>
-  </Box>);
+      </Box> );
 }
 
 
+const buttonBox = {
+  display: 'flex', justifyContent: 'space-between',
+  ml: 5, mr: 5
+}
+
+const button = {
+  bgcolor: 'black',
+  borderRadius: 5,
+  width: 50,
+  fontSize: 12,
+  mt: 2,
+  '&:hover': { 'backgroundColor': '#333' }
+}
 const outlineBox = {
   display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '85vh', alignItems: 'center'
 }
