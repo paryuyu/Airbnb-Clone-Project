@@ -73,7 +73,7 @@ export default function ComboBox() {
 
     return (
         <>
-            <TextField placeholder='주소를 입력하세요' sx={{ bgcolor: 'white', borderRadius: 2, border: '1px solid grey' }} value={inputVal} onChange={(evt) => { setInputVal(evt.target.value); setlistopen(true) }}></TextField>
+            <TextField placeholder='주소를 입력하세요' sx={{ ...TextFieldStyle}} value={inputVal} onChange={(evt) => { setInputVal(evt.target.value); setlistopen(true) }}></TextField>
 
             <Box sx={{ width: '100%', bgcolor: 'background.paper', mt: 0 }}>
 
@@ -132,3 +132,6 @@ export default function ComboBox() {
 }
 
 
+const TextFieldStyle={
+    bgcolor: 'white', borderRadius: 2,width:250,
+}

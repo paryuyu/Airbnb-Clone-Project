@@ -58,7 +58,7 @@ function MapComponents({ }) {
     }, [])
 
     return (
-        <Box ref={ref} sx={{ height: '100vh', width: '50vw' }}></Box>)
+        <Box ref={ref} sx={{ height: '50vh' , marginLeft:23 , marginRight:23,position:'relative',}}></Box>)
 }
 
 

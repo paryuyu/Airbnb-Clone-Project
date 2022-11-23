@@ -8,6 +8,7 @@ import { CheckBox, SettingsOutlined } from "@mui/icons-material";
 import Image from "next/image";
 import LastHosting from "../../../components/ui/last/hosting-last";
 import { AccomodationData } from "../../../lib/model/accomodation";
+import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 
 export default function LastPage() {
     let router = useRouter();
@@ -70,12 +71,20 @@ export default function LastPage() {
     const closeHandle = () => {
         setModalOpen(false)
     }
+    const [open, setOpen] = useState<boolean>(false)
+    const exitHandle = () => {
 
+        setOpen(true)
+    }
 
     return (<Box>
-        <Box  sx={{ ...outlineBox }}>
-        <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>숙소 검토하기</Typography>
-        <Typography  sx={{ fontSize: 15, color: 'grey', mb: 5 }}>게스트에게 표시되는 정보는 다음과 같습니다. 모든 정보가 정확한지 확인하세요.</Typography>
+      
+        <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
+                    <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
+                </Box>
+            <Box sx={{ ...outlineBox }}>
+                <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>숙소 검토하기</Typography>
+        <Typography  sx={{ fontSize: 15, fontWeight: '100' ,  color: 'grey', mb: 5 }}>게스트에게 표시되는 정보는 다음과 같습니다. 모든 정보가 정확한지 확인하세요.</Typography>
 
 
         <Card sx={{ width: 350 }}>
@@ -113,6 +122,15 @@ export default function LastPage() {
             <Button onClick={BackHandle} variant='contained' sx={{ ...button }}>뒤로</Button>
             <Button onClick={NextHandle} variant='contained' sx={{ ...button }}>다음</Button>
         </Box>
+
+        <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false)
+                }
+                }>
+                <HostingModal onModal={() => { setOpen(false) }} />
+            </Modal>
     </Box>);
 }
 
@@ -120,12 +138,25 @@ const outlineBox = {
     display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '85vh', alignItems: 'center'
 }
 
-const button = {
-    width: 10, mt: 5, mb: 5, bgcolor: 'black',
-    '&:hover': { 'backgroundColor': '#333' }
-}
-
 const buttonBox = {
-    display: 'flex', justifyContent: 'space-around'
+    display: 'flex', justifyContent: 'space-between',
+    ml: 5, mr: 5
+  }
+  
+  const button = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 50,
+    fontSize: 12,
+    mt: 2, mb: 2,
+    '&:hover': { 'backgroundColor': '#333' }
+  }
 
+
+const buttonSt = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 110,
+    fontSize: 12,
+    mb: 2
 }

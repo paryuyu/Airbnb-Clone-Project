@@ -1,7 +1,7 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Modal, Typography } from "@mui/material";
 
 import { Box } from "@mui/system";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmptyPhotos from "../../../components/ui/photos/emptyPhoto";
 import PreviewPhotoBox from "../../../components/ui/photos/previewPhotosBox";
 import { useRouter } from "next/router";
@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { firebaseApp } from "../../../lib/firebase-config";
 import { uuidv4 } from "@firebase/util";
-
+import HostingModal from '../../../components/ui/hosting_modal/HostingModal'
 function Photos() {
     const [files, setFiles] = useState<File[]>([])
     const [draging, setDraging] = useState(false)
@@ -17,8 +17,9 @@ function Photos() {
     const router = useRouter();
     const { itemId } = router.query;
     const [loading,setLoading] = useState(false);
-
+    const [bt,setBt] =useState<boolean>(true)
     const NextHandle = async () => {
+       
         setLoading(true)
         const formData = new FormData();
         formData.append('itemId', itemId as string);
@@ -54,16 +55,24 @@ function Photos() {
             return current.filter(one => one !== t)
         })
     }
+    const [open, setOpen] = useState<boolean>(false)
+    const exitHandle = () => {
 
+        setOpen(true)
+    }
     return (
         <>
+
+<Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
+                    <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
+                </Box>
             <Box sx={{ ...outlineBox }}>
-                <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>아파트 사진 추가하기</Typography>
-                <Typography sx={{ fontSize: 15, color: 'grey', mb: 5 }}>숙소 등록을 시작하려면 사진 5장을 제출하셔야 합니다. 나중에 추가하거나 변경하실 수 있습니다.</Typography>
+                <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>숙소 사진 추가하기</Typography>
+                <Typography sx={{ fontSize: 15,fontWeight:'100', color: 'grey', mb: 5 }}>숙소 등록을 시작하려면 사진 5장을 제출하셔야 합니다. 나중에 추가하거나 변경하실 수 있습니다.</Typography>
 
                 {files.length == 0 ?
                     <EmptyPhotos onFile={handleFile} /> :
-                    <PreviewPhotoBox target={files} onFile={handleFile} onDel={removeFile} />
+                    <PreviewPhotoBox target={files} onFile={handleFile} onDel={removeFile} onLoading={()=>{setLoading(true)}} />
                 }
 
             </Box>
@@ -73,6 +82,14 @@ function Photos() {
                 >다음</Button>
                
             </Box>
+            <Modal
+                            open={open}
+                onClose={() => {
+                    setOpen(false)
+                }
+                }>
+                <HostingModal onModal={() => { setOpen(false) }} />
+            </Modal>
         </>
     );
 }
@@ -80,15 +97,27 @@ function Photos() {
 export default Photos;
 
 const buttonBox = {
-    display: 'flex', justifyContent: 'space-around'
-
+    display: 'flex', justifyContent: 'space-between',
+    ml: 5, mr: 5
 }
 
 const button = {
-    width: 10, mt: 5, mb: 5, bgcolor: 'black',
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 50,
+    fontSize: 12,
+    mt: 2,mb:2,
     '&:hover': { 'backgroundColor': '#333' }
 }
-
 const outlineBox = {
     display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '85vh', alignItems: 'center'
+}
+
+
+const buttonSt = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 110,
+    fontSize: 12,
+    mb: 2
 }

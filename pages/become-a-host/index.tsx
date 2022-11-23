@@ -74,12 +74,23 @@ export default function BecomeAHostPropertyTypeGroup() {
                     </Box>
                 </Box>
                 <Link href={"/"}>
-                    <Button>나가기</Button>
+                    <Button variant="contained" sx={{...buttonSt}}>나가기</Button>
                 </Link>
             </Grid>
         </Grid>
 </>
     );
 }
+
+
+
+const buttonSt = {
+    bgcolor: 'black',
+    borderRadius: 5,
+    width: 110,
+    fontSize: 12,
+    mb: 2
+}
+
 
 BecomeAHostPropertyTypeGroup.isLayout = false

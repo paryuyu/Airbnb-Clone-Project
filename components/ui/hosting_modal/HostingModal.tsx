@@ -30,7 +30,7 @@ export default function HostingModal({ onModal }: any) {
     </Box>
 
     <Divider />
-    <Typography sx={{textAlign:'center',mb:2,fontSize:16,mt:4}}>여기서 나가시면 <b style={{textDecoration:'underline'}}>이전 페이지</b>까지 저장됩니다.</Typography>
+    <Typography sx={{textAlign:'center',mb:2,fontSize:16,mt:4}}>여기서 나가시면 <b style={{textDecoration:'underline'}}>이전 단계까지</b> 저장됩니다.</Typography>
 
     
     <Typography sx={{textAlign:'center',fontSize:16,mt:2,fontWeight:'100'}}>정말 나가시겠습니까?</Typography>
