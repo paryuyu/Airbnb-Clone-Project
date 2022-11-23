@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { AccomodationData } from "../../lib/model/accomodation";
 import RoomList from "../../components/ui/hosting-first/list";
+import Head from "next/head";
 export default function BecomeAHostPropertyTypeGroup() {
 
     const { data, status } = useSession();
@@ -21,6 +22,7 @@ export default function BecomeAHostPropertyTypeGroup() {
     async function IncompleteData() {
         let find = await fetch("/api/accomodation/roomtypefind")
         let rst = await find.json();
+        console.log(rst)
         if (rst.data.length > 0) {
             setrstdata(rst.data);
         }
@@ -35,6 +37,10 @@ export default function BecomeAHostPropertyTypeGroup() {
   
 
     return (
+        <>
+        <Head>
+            <title>호스팅 홈</title>
+        </Head>
         <Grid component={"main"} container  >
 
             <Grid item sx={{ display: "flex", flex: 1, bgcolor: "black", color: "white", height: '100vh', alignItems: "center", justifyContent: "center" }}
@@ -48,6 +54,8 @@ export default function BecomeAHostPropertyTypeGroup() {
 
                 {rstdata && 
                     <Typography fontSize={20} fontWeight={"bold"} pl={2} mt={4}>숙소 등록 완료하기</Typography>}
+
+
                 {rstdata && rstdata.map((one) => {
                     return (<>
                         <RoomList item={one}/>
@@ -70,7 +78,7 @@ export default function BecomeAHostPropertyTypeGroup() {
                 </Link>
             </Grid>
         </Grid>
-
+</>
     );
 }
 

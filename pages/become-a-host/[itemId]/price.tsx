@@ -28,7 +28,7 @@ export default function Price() {
         }
     }
     async function priceUpdate() {
-        let response = await fetch('/api/accomodation/price?itemId=' + itemId, {
+        let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
             body: JSON.stringify({ price: num }),
             headers: { 'Content-type': 'application/json' }

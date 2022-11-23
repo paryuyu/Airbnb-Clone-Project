@@ -11,7 +11,7 @@ function MoveButton() {
 
     async function locationUpdate() {
 
-        let res = await fetch('/api/accomodation/location?itemId=' + itemId, {
+        let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
             body: JSON.stringify({ location: ctx.mapNew }), //바디
             headers: { 'Content-type': 'application/json' }

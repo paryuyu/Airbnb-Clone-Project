@@ -41,20 +41,22 @@ export default function AmenitiesFirst() {
         }
     }
 
-    let amemity = {
-        facilities: facilities,
-        special: sp,
-        safty: safty
-    } as AmenityData
 
     async function AmenityUpdate() {
 
 
-        let res = await fetch('/api/accomodation/amenity', {
+        let amenity = {
+            facilities: facilities,
+            special: sp,
+            safty: safty
+        } as AmenityData
+        
+        let res = await fetch('/api/accomodation/newUpdate?_id='+itemId, {
             method: 'post',
-            body: JSON.stringify({ itemId: itemId, ameinty: amemity }),
+            body: JSON.stringify({amenities:amenity}),
             headers: { 'Content-type': 'application/json' }
         })
+        
         let json = await res.json();
         console.log(json, "update")
         if (json.result) {

@@ -18,7 +18,7 @@ export default function () {
 
 
   async function titleUpdate() {
-    let response = await fetch('/api/accomodation/title?itemId=' + itemId, {
+    let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
       method: 'post',
       body: JSON.stringify({ title: title }),
       headers: { 'Content-type': 'application/json' }

@@ -74,7 +74,7 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
 
                 if (json && json.result) {
                     ctx.setWhat({ lat: json.result.geometry.location.lat, lng: json.result.geometry.location.lng })
-                    
+
                     setLat(json.result.geometry.location.lat)
                     setLng(json.result.geometry.location.lng)
                 }
@@ -128,14 +128,14 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
 
     async function locationUpdate() {
 
-        let res = await fetch('/api/accomodation/location?itemId=' + itemId, {
+        let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
-            body: JSON.stringify({ location: ctx.what, address: ctx.location }), //바디
+            body: JSON.stringify({ location: ctx.what }), //바디
             headers: { 'Content-type': 'application/json' }
         });
 
         let json = await res.json();
-// console.log(json, "location update result")
+        // console.log(json, "location update result")
     }
 
     const handleNext = () => {

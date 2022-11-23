@@ -12,7 +12,7 @@ export default function () {
   const itemId = router.query.itemId as string;
 
   async function descriptionUpdate() {
-    let response = await fetch('/api/accomodation/description?itemId=' + itemId, {
+    let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
       method: 'post',
       body: JSON.stringify({ description: description }),
       headers: { 'Content-type': 'application/json' }

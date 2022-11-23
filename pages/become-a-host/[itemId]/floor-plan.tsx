@@ -58,9 +58,12 @@ export default function Privacy() {
 
     async function floorPlanUpdate (){
         console.log("...")
-            let res = await fetch('/api/accomodation/floorplanUpdate',{
+        let floor = {
+            guest:guest, bed:bed,bedroom:bedroom,bathroom:bathroom
+        }
+            let res = await fetch('/api/accomodation/newUpdate?_id='+itemId,{
                 method:'post',
-                body: JSON.stringify({guest:guest, bed:bed,bedroom:bedroom,bathroom:bathroom ,itemId:itemId }),
+                body: JSON.stringify({floorPlan:floor}),
                 headers:{'Content-type':'application/json'}
             })
 
