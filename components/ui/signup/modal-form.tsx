@@ -17,11 +17,6 @@ type ModalProps = {
 //오늘 할 것 : 회원가입 연동, 인증구현(Email기반), 회원가입 끝나고-> 동의 및 거부창 -> 동의는 로그인 -> 동의거부 -> 돌아가기/가입취소하기
 
 
-
-
-
-
-
 export const ModalForm: React.FC<ModalProps> = ({ isShown }) => {
 
     const [moveType, setMoveType] = React.useState<string>("email");

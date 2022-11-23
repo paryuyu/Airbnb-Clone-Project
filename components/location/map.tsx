@@ -32,7 +32,6 @@ function MapComponents({ }) {
                 lng = ctx?.what?.lng;
             }
 
-            console.log("MAP COMPONENT= ", lat, lng)
             let map = new google.maps.Map(ref?.current!, {
                 center: { lat: lat, lng: lng },
                 zoom: 15

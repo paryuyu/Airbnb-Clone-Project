@@ -17,9 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <header>
                 <Header />
             </header>
-
-            <Divider />
-
+            
             <nav>
                 <Nav />
             </nav>

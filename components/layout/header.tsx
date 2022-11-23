@@ -4,20 +4,24 @@ import Menu from '@mui/material/Menu';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { AppBar, Button, Toolbar } from '@mui/material';
+import { AppBar, Button, Divider, Toolbar } from '@mui/material';
 import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import { FaAirbnb } from 'react-icons/fa';
 import { Modal } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { UnAuthMenu } from '../ui/menu/unauth-menu';
 import { AuthMenu } from '../ui/menu/auth-menu';
 import { ModalForm } from '../ui/signup/modal-form';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 export default function Header() {
+  const { data, status } = useSession();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [modalopen, setModalOpen] = React.useState<boolean>(false);
- 
+  console.log(data)
+  console.log(status)
   //메뉴  
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,13 +37,10 @@ export default function Header() {
     setModalOpen(false)
   }
 
-  const { data, status } = useSession();
- 
 
 
-  const handleMoveModal = () => {
 
-  }
+
   React.useEffect(() => {
 
     !async function () {
@@ -62,14 +63,14 @@ export default function Header() {
     <>
       <AppBar position="sticky" elevation={0}>
         <Toolbar variant="dense" sx={{ bgcolor: "white", color: "black", display: "flex", justifyContent: "space-between" }}  >
-          <IconButton edge="start" color="inherit" sx={{ mr: 0 }}>
-            <ModeOfTravelIcon />
+          <IconButton edge="start" color="inherit" sx={{ mr: 0 }} onClick={() => { router.push('/') }}>
+            <FaAirbnb />
           </IconButton>
 
           <Box display={"flex"} flexDirection={"row"}>
             {status === 'authenticated' &&
-              <Link href={url+"/become-a-host"} >
-                <Button variant="outlined">호스트 되기</Button>
+              <Link href={url + "/become-a-host"} >
+                <Button variant="outlined" sx={[{backgroundColor:'white',color:'black',borderColor:'black',borderWidth:1, borderRadius:5},{'&:hover':{color:'#333',borderColor:'#333',borderWidth:2,backgroundColor:'white'}}]}>호스트 되기</Button>
               </Link>
             }
 
@@ -128,13 +129,14 @@ export default function Header() {
 
         </Toolbar>
       </AppBar>
+
       <Modal
         open={modalopen}
         onClose={handleModalClose}
       >
         <ModalForm isShown={(modal) => setModalOpen(modal)} />
       </Modal>
-
+<Divider/>
     </>
 
   );

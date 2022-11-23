@@ -27,11 +27,13 @@ export const authOption: NextAuthOptions = {
                 password: {}
             },
             async authorize(credentials, req) {
+                
                 console.log(credentials, "credentials");
                 console.log(req, "req");
-                const one = await user.findOne({ email: credentials!.email }) as any
 
-                if (!one || !(await compare(credentials!.password, one.password))) {
+                const one = await user.findOne({ email: credentials!.email }) as any
+                console.log(one,'one-----------------')
+                if (!(await compare(credentials!.password, one.password))) {
                     throw new Error(`invalid email/password`)
                 }
 
@@ -59,6 +61,7 @@ export const authOption: NextAuthOptions = {
             }
 
             let rst = await user.findOne({ email: params.user.email }).lean();
+            
             if (rst !== null && (params.account?.provider === "google" || params.account?.provider === "kakao")) {
                 //디비에 데이터가 있 -> 회원가입 완료된 상태라는거니깐 그냥 꺼주기.
                 //근데 여기서 계정아이디값을 생각해야함.
