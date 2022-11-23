@@ -17,7 +17,6 @@ function MapComponents({ }) {
             if (!ctx?.what?.lat) {
                 const result : {lat : number, lng : number}= await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(function (pos) {
-                        // ctx.setWhat({lat: pos.coords.latitude, lng: pos.coords.longitude})
                         lat = pos.coords.latitude
                         lng = pos.coords.longitude
                         resolve({ lat, lng });
