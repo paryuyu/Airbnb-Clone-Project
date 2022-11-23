@@ -9,10 +9,6 @@ import Image from "next/image";
 import LastHosting from "../../../components/ui/last/hosting-last";
 import { AccomodationData } from "../../../lib/model/accomodation";
 
-type Location = {
-    lat: string;
-    lng: string;
-}
 export default function LastPage() {
     let router = useRouter();
     let { itemId } = router.query;
@@ -21,9 +17,9 @@ export default function LastPage() {
     let [price, setPrice] = useState('');
     let [item, setItem] = useState<AccomodationData>()
     let [title, setTitle] = useState('');
-    let [location,setLocation] = useState<Location>()
-    // let [amenities,setAmenities] =useState();
-    const [ad, setAd] = useState<string>('')
+   
+
+   
     useEffect(() => {
         !async function () {
 
@@ -40,7 +36,7 @@ export default function LastPage() {
                 setPrice(json.data.price)
                 setTitle(json.data.title)
                 setItem(json.data)
-                setLocation(json.data.location)
+                
                
             }
 
@@ -73,13 +69,6 @@ export default function LastPage() {
 
     const closeHandle = () => {
         setModalOpen(false)
-    }
-    async function Location() {
-        let endPoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${GoogleAppKey}&language=ko`;
-        let response = await fetch(endPoint);
-        let json = await response.json();
-        setAd(json.results[0].formatted_address);
-        return;
     }
 
 
