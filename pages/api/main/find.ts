@@ -4,9 +4,9 @@ import { NextApiHandler } from 'next';
 import accomodation from "../../../lib/model/accomodation";
 
 async function handler(req:NextApiRequest,res:NextApiResponse) {
-
+  console.log(req.query)
 try{
-  let found =  await accomodation.find({});
+  let found =  await accomodation.find(req.query).sort('-receipt').lean();
   console.log(found)
   if(found !==null){
     return res.status(200).json({result:true, data:found})

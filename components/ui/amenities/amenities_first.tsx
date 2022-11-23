@@ -80,6 +80,8 @@ export default function AmenitiesFirst() {
     let safArr = ['화재경보기', '구급상자', '소화기', '침실문', '일산화탄소 경보기']
 
     let facArr = ['무선인터넷', 'TV', '세탁기', '건물 내 무료 주차', '건물 내 유료 주차', '에어컨', '업무 전용 공간'];
+
+    
     return (<Box sx={{ overflow: 'scroll' }}>
 
         <Typography sx={{ fontSize: 20, fontWeight: 'bold', mt: 3, mb: 1 }}>숙소 편의시설 정보를 추가하세요</Typography>

@@ -10,7 +10,7 @@ const handler : NextApiHandler<RstData> =  async(req, res) =>{
 
     try{
         let dataFind = await user.findOne({email});
-        console.log(dataFind,"dataFind")
+        // console.log(dataFind,"dataFind")
         if(dataFind !== null){
             return res.status(200).json({result:true, data:dataFind});
         }else{

@@ -63,20 +63,20 @@ export const PasswordLogin: React.FC<SignupProps> = ({ onMove, email, onModal })
     };
 
     const handleClick = async () => {
+        
         const result = await signIn("credentials", {
             redirect: false,
             email: email, password: passWord
         }) as typeof signInRst
-        
+
+        console.log(result,'result---pw')
+
         if(result !== null && result!.ok){
-            
             setSignInRst(result)
         }else if(!result!.ok){
-            console.log(error,"error")
             setError(true)
         }
         
-        console.log(result,"signIn--result")
     }
 
     React.useEffect(()=>{
