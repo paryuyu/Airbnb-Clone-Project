@@ -43,15 +43,14 @@ export default function () {
     router.push('/become-a-host/' + itemId + '/photos')
   }
 
-  return (<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-    <Box sx={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Typography sx={{ fontSize: 25, fontWeight: 'bold' }}>이제 place에 이름을 지⁠어⁠주⁠세⁠요
+  return (<Box sx={{ ...outlineBox}}>
+
+      <Typography sx={{ fontSize: 25, fontWeight: 'bold' ,textAlign:'center',mb:3 }}>이제 place에 이름을 지⁠어⁠주⁠세⁠요
         숙소 이름은 짧을수록 효과적입니다.
       </Typography>
 
-      <Typography sx={{ fontSize: 18, fontWeight: '100', color: 'grey' }}>나중에 언제든지 변경할 수 있으니, 너무 걱정하지 마세요.</Typography>
-      <Typography sx={{ fontSize: 13, fontWeight: '100', color: 'grey' }}>32글자를 초과할 수 없습니다.
-      </Typography>
+      <Typography sx={{ fontSize: 18, fontWeight: '100', color: 'grey',mb:1 }}>나중에 언제든지 변경할 수 있으니, 너무 걱정하지 마세요.</Typography>
+      
       <Textarea
         value={title}
         onChange={(evt) => { setTitle(evt.currentTarget.value) }}
@@ -64,10 +63,16 @@ export default function () {
           width: 400
         }}
       />
-    </Box>
+ <Typography sx={{ fontSize: 13, fontWeight: '100', color: 'grey',mt:1 , textAlign:'end'}}>32글자를 초과할 수 없습니다.
+      </Typography>
     <Box>
       <Button onClick={BackHandle} >뒤로</Button>
       <Button onClick={NextHandle} disabled={title.length === 0}>다음</Button>
     </Box>
   </Box>);
+}
+
+
+const outlineBox = {
+  display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '85vh', alignItems: 'center'
 }

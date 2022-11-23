@@ -57,17 +57,16 @@ export default function () {
 
 
     <Grid item sx={{ display: "flex", flex: 1, flexDirection: "column", height: '100vh', pr: 10, pl: 10, justifyContent: "center" }}>
-      <Box sx={{ outlineBox }}>
+      <Box sx={{...outlineBox}}>
         {des.map((one, index) => {
           return (
             <DescriptionList item={one} key={index} onDes={handleDescriptionList} des={description} />
           )
         })}
-
-      </Box>
-      <Box>
-        <Button onClick={BackHandle}>뒤로</Button>
-        <Button onClick={NextHandle} disabled={description.length === 0}>다음</Button>
+</Box>
+      <Box sx={{...buttonBox}}>
+        <Button variant="contained" onClick={BackHandle} sx={{...button}}>뒤로</Button>
+        <Button variant="contained" onClick={NextHandle} disabled={description.length === 0}  sx={{...button}}>다음</Button>
       </Box>
     </Grid>
   </Grid>);
@@ -82,25 +81,12 @@ const outlineBox = {
 }
 
 
-/**<Grid component={"main"} container  >
-       
-        <Grid item sx={{ display: "flex", flex: 1, bgcolor: "black", color: "white", height: '100vh', alignItems: "center", justifyContent: "center" }}
-        >
-            <Typography component="h1" variant="h5" textAlign={"center"}>
-                숙소 편의시설 정보를 추가하세요.
-            </Typography>
-        </Grid>
+const button = {
+  width: 10, mt: 5, mb: 5, bgcolor: 'black',
+  '&:hover': { 'backgroundColor': '#333' }
+}
 
-        <Grid item sx={{ display: "flex", flex: 1, flexDirection: "column", height: '100vh', pr: 10, pl: 10, justifyContent: "center" }}>
-               <AmenitiesFirst/>
-               {/* <AmenityTwo/> 
-               </Grid>
-               </Grid> */
+const buttonBox = {
+  display: 'flex', justifyContent: 'space-around'
 
-
-/**<ToggleButton
-            onClick={handleClick}
-            value={one}
-            key={index}
-            selected={selected}
-          >{one}</ToggleButton> */
+}

@@ -1,6 +1,7 @@
 import { Button, Card, CardContent, Chip, Divider, ImageList, ImageListItem, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Header from "../../components/layout/header";
@@ -76,7 +77,10 @@ export default function DetailPage() {
     }
 
     return (
-        <><Header />
+        <>
+        <Head><title>Detail</title></Head>
+        
+        <Header />
 
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
