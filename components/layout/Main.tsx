@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AccomodationData } from "../../lib/model/accomodation";
 import { useRouter } from "next/router";
 import MainCard from "../ui/mainCard/mainCard";
+import Head from "next/head";
 
 export default function MainPage() {
   const [mainData, setMainData] = useState<AccomodationData[] | null>(null);
@@ -20,6 +21,9 @@ export default function MainPage() {
 
 
   return (<>
+  <Head>
+    <title>MAIN_PAGE</title>
+  </Head>
     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1.5, flexWrap: 'wrap', pl: 2, mt: 1.5 }}>
 
     {mainData && mainData.map((one,index) => <MainCard item={one} key={index}/>)}

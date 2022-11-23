@@ -9,16 +9,21 @@ import Image from "next/image";
 import LastHosting from "../../../components/ui/last/hosting-last";
 import { AccomodationData } from "../../../lib/model/accomodation";
 
+type Location = {
+    lat: string;
+    lng: string;
+}
 export default function LastPage() {
     let router = useRouter();
     let { itemId } = router.query;
     let [modalOpen, setModalOpen] = useState(false)
     let [photos, setphotos] = useState('');
     let [price, setPrice] = useState('');
-    let [item,setItem] = useState<AccomodationData>()
+    let [item, setItem] = useState<AccomodationData>()
     let [title, setTitle] = useState('');
+    let [location,setLocation] = useState<Location>()
     // let [amenities,setAmenities] =useState();
-
+    const [ad, setAd] = useState<string>('')
     useEffect(() => {
         !async function () {
 
@@ -29,53 +34,62 @@ export default function LastPage() {
             })
 
             let json = await response.json();
-         
+
             if (json.result && json.data) {
                 setphotos(json.data.Photos[0])
                 setPrice(json.data.price)
                 setTitle(json.data.title)
                 setItem(json.data)
+                setLocation(json.data.location)
+               
             }
 
         }();
     }, [])
-   
-/** receipt: { type: Date },
-    publish: { type: Boolean }, */
+
+    /** receipt: { type: Date },
+        publish: { type: Boolean }, */
     const BackHandle = () => {
-        router.push('/become-a-host/'+itemId+'/price')
+        router.push('/become-a-host/' + itemId + '/price')
     }
     async function LastPageApi() {
-        let response = await fetch('/api/accomodation/lastpage?itemId='+itemId,{
-            method:'post',
-            body:JSON.stringify({receipt:new Date(), publish:true}),
-            headers:{'Content-type':'application/json'}
+        let response = await fetch('/api/accomodation/lastpage?itemId=' + itemId, {
+            method: 'post',
+            body: JSON.stringify({ receipt: new Date(), publish: true }),
+            headers: { 'Content-type': 'application/json' }
         });
         let json = await response.json();
 
-        if(json.result){
-            
+        if (json.result) {
+
             router.push('/')
         }
     }
 
     const NextHandle = () => {
-        
+
         LastPageApi()
     }
 
     const closeHandle = () => {
         setModalOpen(false)
     }
-
+    async function Location() {
+        let endPoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${GoogleAppKey}&language=ko`;
+        let response = await fetch(endPoint);
+        let json = await response.json();
+        setAd(json.results[0].formatted_address);
+        return;
+    }
 
 
     return (<Box>
-        <Typography>숙소 검토하기</Typography>
-        <Typography>게스트에게 표시되는 정보는 다음과 같습니다. 모든 정보가 정확한지 확인하세요.</Typography>
+        <Box  sx={{ ...outlineBox }}>
+        <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>숙소 검토하기</Typography>
+        <Typography  sx={{ fontSize: 15, color: 'grey', mb: 5 }}>게스트에게 표시되는 정보는 다음과 같습니다. 모든 정보가 정확한지 확인하세요.</Typography>
 
 
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ width: 350 }}>
             <CardActionArea onClick={() => { setModalOpen(true) }}>
                 {photos.length > 0 &&
                     <CardMedia
@@ -103,12 +117,26 @@ export default function LastPage() {
             open={modalOpen}
             onClose={closeHandle}
         >
-            <LastHosting item={item}/>
+            <LastHosting item={item} />
         </Modal>
-
-
-        <Button onClick={BackHandle}>뒤로</Button>
-        <Button onClick={NextHandle}>다음</Button>
-
+        </Box>
+        <Box sx={{ ...buttonBox }}>
+            <Button onClick={BackHandle} variant='contained' sx={{ ...button }}>뒤로</Button>
+            <Button onClick={NextHandle} variant='contained' sx={{ ...button }}>다음</Button>
+        </Box>
     </Box>);
+}
+
+const outlineBox = {
+    display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '85vh', alignItems: 'center'
+}
+
+const button = {
+    width: 10, mt: 5, mb: 5, bgcolor: 'black',
+    '&:hover': { 'backgroundColor': '#333' }
+}
+
+const buttonBox = {
+    display: 'flex', justifyContent: 'space-around'
+
 }

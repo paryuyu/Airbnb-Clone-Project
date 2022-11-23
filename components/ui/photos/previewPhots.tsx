@@ -14,7 +14,7 @@ function PreviewPhoto(props: any) {
         fileReader.onload = (rst) => {
             let result = rst.target!.result as string;
             setimgurl(result)
-            console.log(rst, '????type잡는중')
+            
         }
 
     }, [props])
@@ -28,12 +28,12 @@ function PreviewPhoto(props: any) {
 
 
     return (
-        <Box sx={{ border: '1px dotted', position: 'relative', height: 110, width: 180 }}>
+        <Box sx={{ border: '1px dotted', position: 'relative', height: 140, width: 180 }}>
             <IconButton sx={{ position: 'absolute', top: 2, left: 1 }} onClick={handleDel} >
                 <HighlightOffIcon sx={{ fontSize: 20, color: 'grey' }} />
             </IconButton>
-            <Box ref={ref}>
-                <img src={imgurl} style={{ height: '100%' }} />
+            <Box ref={ref} >
+                <img src={imgurl} style={{ minWidth:175,maxWidth:178 , maxHeight:140 }} />
             </Box>
         </Box>
     );

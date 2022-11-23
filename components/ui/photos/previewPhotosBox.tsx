@@ -39,7 +39,7 @@ export default function PreviewPhotoBox({ target, onFile ,onDel }:props) {
             })}
 
 
-            <Box sx={{ border: '1px dotted', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 110, width: 180, cursor: 'pointer' }} onClick={() => { fileRef.current?.click() }}
+            <Box sx={{ border: '1px dotted', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 140, width: 180, cursor: 'pointer' }} onClick={() => { fileRef.current?.click() }}
                 onDragOver={(evt) => {
                     evt.preventDefault();
                     evt.stopPropagation();

@@ -19,9 +19,13 @@ export const AuthMenu: React.FC <authmenu> = ({onModal}) => {
 
 return(
 
-    <> <MenuItem onClick={(evt) => { if (evt) { signOut() } }}>
+    <> <MenuItem style={{display:'flex',flexDirection:'column'}} >
+    <ListItemIcon >
+      <LogoutIcon fontSize="small" sx={{ mr: 1.8,mb:2 }} />로그아웃
+    </ListItemIcon>
+
     <ListItemIcon>
-      <LogoutIcon fontSize="small" sx={{ mr: 1.8 }} />로그아웃
+      <LogoutIcon fontSize="small" sx={{ mr: 1.8 }} />숙소관리
     </ListItemIcon>
   </MenuItem>
 </>
