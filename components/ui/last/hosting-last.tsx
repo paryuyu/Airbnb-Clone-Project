@@ -30,7 +30,7 @@ export default function LastHosting({item}:any) {
     const [ad, setAd] = useState<string>('')
 
     async function Location() {
-        if(location){
+        if(location?.lat && location?.lng){
         let GoogleAppKey = 'AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs'
         let endPoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${GoogleAppKey}&language=ko`;
         let response = await fetch(endPoint);
@@ -65,6 +65,9 @@ export default function LastHosting({item}:any) {
             Location()
         }
     },[item])
+
+
+
     return ( <Box sx={{...outline}}  overflow={"scroll"}>
 
         <Box sx={{display:'flex', flexDirection:'column'}}>
