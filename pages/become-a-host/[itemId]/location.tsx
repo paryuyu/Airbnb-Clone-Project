@@ -62,7 +62,7 @@ export default function Location() {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 110,
+    width: 120,
     fontSize: 12,
     mb: 2
 }

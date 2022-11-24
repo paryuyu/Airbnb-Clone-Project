@@ -9,21 +9,20 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
   //구글 로그인 팝업창 띄울때 기본 레이아웃 분리하기.
   const { isLayout } = Component as (NextPage & { isLayout?: boolean });
-  
+
   return (
 
     <SessionProvider session={session}>
-     {isLayout && ( 
+      {isLayout && (
         <Layout>
           <Component {...pageProps} />
         </Layout>
-        )
-      } 
+      )
+      }
 
-    {!isLayout && (
+      {!isLayout && (
         <Component {...pageProps} />
       )}
     </SessionProvider>
-
   )
 }

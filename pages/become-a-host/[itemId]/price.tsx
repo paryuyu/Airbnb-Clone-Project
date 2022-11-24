@@ -64,10 +64,13 @@ export default function Price() {
 
 
         <Box sx={{ border: '1px solid #ddd', borderRadius: 5, padding: 3 , width:'55vw'}}>
-            <Box>
+             
+            <Box display={'flex'} alignItems={'center'}>
+
                 <IconButton onClick={minusHandle}>
                     <RemoveCircleOutlineIcon />
                 </IconButton>
+
                 <FormControl>
                     <OutlinedInput
                         placeholder="0"
@@ -77,10 +80,12 @@ export default function Price() {
                         startAdornment={<InputAdornment position="start">KRW</InputAdornment>}
                     />
                 </FormControl>
+
                 <IconButton onClick={plusHandle}>
                     <AddCircleOutlineIcon />
                 </IconButton>
             </Box>
+
             <Typography sx={{ textAlign: 'end', fontWeight: '100', pr: 2, color: 'grey' }}>/박</Typography>
         </Box>
         </Box>
@@ -127,7 +132,7 @@ const buttonBox = {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 110,
+    width: 120,
     fontSize: 12,
     mb: 2
   }

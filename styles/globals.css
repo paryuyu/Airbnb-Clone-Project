@@ -29,6 +29,14 @@ a {
     background: black;
   }
 }
+.MuiPickerStaticWrapper-content > div > div:first-of-type,
+.css-xelq0e-MuiPickerStaticWrapper-content > div > div:first-of-type {
+  display:  none;
+}
+  
+.css-3pa7bi-MuiDateRangePickerViewDesktop-container:not(:last-of-type) {
+  border-right: none;
+}
 
 
 @keyframes fadein {
