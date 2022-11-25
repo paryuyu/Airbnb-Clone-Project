@@ -3,7 +3,7 @@ import { formatDistance } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useRouter } from "next/router";
 import { AccomodationData } from "../../../lib/model/accomodation";
-import PersonList from "../detail/person";
+import PersonList from "../detail/reservation/guests";
 
 export default function MainCard({ item }: any) {
     const router = useRouter()

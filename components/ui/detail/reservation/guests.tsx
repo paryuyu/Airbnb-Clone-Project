@@ -2,54 +2,68 @@ import { Box, IconButton, List, Typography } from "@mui/material";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState, useContext, useEffect } from 'react'
-export default function PersonList() {
+import { ReservationCtx } from "../../../../context/reservation-context";
+export default function GuestList() {
+    const ctx = useContext(ReservationCtx);
 
 
-    const [adult, setAdult] = useState<number>(0);
-    const [child, setChild] = useState<number>(0);
-    const [infant, setInfant] = useState<number>(0);
-    const [pet, setPet] = useState<number>(0);
     const handlePlusAdult = () => {
-        setAdult(adult + 1)
+        if (ctx.totalGuest !== ctx.limitGuest) {
+            ctx.setAdult(ctx.adult + 1)
+        }
+
     }
+
     const handleMinusAdult = () => {
-        if (adult !== 0) {
-            setAdult(adult - 1)
+        if (ctx.adult !== 0) {
+            ctx.setAdult(ctx.adult - 1)
         }
     }
     const handleMinusinfant = () => {
-        if (infant !== 0) {
-            setInfant(infant - 1)
+        if (ctx.infant !== 0) {
+            ctx.setInfant(ctx.infant - 1)
         }
     }
 
     const handlePlusinfant = () => {
-        setInfant(infant + 1)
+        if (ctx.infant < 5) {
+            ctx.setInfant(ctx.infant + 1)
+        }
     }
 
     const handlePluschild = () => {
-        
-            setChild(child + 1)
-        
+        if (ctx.totalGuest !== ctx.limitGuest) {
+            ctx.setChild(ctx.child + 1)
+        }
     }
 
     const handleMinuschild = () => {
-        if (child !== 0) {
-            setChild(child - 1)
+        if (ctx.child !== 0) {
+            ctx.setChild(ctx.child - 1)
         }
     }
 
     const handleMinusPet = () => {
-        if (pet !== 0) {
-            setPet(pet - 1)
+        if (ctx.pet !== 0) {
+            ctx.setPet(ctx.pet - 1)
         }
     }
 
     const handlePlusPet = () => {
-        setPet(pet + 1)
+        ctx.setPet(ctx.pet + 1)
     }
 
-    return (<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' , bgcolor:'red', maxHeight:370 }}>
+    useEffect(() => {
+        ctx.setTotalGuest(ctx.adult + ctx.child)
+    }, [ctx.child, ctx.adult])
+
+
+
+
+
+
+    
+    return (<Box >
 
         <Box sx={{ ...boxStyle }}>
 
@@ -58,7 +72,7 @@ export default function PersonList() {
                 <IconButton onClick={handleMinusAdult}>
                     <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
                 </IconButton>
-                <Typography sx={{ ...numStyle }}>{adult}</Typography>
+                <Typography sx={{ ...numStyle }}>{ctx.adult}</Typography>
                 <IconButton onClick={handlePlusAdult}>
                     <ControlPointIcon sx={{ ...iconStyle }} />
                 </IconButton>
@@ -71,7 +85,7 @@ export default function PersonList() {
                 <IconButton onClick={handleMinuschild}>
                     <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
                 </IconButton>
-                <Typography sx={{ ...numStyle }}>{child}</Typography>
+                <Typography sx={{ ...numStyle }}>{ctx.child}</Typography>
                 <IconButton onClick={handlePluschild}>
                     <ControlPointIcon sx={{ ...iconStyle }} />
                 </IconButton>
@@ -84,7 +98,7 @@ export default function PersonList() {
                 <IconButton onClick={handleMinusinfant}>
                     <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
                 </IconButton>
-                <Typography sx={{ ...numStyle }}>{infant}</Typography>
+                <Typography sx={{ ...numStyle }}>{ctx.infant}</Typography>
                 <IconButton onClick={handlePlusinfant}>
                     <ControlPointIcon sx={{ ...iconStyle }} />
                 </IconButton>
@@ -98,7 +112,7 @@ export default function PersonList() {
                 <IconButton onClick={handleMinusPet}>
                     <RemoveCircleOutlineIcon sx={{ ...iconStyle }} />
                 </IconButton>
-                <Typography sx={{ ...numStyle }}>{pet}</Typography>
+                <Typography sx={{ ...numStyle }}>{ctx.pet}</Typography>
                 <IconButton onClick={handlePlusPet}>
                     <ControlPointIcon sx={{ ...iconStyle }} />
                 </IconButton>
@@ -111,7 +125,7 @@ export default function PersonList() {
 
 
 const boxStyle = {
-    display: 'flex', justifyContent: 'space-around', alignItems: 'center', bgcolor: 'white',  borderRadius: 4, width: 400, pt: 1, pb: 1
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center', bgcolor: 'white', borderRadius: 4, maxWidth: '100%', p:0.5
 }
 
 const textStyle = {

@@ -5,12 +5,12 @@ import { useState , useEffect, useContext} from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { ko } from 'date-fns/locale'
-import { CalendarCtx } from "../../../context/calendar-context";
+import { ReservationCtx } from "../../../../context/reservation-context";
 
 export default function Calender() {
 
     // const [value, setValue] = useState<DateRange<Date>>([null, null]);
-    const ctx = useContext(CalendarCtx);
+    const ctx = useContext(ReservationCtx);
 
     useEffect(()=>{
         if(ctx.date[0] && ctx.date[1]){

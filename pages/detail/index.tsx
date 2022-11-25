@@ -5,14 +5,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import Header from "../../components/layout/header";
-import Calender from "../../components/ui/detail/calender";
+import Calender from "../../components/ui/detail/reservation/calender";
 import DetailAddress from "../../components/ui/detail/addressDetail";
 import Amenities from "../../components/ui/detail/amenities";
 import Images from "../../components/ui/detail/images";
 import { AccomodationData } from "../../lib/model/accomodation";
-import ReservationCard from "../../components/ui/detail/reservation-card";
-import { CalendarProvider } from "../../context/calendar-context";
-import PersonList from "../../components/ui/detail/person";
+import ReservationCard from "../../components/ui/detail/reservation/reservation-card";
+import { ReservationProvider } from "../../context/reservation-context";
+import GuestList from "../../components/ui/detail/reservation/guests";
 
 
 type floorPlan = {
@@ -74,7 +74,7 @@ export default function DetailPage() {
 
     return (
         <>
-            <CalendarProvider>
+            <ReservationProvider>
                 <Head><title>Reservation</title></Head>
 
                 <Header />
@@ -137,5 +137,5 @@ export default function DetailPage() {
                     
                     
                     
-                    </CalendarProvider></>);
+                    </ReservationProvider></>);
 }
