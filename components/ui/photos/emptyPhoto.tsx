@@ -21,7 +21,8 @@ function EmptyPhotos({ onFile }:props) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        animation: 'fadein 1.5s'
+        animation: 'fadein 1.5s',
+        
     }
 
     const icon = {
