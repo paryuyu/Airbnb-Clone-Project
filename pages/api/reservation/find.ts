@@ -4,12 +4,12 @@ import reservation from '../../../lib/model/reservation'
 type RstData = { result: Boolean; data?: string[], err?: Error }
 const handler: NextApiHandler<RstData> = async (req, res) => {
     await dbConnect()
-    console.log(req.body)
+    
     try {
-        let create = await reservation.create(req.body);
+        let find = await reservation.find({});
 
-        if (create !== null) {
-            return res.status(200).json({ result: true, data: create });
+        if (find !== null) {
+            return res.status(200).json({ result: true, data: find });
         } else {
             return res.status(500).json({ result: false })
         }
