@@ -40,6 +40,7 @@ export default function DetailPage() {
     const [floorPlan, setFloorPlan] = useState<floorPlan>();
     const [description, setDescription] = useState<string[]>([]);
     const [location, setLocation] = useState<Location>();
+    const [title, setTitle] = useState<string>('');
 
 
     //receipt -> 호스팅 날짜
@@ -59,6 +60,7 @@ export default function DetailPage() {
             setFloorPlan(json.data[0].floorPlan)
             setDescription(json.data[0].description)
             setLocation(json.data[0].location)
+            setTitle(json.data[0].title)
         }
     }
 
@@ -75,7 +77,7 @@ export default function DetailPage() {
     return (
         <>
             <ReservationProvider>
-                <Head><title>Reservation</title></Head>
+                <Head><title>{title}</title></Head>
 
                 <Header />
 
@@ -83,14 +85,14 @@ export default function DetailPage() {
 
                     <Box >
 
-                        {datas && <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 1, mb: 1, position: 'sticky', top: 0 }}>{datas.title}</Typography>}
+                        {datas && <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 1, mb: 1, position: 'sticky', top: 0 }}>{title}</Typography>}
 
                         {description && description.map((one, index) => <Chip key={index} label={one} sx={{ mr: 0.5, bgcolor: '#333', color: 'white', fontSize: 12, height: 25, mb: 1 }} />)}
 
 
-                        <Divider></Divider>
+                        <Divider />
                         <ImageList
-                            sx={{ width: '70vw', height: 500, border: '1px solid #ddd', borderRadius: 5 }}
+                            sx={{ width: '80vw', height: 500, border: '1px solid #ddd', borderRadius: 5 }}
                             variant="quilted"
                             cols={2}
                             rowHeight={300}
@@ -100,15 +102,12 @@ export default function DetailPage() {
                             ))}
                         </ImageList>
 
-
-                        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '70vw', justifyContent: 'center' }}>
-
-                            <Box sx={{ mr: 2 }}>
+                            <Box sx={{width:'60%'}}>
                                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', color: '#333', mb: 1 }}>{email}님이 호스팅하는 {groupType}</Typography>
 
                                 <Typography sx={{ fontSize: 14 }}>최대 인원 {floorPlan?.guest}명 / 침대 {floorPlan?.bed}개 / 침실 {floorPlan?.bedroom}개 / 욕실 {floorPlan?.bathroom}개</Typography>
 
-                                <Divider sx={{ mt: 1, mb: 1, mr: 5 }}></Divider>
+                                <Divider sx={{ mt: 1, mb: 1 }}></Divider>
 
 
 
@@ -122,20 +121,21 @@ export default function DetailPage() {
                                 {safty?.map((one, index) => {
                                     return (<Amenities item={one} key={index} />)
                                 })}
-
-                                <Calender />
-                                {location && <DetailAddress location={location} />}
                             </Box>
 
                             {datas && <ReservationCard datas={datas} />}
-                        </Box>
+                        
+                        <Calender />
+                        {location && <DetailAddress location={location} />}
 
 
                     </Box></Box>
-                             
-                    
-                    
-                    
-                    
-                    </ReservationProvider></>);
+
+
+
+
+
+            </ReservationProvider></>);
 }
+
+// flexWrap: 'wrap', width: '70vw', justifyContent: 'center' 

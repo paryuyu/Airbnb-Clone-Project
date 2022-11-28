@@ -9,10 +9,10 @@ const handler : NextApiHandler<RstData> =  async(req, res) =>{
     let {_id} = req.body;
 
     try{
-        let dataCreate = await accomodation.findById(_id);
-        console.log(dataCreate)
-        if(dataCreate){
-            return res.status(200).json({result:true, data:dataCreate});
+        let findRoom = await accomodation.findById(_id);
+        console.log(findRoom)
+        if(findRoom){
+            return res.status(200).json({result:true, data:findRoom});
         }else{
             return res.status(500).json({result:false})
         }

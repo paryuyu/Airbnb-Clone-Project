@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardContent, Divider, Modal, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { format, formatDistance } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useRouter } from "next/router";
 
 import { useState, useContext, useEffect } from 'react';
 import { ReservationCtx } from "../../../../context/reservation-context";
@@ -14,14 +15,15 @@ function ReservationCard({ datas }: any) {
     const [date1, setdate1] = useState() as any;
     const [date2, setdate2] = useState() as any;
 
+    const ctx = useContext(ReservationCtx)
+    const router = useRouter();
+    let _id = router.query._id as string;
     const [guestOpen, setGuestOpen] = useState<boolean>(false);
     const handleReservationType = (event: React.MouseEvent<HTMLElement, MouseEvent>
     ) => {
         // let val = event.currentTarget.value as any;
         // setReservationType(val) //타입오류잡기
     }
-    const ctx = useContext(ReservationCtx)
-
     useEffect(() => {
         ctx.setLimitGuest(datas.floorPlan.guest)
         ctx.setPrice(datas.price)
@@ -42,21 +44,20 @@ function ReservationCard({ datas }: any) {
     }, [ctx.date, datas])
 
 
-    async function ReservationCreate() {
-        let response = await fetch('/api/reservation/create');
-        let json = await response.json();
-        
-        
+    const handleReservation = () => {
+        //디비붙이고, 예약페이지로 가기
+        if (ctx.date[0] !== null && ctx.date[1] !== null) {
+            let chkin = format(ctx.date[0], 'yyyy-MM-dd');
+            let chkout = format(ctx.date[1], 'yyyy-MM-dd');
+            router.push(`/book/stay?numberOfAdults=${ctx.adult}&numberOfChildren=${ctx.child}&numberOfInfants=${ctx.infant}&numberOfPets=${ctx.pet}&checkin=${chkin}&checkout=${chkout}&guestCurrency=krw&productId=${_id}&numberOfGuests=${ctx.totalGuest}`)
+        }
     }
 
-    const handleReservation = ()=>{
-        //디비붙이고, 예약페이지로 가기
-    }
 
 
     return (<>
 
-        <Card sx={{ width: 300, position: 'relative' }}>
+        <Card sx={{ width: '35%', position: 'sticky', top: 50 }}>
             <CardContent>
                 <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>₩ {datas?.price}</Typography>
                 <ToggleButtonGroup
@@ -99,7 +100,7 @@ function ReservationCard({ datas }: any) {
 
 
                 <Button fullWidth variant="contained" sx={[{ ...bt }, { '&:hover': { backgroundColor: '#333' } }]}
-                onClick={handleReservation}
+                    onClick={handleReservation}
                 >예약하기</Button>
 
                 <Typography sx={{ textAlign: 'center', fontSize: 14, fontWeight: '100', mt: 1, mb: 1 }}>예약 확정 전에는 요금이 청구되지 않습니다.</Typography>

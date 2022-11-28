@@ -10,7 +10,7 @@ export function ReservationProvider({ children }: { children: React.ReactNode })
     const [date, setDate] = useState<DateRange<Date>>([new Date(), add]);
     const [totalGuest, setTotalGuest] = useState<number>(0);
     const [totalInfant, setTotalInfant] = useState<number>(0);
-    const [adult, setAdult] = useState<number>(0);
+    const [adult, setAdult] = useState<number>(1);
     const [child, setChild] = useState<number>(0);
     const [infant, setInfant] = useState<number>(0);
     const [pet, setPet] = useState<number>(0);
