@@ -1,8 +1,8 @@
-import { Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 function Amenities({item}:any) {
-    return ( <><Typography sx={{ fontSize: 14, mt: 1 }}>{item}</Typography><Divider sx={{ mt: 1, mr: 5 }} />
-   </> );
+    return ( <Box ><Typography sx={{ fontSize: 16, mt: 1 }}>{item}</Typography>
+   </Box> );
 }
 
 export default Amenities;

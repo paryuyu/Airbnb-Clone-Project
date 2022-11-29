@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import CottageIcon from '@mui/icons-material/Cottage';
 import { signOut } from "next-auth/react";
 import LogoutIcon from '@mui/icons-material/Logout';
+import LuggageIcon from '@mui/icons-material/Luggage';
+import { useRouter } from "next/router";
 type authmenu = {
 onModal: (modal:boolean) => void;
 }
@@ -16,16 +18,22 @@ onModal: (modal:boolean) => void;
 
 export const AuthMenu: React.FC <authmenu> = ({onModal}) => {
 
+const router = useRouter();
+
+
+
 
 return(
 
-    <> <MenuItem style={{display:'flex',flexDirection:'column'}} >
-    <ListItemIcon >
-      <LogoutIcon fontSize="small" sx={{ mr: 1.8,mb:2 }} />로그아웃
+    <> 
+  <MenuItem style={{display:'flex',flexDirection:'column'}} >
+    <ListItemIcon onClick={()=>{router.push('/detail/trip')}}>
+      <LuggageIcon fontSize="small" sx={{ mr: 1.8,mb:2 }} />여행
     </ListItemIcon>
-
-    <ListItemIcon>
-      <LogoutIcon fontSize="small" sx={{ mr: 1.8 }} />숙소관리
+  </MenuItem>
+  <MenuItem style={{display:'flex',flexDirection:'column'}} >
+    <ListItemIcon onClick={()=>{signOut()}}>
+      <LogoutIcon fontSize="small" sx={{ mr: 1.8,mb:2 }} />로그아웃
     </ListItemIcon>
   </MenuItem>
 </>

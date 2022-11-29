@@ -85,25 +85,22 @@ export default function Privacy() {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 120,
-    fontSize: 12,
     mb: 2
 }
 
 const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 50,
-    fontSize: 12,
     mt: 2
 }
 
 const outlineBox = {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100%',
+    width: '90%',
     gap: 2,
-    padding: 2
+    padding: 2,
+    margin:'auto'
 }
 
 const buttonBox = {

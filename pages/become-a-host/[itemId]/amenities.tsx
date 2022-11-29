@@ -23,11 +23,8 @@ function Amenities() {
         <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
             <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
         </Box>
-        <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
-            숙소 편의시설 정보를 추가하세요.
-        </Typography>
 
-<Box sx={{marginLeft:2,marginRight:2}}>
+<Box sx={{display: 'flex', justifyContent: 'center',}}>
 
         <AmenitiesFirst />
 
@@ -52,7 +49,5 @@ export default Amenities;
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 120,
-    fontSize: 12,
     mb: 2
 }

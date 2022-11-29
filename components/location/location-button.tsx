@@ -63,7 +63,5 @@ const buttonBox = {
 const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 50,
-    fontSize: 12,
     mt: 2
 }

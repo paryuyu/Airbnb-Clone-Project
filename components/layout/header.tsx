@@ -68,6 +68,7 @@ export default function Header() {
           </IconButton>
 
           <Box display={"flex"} flexDirection={"row"}>
+
             {status === 'authenticated' &&
               <Link href={"/become-a-host"} >
                 <Button variant="outlined" sx={[{backgroundColor:'white',color:'black',borderColor:'black',borderWidth:1, borderRadius:5},{'&:hover':{color:'#333',borderColor:'#333',borderWidth:2,backgroundColor:'white'}}]}>호스트 되기</Button>
@@ -124,6 +125,7 @@ export default function Header() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 
           >
+            
             {status == "unauthenticated" ? <UnAuthMenu onModal={(modal) => { setModalOpen(modal) }} /> : <AuthMenu onModal={(modal) => { setModalOpen(modal) }} />}
           </Menu>
 

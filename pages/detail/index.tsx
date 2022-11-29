@@ -81,20 +81,19 @@ export default function DetailPage() {
 
                 <Header />
 
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', }}>
 
-                    <Box >
-
-                        {datas && <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 1, mb: 1, position: 'sticky', top: 0 }}>{title}</Typography>}
+                    <Box>
+                        {datas && <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 1, mb: 1 }}>{title}</Typography>}
 
                         {description && description.map((one, index) => <Chip key={index} label={one} sx={{ mr: 0.5, bgcolor: '#333', color: 'white', fontSize: 12, height: 25, mb: 1 }} />)}
 
 
                         <Divider />
                         <ImageList
-                            sx={{ width: '80vw', height: 500, border: '1px solid #ddd', borderRadius: 5 }}
+                            sx={{ width: '80vw', height: 600, border: '1px solid #ddd', borderRadius: 5 }}
                             variant="quilted"
-                            cols={2}
+                            cols={3}
                             rowHeight={300}
                         >
                             {photos && photos.map((item, index) => (
@@ -102,34 +101,41 @@ export default function DetailPage() {
                             ))}
                         </ImageList>
 
-                            <Box sx={{width:'60%'}}>
+
+                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                            <Box sx={{ width: '70%' }}>
                                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', color: '#333', mb: 1 }}>{email}님이 호스팅하는 {groupType}</Typography>
 
                                 <Typography sx={{ fontSize: 14 }}>최대 인원 {floorPlan?.guest}명 / 침대 {floorPlan?.bed}개 / 침실 {floorPlan?.bedroom}개 / 욕실 {floorPlan?.bathroom}개</Typography>
 
-                                <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                                <Divider sx={{ mt: 1, mb: 1, mr: 1 }}></Divider>
 
 
+                                <Box sx={{ border: '1px solid black', borderRadius: 5, padding: 2, mr: 1, mb: 1, mt: 2 }}>
 
-                                <Typography sx={{ fontSize: 23, fontWeight: 'bold', color: '#333' }} >편의시설</Typography>
-                                {facilities?.map((one, index) => {
-                                    return (<Amenities item={one} key={index} />)
-                                })}
-                                {special?.map((one, index) => {
-                                    return (<Amenities item={one} key={index} />)
-                                })}
-                                {safty?.map((one, index) => {
-                                    return (<Amenities item={one} key={index} />)
-                                })}
+                                    <Typography sx={{ fontSize: 23, fontWeight: 'bold', color: '#333' }} >편의시설</Typography>
+                                    {facilities?.map((one, index) => {
+                                        return (<Amenities item={one} key={index} />)
+                                    })}
+                                    {special?.map((one, index) => {
+                                        return (<Amenities item={one} key={index} />)
+                                    })}
+                                    {safty?.map((one, index) => {
+                                        return (<Amenities item={one} key={index} />)
+                                    })}
+                                </Box>
+
+                                <Calender />
+                                {location && <DetailAddress location={location} />}
                             </Box>
+                            {datas && <Box sx={{ position: 'relative' }}><ReservationCard datas={datas} /></Box>}
 
-                            {datas && <ReservationCard datas={datas} />}
-                        
-                        <Calender />
-                        {location && <DetailAddress location={location} />}
+
+                        </Box>
 
 
                     </Box></Box>
+
 
 
 

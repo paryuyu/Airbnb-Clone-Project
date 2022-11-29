@@ -34,7 +34,7 @@ export default function PrivacyList({ item, onItem, pri }: props) {
     {item === pri ?
 
       <Box sx={[{ ...styletwo }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
-        <Typography fontSize={15}>{item}</Typography>
+        <Typography fontSize={20}>{item}</Typography>
         <Typography sx={{ ...descriptionStyle }}>{detail}</Typography>
       </Box> :
       <Box sx={[{ ...style }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
@@ -50,11 +50,11 @@ export default function PrivacyList({ item, onItem, pri }: props) {
 
 
 const propertyStyle = {
-  fontSize: 16
+  fontSize: 20
 
 }
 const descriptionStyle = {
-  fontSize: 10
+  fontSize: 15
 
 }
 
@@ -63,7 +63,6 @@ const style = {
   border: '3px solid #ddd',
   borderRadius: '10px',
   width: 'calc((100% - 32px) / 3)',
-  height: 80,
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
@@ -76,7 +75,6 @@ const styletwo = {
   border: '3px solid black',
   borderRadius: '10px',
   width: 'calc((100% - 32px) / 3)',
-  height: 80,
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',

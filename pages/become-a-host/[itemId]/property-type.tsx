@@ -93,7 +93,9 @@ export default function Property() {
             <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2 ,mt:5 }}>
                 <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
             </Box>
+
             <Typography sx={{ fontSize: 25, fontWeight: 'bold' ,textAlign:'center',mb:3 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
+
             <Box sx={{ ...outlineBox }}>
 
                 {propertyTypeData && propertyTypeData.map((one, index) => {
@@ -125,25 +127,22 @@ export default function Property() {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 120,
-    fontSize: 12,
     mb: 2
 }
 
 const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 50,
-    fontSize: 12,
     mt: 2
 }
 
 const outlineBox = {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100%',
+    width: '90%',
     gap: 2,
-    padding: 2
+    padding: 2,
+margin:'auto'
 }
 
 const buttonBox = {

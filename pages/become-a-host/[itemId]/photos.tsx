@@ -19,7 +19,7 @@ function Photos() {
     const [loading, setLoading] = useState(false);
     const [bt, setBt] = useState<boolean>(true)
     const NextHandle = async () => {
-
+        console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
         setLoading(true)
         const formData = new FormData();
         formData.append('itemId', itemId as string);
@@ -27,15 +27,17 @@ function Photos() {
         files.forEach((one) => {
             formData.append('photos', one)
         })
+
         const res = await fetch('/api/accomodation/uploadPhotos', {
             method: 'post',
             body: formData,
             // headers:{'Content-type':'multipart/form-data'} //얘 설정해주면 에러 터짐
         })
+
         if (res.ok) {
             router.push('/become-a-host/' + itemId + '/title')
             setLoading(false)
-        }
+        } 
     }
 
 
@@ -55,9 +57,10 @@ function Photos() {
             return current.filter(one => one !== t)
         })
     }
-    const [open, setOpen] = useState<boolean>(false)
-    const exitHandle = () => {
 
+    const [open, setOpen] = useState<boolean>(false)
+
+    const exitHandle = () => {
         setOpen(true)
     }
     return (
@@ -104,8 +107,6 @@ const buttonBox = {
 const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 50,
-    fontSize: 12,
     mt: 2, mb: 2,
     '&:hover': { 'backgroundColor': '#333' }
 }
@@ -117,7 +118,5 @@ const outlineBox = {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 120,
-    fontSize: 12,
     mb: 2
 }

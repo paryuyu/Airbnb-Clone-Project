@@ -20,7 +20,7 @@ export default function DetailAddress({ location }: any) {
     }
 
     function createStaticMap() {
-        return `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=17&size=400x300&markers=size:mid%7Ccolor:green%7Clabel:S%7C${location.lat},${location.lng}&key=${GoogleAppKey}`
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=15&size=500x500&markers=size:mid%7Ccolor:green%7Clabel:S%7C${location.lat},${location.lng}&key=${GoogleAppKey}`
     }
   
     useEffect(() => {
@@ -31,13 +31,12 @@ export default function DetailAddress({ location }: any) {
         }
     }, [location])
 
-    return (<Box sx={{display:'flex', flexDirection:'column' , mt:2}}>
+    return (<Box sx={{display:'flex', flexDirection:'column' , mt:2 , mb:10}}>
         <Box sx={{display:'flex', flexDirection:'row', alignItems:'center' }}>
-       <LocationOnIcon fontSize='medium' sx={{mr:1}}/>
     <Typography sx={{ fontSize: 23, fontWeight: 'bold', color: '#333' }} >숙소 위치</Typography>
     </Box>
     <Typography sx={{fontSize:14,  fontWeight: '100', mb:1}}>{ad}</Typography>
-    {img.length > 0 && <Image src={img} alt='map' width={400} height={300} />}
+    {img.length > 0 && <Image src={img} alt='map' width={500} height={500}/>}
   
     </Box>);
 }

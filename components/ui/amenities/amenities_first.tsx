@@ -84,10 +84,10 @@ export default function AmenitiesFirst() {
     let facArr = ['무선인터넷', 'TV', '세탁기', '건물 내 무료 주차', '건물 내 유료 주차', '에어컨', '업무 전용 공간'];
 
     
-    return (<Box sx={{ overflow: 'scroll' }}>
+    return (<Box sx={{ overflow: 'scroll' , width:'60vw' }}>
 
-        <Typography sx={{ fontSize: 20, fontWeight: 'bold', mt: 3, mb: 1 }}>숙소 편의시설 정보를 추가하세요</Typography>
-        <Typography sx={{ fontSize: 13, fontWeight: '100', mt: 3, mb: 1 }}>여기에 추가하려는 편의시설이 보이지 않더라도 걱정하지 마세요! 숙소를 등록한 후에 편의시설을 추가할 수 있습니다.</Typography>
+        <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 3, mb: 1 }}>숙소 편의시설 정보를 추가하세요</Typography>
+        <Typography sx={{ fontSize: 15, fontWeight: '100', mt: 3, mb: 1 }}>여기에 추가하려는 편의시설이 보이지 않더라도 걱정하지 마세요! 숙소를 등록한 후에 편의시설을 추가할 수 있습니다.</Typography>
 
         <Box sx={{ ...outlineBox }}>
             {facArr.map((item) => {
@@ -95,7 +95,7 @@ export default function AmenitiesFirst() {
             })}
         </Box>
 
-        <Typography sx={{ fontSize: 20, fontWeight: 'bold', mt: 3, mb: 1 }}>특별히 내세울 만한 편의시설이 있나요?</Typography>
+        <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 3, mb: 1 }}>특별히 내세울 만한 편의시설이 있나요?</Typography>
         <Box sx={{ ...outlineBox }}>
 
             {spArr.map((one) => {
@@ -106,7 +106,7 @@ export default function AmenitiesFirst() {
             }
 
         </Box>
-        <Typography sx={{ fontSize: 20, fontWeight: 'bold', mt: 3, mb: 1 }}>다음과 같은 안전 관련 물품이 있나요?</Typography>
+        <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 3, mb: 1 }}>다음과 같은 안전 관련 물품이 있나요?</Typography>
         <Box sx={{ ...outlineBox }}>
             {safArr.map((one) => {
 
@@ -114,7 +114,6 @@ export default function AmenitiesFirst() {
                     <AmenityThree safty={safty} item={one} onSafty={handleSafty}/>
                 </>)
             })}
-
 
         </Box>
         <Box sx={{ ...buttonBox }}>
@@ -148,7 +147,7 @@ const amenityBox = {
 const hover = { 'border': '3px solid black' }
 
 const text = {
-    fontSize: 13,
+    fontSize: 15,
     textAlign: 'center'
 
 }
@@ -161,8 +160,6 @@ const buttonBox = {
 const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 50,
-    fontSize: 12,
     mt: 2,
     mb:2,
     '&:hover': { 'backgroundColor': '#333' }
