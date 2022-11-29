@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Dummy } from "../../lib/model/dummy";
 import Head from 'next/head'
 export default function PropertyGroup() {
+    const [chk,setChk] = React.useState<string>('');
     const [rstData, setRstData] = React.useState<AccomodationData>();
     const [findData, setFindData] = React.useState<Dummy[]>();
     let { data, status } = useSession();
@@ -40,62 +41,68 @@ export default function PropertyGroup() {
     const hanldleGroupType: React.MouseEventHandler<HTMLDivElement> = (evt) => {
         let groupType = evt.currentTarget.innerText as string;
         CreateData(groupType);
+        setChk(groupType);
     }
 
-    const handleClick =()=>{
-       let con = confirm('등록이 취소됩니다. 뒤로 나가시겠습니까?')
-       console.log(con)
-       if(con){
-           router.push('/become-a-host')
-       }
-        
+    const handleClick = () => {
+        let con = confirm('등록이 취소됩니다. 나가시겠습니까?')
+        console.log(con)
+        if (con) {
+            router.push('/become-a-host')
+        }
+
     }
 
     return (
-<>
-<Head>
-    <title>호스팅_</title>
-</Head>
-        <Grid component={"main"} container  >
-
-            <Grid item sx={{ display: "flex", flex: 1, bgcolor: "black", color: "white", height: '100vh', alignItems: "center", justifyContent: "center" }}
-            >
-                <Typography component="h1" variant="h5" textAlign={"center"}>
+        <>
+            <Head>
+                <title>호스팅_</title>
+            </Head>
+            <Box sx={{width:'60vw' , margin:'auto', display:'flex' , flexDirection:'column'}} >
+                
+                <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3, mt: 5 }}>
                     호스팅 할 숙소 유형을 알려주세요
                 </Typography>
-            </Grid>
+                <Box >
 
-
-            <Grid item sx={{ display: "flex", flex: 1, flexDirection: "column", height: '100vh', pr: 10, pl: 10, justifyContent: "center" }}>
-
-            <Box >
-                {findData && findData.map((one) => {
-                    return (<Box border={'3px solid #d0d0d0'} borderRadius={"10px"} p={2} m={2} sx={[{ cursor: "pointer" }, { "&:hover": { borderColor: "black" } }]} onClick={hanldleGroupType}>
-                        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <Typography fontSize={15}>{one.group}</Typography>
+                    {findData && findData.map((one) => {
+                        return (
+                    <>
+                
+                     <Box border={'3px solid #d0d0d0'} borderRadius={"10px"} p={2} m={2} sx={[{ cursor: "pointer" }, { "&:hover": { borderColor: "black" } }]} onClick={hanldleGroupType}>
+                            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <Typography fontSize={15}>{one.group}</Typography>
+                                </Box>
                             </Box>
-                            <KeyboardArrowRightIcon />
                         </Box>
-                    </Box>)
-                })}
-                </Box>
-                <Box sx={{display:'flex', justifyContent:'end', mr:3,mt:2}}>
+     
+                    </>
+                       
+                        
+                        )
+                    })}
 
-                    
-                        <Button variant="contained" sx={[{ ...buttonSt },{'&:hover':{backgroundColor:'#333'}}]} onClick={handleClick}>뒤로</Button>
                 </Box>
+                <Box sx={{ ...buttonBox }}>
+                    <Button variant="contained" sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]} onClick={handleClick}>뒤로</Button>
+                    <Button variant="contained" sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]} onClick={handleClick}>다음</Button>
+                </Box>
+            </Box>
 
-            </Grid>
-        </Grid>
         </>);
 }
 
 PropertyGroup.layout = "L2";
 
-const buttonSt = {
+
+const buttonBox = {
+    display: 'flex', justifyContent: 'space-between', ml: 5, mr: 5, 
+
+}
+
+const button = {
     bgcolor: 'black',
     borderRadius: 5,
-    
-
+    mt: 2
 }

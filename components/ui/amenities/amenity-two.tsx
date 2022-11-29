@@ -51,7 +51,7 @@ const amenityBox = {
 const hover = { 'border': '3px solid black' }
 
 const text = {
-  fontSize: 13,
+  fontSize: 16,
   textAlign: 'center'
 
 }

@@ -22,8 +22,8 @@ function PropertyList({ item, onItem, arr }: props) {
     {item.property === arr ?
 
       <Box sx={[{ ...styletwo }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
-        <Typography fontSize={15}>{item.property}</Typography>
-        <Typography fontSize={10}>{item.description}</Typography>
+        <Typography fontSize={20} fontWeight={'bold'}>{item.property}</Typography>
+        <Typography fontSize={15}>{item.description}</Typography>
 
       </Box> :
       <Box sx={[{ ...style }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
@@ -39,11 +39,12 @@ function PropertyList({ item, onItem, arr }: props) {
 export default PropertyList;
 
 const propertyStyle = {
-  fontSize:16
+  fontWeight:'bold',
+  fontSize:20
   
 }
 const descriptionStyle = {
-  fontSize:10
+  fontSize:15
 
 }
 
@@ -52,7 +53,6 @@ const style = {
     border: '3px solid #ddd',
     borderRadius: '10px',
     width: 'calc((100% - 32px) / 3)',
-    height: 80,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -65,7 +65,6 @@ const styletwo = {
   border: '3px solid black',
   borderRadius: '10px',
   width: 'calc((100% - 32px) / 3)',
-  height: 80,
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',

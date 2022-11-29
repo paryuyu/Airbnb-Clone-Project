@@ -6,7 +6,7 @@ type RstData = {result: Boolean; data?:UserData[], err?:Error}
 const handler : NextApiHandler<RstData> =  async(req, res) =>{
   await dbConnect()
     let {email} = req.body;
-
+console.log(req.body)
 
     try{
         let dataFind = await user.findOne({email});

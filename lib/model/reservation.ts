@@ -13,8 +13,9 @@ export interface ReservationData {
     numberOfInfants:number,
     numberOfPets:number,
     numberOfAdults:number,
-    numberOfChildren:number
-   
+    numberOfChildren:number,
+    reservationTime:Date,
+    product?: any
 }
 
 const ReservationSchema = new mongoose.Schema<ReservationData>({
@@ -30,8 +31,16 @@ const ReservationSchema = new mongoose.Schema<ReservationData>({
     numberOfInfants:Number,
     numberOfPets:Number,
     numberOfAdults:Number,
-    numberOfChildren:Number
+    numberOfChildren:Number,
+    reservationTime:Date,
 })
+
+ReservationSchema.virtual('product',{
+    localField:'productId',
+    foreignField:'_id',
+    ref:'accomodation'
+})
+
 
 
 export default mongoose.models.reservation || mongoose.model<ReservationData>("reservation", ReservationSchema);

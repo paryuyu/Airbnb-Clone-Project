@@ -25,7 +25,6 @@ export default function Location() {
                     <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
                 </Box>
                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
-
                     숙소 위치는 어디인가요?
                 </Typography>
 
@@ -44,6 +43,7 @@ export default function Location() {
             </Box>
 
             < MoveButton />
+
             <Modal
                 open={open}
                 onClose={() => {
@@ -62,7 +62,6 @@ export default function Location() {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-    width: 120,
-    fontSize: 12,
+  
     mb: 2
 }

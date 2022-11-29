@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardContent, Divider, Modal, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { format, formatDistance } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { useState, useContext, useEffect } from 'react';
@@ -14,7 +15,7 @@ function ReservationCard({ datas }: any) {
     const [calmodal, setcalmodal] = useState(false)
     const [date1, setdate1] = useState() as any;
     const [date2, setdate2] = useState() as any;
-
+    const {data,status} = useSession();
     const ctx = useContext(ReservationCtx)
     const router = useRouter();
     let _id = router.query._id as string;
@@ -46,20 +47,34 @@ function ReservationCard({ datas }: any) {
 
     const handleReservation = () => {
         //디비붙이고, 예약페이지로 가기
-        if (ctx.date[0] !== null && ctx.date[1] !== null) {
-            let chkin = format(ctx.date[0], 'yyyy-MM-dd');
-            let chkout = format(ctx.date[1], 'yyyy-MM-dd');
-            router.push(`/book/stay?numberOfAdults=${ctx.adult}&numberOfChildren=${ctx.child}&numberOfInfants=${ctx.infant}&numberOfPets=${ctx.pet}&checkin=${chkin}&checkout=${chkout}&guestCurrency=krw&productId=${_id}&numberOfGuests=${ctx.totalGuest}`)
+        if(status === 'authenticated'){
+            if (ctx.date[0] !== null && ctx.date[1] !== null) {
+                let chkin = format(ctx.date[0], 'yyyy-MM-dd');
+                let chkout = format(ctx.date[1], 'yyyy-MM-dd');
+                router.push(`/book/stay?numberOfAdults=${ctx.adult}&numberOfChildren=${ctx.child}&numberOfInfants=${ctx.infant}&numberOfPets=${ctx.pet}&checkin=${chkin}&checkout=${chkout}&guestCurrency=krw&productId=${_id}&numberOfGuests=${ctx.totalGuest}`)
+            }
+        }else if (status === 'unauthenticated'){
+            alert('로그인 후 이용해주세요.')
         }
+       
     }
+
+    let formatter = new Intl.NumberFormat('ko',{
+    style:'currency',
+currency:'krw'})
 
 
 
     return (<>
 
-        <Card sx={{ width: '35%', position: 'sticky', top: 50 }}>
+        <Card sx={{position:'sticky', top:50}}>
             <CardContent>
-                <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>₩ {datas?.price}</Typography>
+                <Box sx={{display:'flex'}}>
+                <Typography sx={{ fontSize: 25, fontWeight: 'bold' , mb:2 }}>{formatter.format(datas.price)}</Typography> <Typography sx={{ fontSize: 25, fontWeight: '100' , mb:2 , ml:1 }}> /박</Typography>
+                </Box>
+
+
+
                 <ToggleButtonGroup
                     fullWidth
                     sx={{ height: 50 }}
@@ -112,7 +127,9 @@ function ReservationCard({ datas }: any) {
         <Modal
             open={calmodal}
             onClose={() => { setcalmodal(false) }}
-        ><Box><Calender /></Box></Modal>
+        ><Box>
+            <Calender />
+            </Box></Modal>
 
 
     </>);

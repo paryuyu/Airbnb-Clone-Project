@@ -49,20 +49,28 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         }
     }, [emailtest, regtest])
 
-
+    async function emailfind() {
+      
+        let res = await fetch('/api/account/emailFind', {
+            method: "post",
+            body: JSON.stringify({ email: emailtest }),
+            headers: { "Content-type": "application/json" }
+        });
+        let json = await res.json();
+        console.log(json,'?????SDASDASDASD')
+        if(json.result){
+            
+            setMoveChk(json.result);
+            Move(json.result);
+        }
+    }
 
     const handleChoiceMove = () => {
+        console.log(regtest,'regtest')
         if (regtest) {
-
+            console.log('!!!')
             onEmail(emailtest);
-
-            fetch("api/account/emailFind", {
-                method: "post",
-                body: JSON.stringify({ email: emailtest }),
-                headers: { "Content-type": "application/json" }
-            }
-            ).then(rc => rc.json())
-                .then(data => { setMoveChk(data.result); Move(data.result) })
+            emailfind()
         }
     }
 
