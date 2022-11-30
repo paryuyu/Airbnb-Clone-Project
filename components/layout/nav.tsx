@@ -24,7 +24,7 @@ import AcUnitIcon from '@mui/icons-material/AcUnit';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import { CategoryCtx } from "../../context/category-context";
-
+import HomeIcon from '@mui/icons-material/Home';
 export default function Nav() {
     const [value, setValue] = React.useState(0);
     const ctx = React.useContext(CategoryCtx);
@@ -45,6 +45,7 @@ export default function Nav() {
             textColor="inherit"
             TabIndicatorProps={{style:{background:'black', padding:3 } }}
         >
+            <Tab label="전체" icon={<HomeIcon fontSize="medium" />} iconPosition={"top"} onClick={()=>{ctx.setCategory('all')}}/>
             <Tab label="수영장" icon={<PoolIcon fontSize="medium" />} iconPosition={"top"} onClick={()=>{ctx.setCategory('수영장')}}/>
             <Tab label="온수욕조" icon={< HotTubIcon fontSize="medium" />} iconPosition={"top"}  onClick={()=>{ctx.setCategory('온수욕조')}}/>
             <Tab label="파티오" icon={<YardIcon fontSize="medium" />} iconPosition={"top"}  onClick={()=>{ctx.setCategory('파티오')}}/>

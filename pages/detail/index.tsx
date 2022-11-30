@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import Header from "../../components/layout/header";
 import Calender from "../../components/ui/detail/reservation/calender";
 import DetailAddress from "../../components/ui/detail/addressDetail";
@@ -13,6 +13,7 @@ import { AccomodationData } from "../../lib/model/accomodation";
 import ReservationCard from "../../components/ui/detail/reservation/reservation-card";
 import { ReservationProvider } from "../../context/reservation-context";
 import GuestList from "../../components/ui/detail/reservation/guests";
+import { BackDropContext } from "../_app";
 
 
 type floorPlan = {
@@ -26,10 +27,16 @@ type Location = {
     lng: string;
 }
 export default function DetailPage() {
+
+
+
+
+    
     let { data, status } = useSession()
     const router = useRouter();
     const { _id } = router.query;
-
+    const backCtx = useContext(BackDropContext);
+    console.log(backCtx)
     const [datas, setDatas] = useState<AccomodationData>();
     const [photos, setPhotos] = useState<string[]>([])
     const [facilities, setFacilities] = useState<string[]>([])
@@ -54,6 +61,7 @@ export default function DetailPage() {
         let json = await res.json();
         console.log(json)
         if (res.ok) {
+            backCtx.setBackDrop(false)
             setDatas(json.data[0]);
             setPhotos(json.data[0].Photos)
             setFacilities(json.data[0].amenities.facilities)
@@ -71,6 +79,7 @@ export default function DetailPage() {
 
 
     useEffect(() => {
+        backCtx.setBackDrop(true)
         if (_id) {
             ItemReq()
         }
@@ -86,7 +95,7 @@ export default function DetailPage() {
 
                 <Header />
 
-                <Box sx={{ display: 'flex', justifyContent: 'center', }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center',}}>
 
                     <Box>
                         {datas && <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 1, mb: 1 }}>{title}</Typography>}

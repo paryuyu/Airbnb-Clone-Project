@@ -3,25 +3,24 @@ import { Box } from "@mui/system";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/layout/header";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { BackDropContext } from "../_app";
 
 export default function Stay() {
     const { data, status } = useSession()
     const router = useRouter();
-    console.log(data)
-    console.log(status)
-    console.log(router.query, 'query')
+    const backCtx = useContext(BackDropContext);
+
     const [email, setEmail] = useState<string>('');
     const [roomPrice, setRoomPrice] = useState<number>(0);
     const [night, setNight] = useState<number>(0);
     const [cover, setCover] = useState<string>('')
     const [total, setTotal] = useState<number>(0)
     const [title, setTitle] = useState<string>('')
-    // const [orderId, setOrderID] = useState<string>('')
-    // const [payerId, setPayerId] = useState<string>('')
+
     const [payState, setPayState] = useState<boolean>(false)
     const [findState, setFindState] = useState<boolean>(false);
     let { productId } = router.query;
@@ -36,7 +35,6 @@ export default function Stay() {
     let numberOfGuests = router.query.numberOfGuests;
     const date = new Date(checkin);
 
-    console.log(new Date(checkin).toLocaleDateString('ko', { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' }), 'date')
     async function findRoomInfo() {
         let response = await fetch('/api/accomodation/roomIdFind', {
             method: 'post',
@@ -45,8 +43,9 @@ export default function Stay() {
         });
 
         let json = await response.json();
-        console.log(json, '결과')
+
         if (json.result) {
+            backCtx.setBackDrop(false)
             setFindState(true)
             setRoomPrice(json.data.price)
             let start = new Date(checkin) as any;
@@ -89,6 +88,7 @@ export default function Stay() {
         let json = await response.json();
 
         setPayState(false)
+        console.log(json, 'dkjfkdjfkdjfk')
         if (json.result) {
             setPayState(false)
             router.push('/trip')
@@ -97,7 +97,7 @@ export default function Stay() {
 
 
     useEffect(() => {
-
+        backCtx.setBackDrop(true)
         findRoomInfo()
 
         if (status === 'authenticated') {
@@ -118,14 +118,15 @@ export default function Stay() {
         <Head><title>예약요청</title></Head>
         <Header />
 
-        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2, justifyContent: 'start' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center',margin:2, justifyContent: 'start' }}>
 
             <IconButton onClick={() => { router.push('/detail?_id=' + productId) }}>
                 <ArrowBackIosIcon sx={{ color: 'black' }} />
             </IconButton>
             <Typography variant="h4">예약요청</Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 'auto', width: '80vw', gap: 5, mb: 2 }}>
+        <Divider sx={{ mb: 2 }} />
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 'auto', width: '80vw', gap: 5, }}>
 
 
             <Box sx={{ width: '50%' }}>
@@ -147,7 +148,7 @@ export default function Stay() {
 
 
             {findState &&
-                <Card sx={{ maxWidth: 400 }} >
+                <Card sx={{ width: '50%' }} >
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <CardMedia
                             component='img'
@@ -182,10 +183,7 @@ export default function Stay() {
                             intent: 'authorize'
                         }}>
                             <PayPalButtons style={{ layout: "horizontal" }}
-
                                 createOrder={(data, actions) => {
-
-
                                     return actions.order.create({
                                         purchase_units: [
                                             {

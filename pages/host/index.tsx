@@ -1,25 +1,28 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Header from "../../components/layout/header";
 import HostRoom from "../../components/ui/hostManagePage/host_room";
+import { BackDropContext } from "../_app";
 
 function HostPage() {
     let { status, data } = useSession()
     let [roomData, setRoomData] = useState<any[]>([])
     let [refresh, setRefresh] =useState<boolean>(false)
-
+    let backCtx = useContext(BackDropContext);
     async function RoomFindReq() {
         let res = await fetch('/api/accomodation/roomtypefind')
         let json = await res.json();
-        console.log(json)
+   
         if (json.result) {
+            backCtx.setBackDrop(false)
             setRoomData(json.data)
         }
     }
 
     useEffect(() => {
+        backCtx.setBackDrop(true)
         console.log(data)
         if (status === 'authenticated') {
             RoomFindReq()
@@ -39,11 +42,12 @@ function HostPage() {
         <Head><title>호스트페이지</title></Head>
         <Header/>
         {status === 'authenticated' ?
-            <Box >
+            <Box sx={{margin:2}} >
 
                 {roomData.length > 0 && <>
-                    <Typography>숙소관리</Typography>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                    <Typography variant="h4">숙소관리</Typography>
+                    <Divider ></Divider>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 , mt:2}}>
                         {roomData.map((one, index) => {
                             return <HostRoom datas={one} key={index} onRefresh={handleRefresh}/>
                         })
