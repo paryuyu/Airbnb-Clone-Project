@@ -9,6 +9,8 @@ import Link from "next/link";
 import { Dummy } from "../../lib/model/dummy";
 import Head from 'next/head'
 import GroupType from "../../components/ui/property/groupType";
+import HeaderTwo from "../../components/layout2/header2";
+import FooterTwo from '../../components/layout2/footer2';
 export default function PropertyGroup() {
     const [chk, setChk] = React.useState<string>('');
     const [rstData, setRstData] = React.useState<AccomodationData>();
@@ -16,6 +18,7 @@ export default function PropertyGroup() {
     let { data, status } = useSession();
 
     const router = useRouter();
+
     React.useEffect(() => {
         fetch("/api/accomodation/dummyfound")
             .then(rc => rc.json())
@@ -60,6 +63,8 @@ export default function PropertyGroup() {
             <Head>
                 <title>호스팅_</title>
             </Head>
+            <HeaderTwo/>
+
             <Box sx={{ width: '60vw', margin: 'auto', display: 'flex', flexDirection: 'column' }} >
 
                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3, mt: 5 }}>
@@ -73,18 +78,13 @@ export default function PropertyGroup() {
                                 <GroupType one={one} onChk={handleChk} chk={chk} />
 
                             </>
-
-
                         )
                     })}
 
                 </Box>
-                <Box sx={{ ...buttonBox }}>
-                    <Button variant="contained" sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]} onClick={handleClick}>뒤로</Button>
-                    <Button variant="contained" sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]} onClick={handleNext}>다음</Button>
-                </Box>
+                
             </Box>
-
+<FooterTwo onBack={handleClick} onNext={handleNext} datas={chk} step={1}/>
         </>);
 }
 

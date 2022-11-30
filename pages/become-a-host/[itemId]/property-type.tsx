@@ -7,6 +7,9 @@ import { Types } from "../../../lib/model/dummy";
 import Head from "next/head";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 import PropertyList from "../../../components/ui/property/propertyList"
+import FooterTwo from "../../../components/layout2/footer2";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
 export default function Property() {
 
     const router = useRouter();
@@ -89,12 +92,10 @@ export default function Property() {
     return (
         <>
             <Head><title>호스팅_</title></Head>
+            <HeaderTwo />
+            <NavTwo onExit={exitHandle}/>
 
-            <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2 ,mt:5 }}>
-                <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-            </Box>
-
-            <Typography sx={{ fontSize: 25, fontWeight: 'bold' ,textAlign:'center',mb:3 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
+            <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
 
             <Box sx={{ ...outlineBox }}>
 
@@ -104,13 +105,6 @@ export default function Property() {
 
             </Box>
 
-            <Box sx={{ ...buttonBox }}>
-                <Button variant="contained" sx={[{ ...button }, { '&:hover': { bgcolor: '#333' } }]} onClick={BackHandle}>뒤로</Button>
-                <Button
-                    disabled={arr === ""}
-                    variant="contained" sx={[{ ...button }, { '&:hover': { bgcolor: '#333' } }]} onClick={handleClick}>다음</Button>
-            </Box>
-
             <Modal
                 open={modalopen}
                 onClose={() => { setModalOpen(false) }}>
@@ -118,6 +112,8 @@ export default function Property() {
                     <HostingModal onModal={handleModal} />
                 </Box>
             </Modal>
+
+            <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr} step={3} />
 
         </>);
 }
@@ -142,7 +138,7 @@ const outlineBox = {
     width: '90%',
     gap: 2,
     padding: 2,
-margin:'auto'
+    margin: 'auto'
 }
 
 const buttonBox = {
