@@ -45,7 +45,12 @@ export default function DetailPage() {
 
     //receipt -> 호스팅 날짜
     async function ItemReq() {
-        let res = await fetch('/api/main/find?_id=' + router.query._id);
+        let res = await fetch('/api/main/find', {
+            method: 'post',
+            body: JSON.stringify({ _id: _id }),
+            headers: { 'Content-type': 'application/json' }
+        });
+
         let json = await res.json();
         console.log(json)
         if (res.ok) {

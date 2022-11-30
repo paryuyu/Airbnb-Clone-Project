@@ -99,13 +99,11 @@ const button = {
 const outlineBox = {
   display: 'flex',
   flexWrap: 'wrap',
-  width: '100%',
+  width: '60vw',
+  margin:'auto',
   gap: 2,
   padding: 2
 }
-
-
-
 
 
 const buttonSt = {

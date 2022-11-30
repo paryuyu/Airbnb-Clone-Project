@@ -37,6 +37,7 @@ export interface AccomodationData {
     price?: number;
     receipt?: string;
     publish?: boolean;
+    reservationData?:any;
 }
 
 const AccomodationSchema = new mongoose.Schema<AccomodationData>({
@@ -54,6 +55,12 @@ const AccomodationSchema = new mongoose.Schema<AccomodationData>({
     price: { type: Number },
     receipt: { type: Date },
     publish: { type: Boolean },
+})
+
+AccomodationSchema.virtual('reservationData',{
+    localField:'_id',
+    foreignField:'productId',
+    ref:'reservation'
 })
 
 

@@ -76,6 +76,7 @@ function EmptyPhotos({ onFile }:props) {
             >
 
                 <PhotoLibraryIcon sx={{ ...icon }} />
+                
                 <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>여기로 사진을 끌어다 놓으세요.</Typography>
 
                 <Typography sx={{ fontSize: 13, color: 'grey', mb: 5 }}>5장 이상의 사진을 선택하세요.</Typography>

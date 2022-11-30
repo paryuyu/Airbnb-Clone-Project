@@ -42,5 +42,4 @@ ReservationSchema.virtual('product',{
 })
 
 
-
 export default mongoose.models.reservation || mongoose.model<ReservationData>("reservation", ReservationSchema);
