@@ -10,6 +10,7 @@ function HostRoom({ datas, onRefresh }: any) {
     console.log(datas)
     //숙소 삭제
     //예약 확인
+    const [total, setTotal] = useState<boolean>(false)
     const [modal, setModal] = useState<boolean>(false);
     const [reservationModal, setReservationModal] = useState<boolean>(false)
     const [reservationData, setReservationData] = useState<any[]>([])
@@ -59,11 +60,21 @@ function HostRoom({ datas, onRefresh }: any) {
     let handlereservationModal = () => {
         setReservationModal(false)
     }
+
     const [delChk, setDelChk] = useState(false);
+    const [after, setAfter] = useState<Date[]>([])
+
     let handleDelChk = async () => {
 
-        let rrr = await ReservationFind()
-        if (rrr.length > 0) {
+        let rrr = await ReservationFind();
+
+        let dateArr = rrr.map((one: any) => { return (one.checkout) }
+        )
+        let filterArr = dateArr.filter((one: any) => new Date(one) >= new Date())
+        setAfter(filterArr)
+        console.log(filterArr, 'filterArr')
+
+        if (filterArr.length > 0) {
             setModal(true)
             setDelChk(false)
         } else {
@@ -71,8 +82,10 @@ function HostRoom({ datas, onRefresh }: any) {
             setDelChk(true)
         }
     }
+
+
     return (<>
-    
+
         {datas.publish &&
             <Box sx={{ border: '1px solid #ddd', mb: 1, width: 300, padding: 1, borderRadius: 3, }}>
 
@@ -85,15 +98,17 @@ function HostRoom({ datas, onRefresh }: any) {
                         <Typography sx={{ fontSize: 'small' }}><b>가격:</b> {formmater.format(datas.price)}</Typography>
 
                         <Typography sx={{ fontSize: 'small' }}><b>등록일:</b> {new Date(datas.receipt).toLocaleDateString('ko', { year: 'numeric', day: "numeric", month: 'long' })}</Typography>
+
+                        <Typography sx={{ color: 'black', textDecoration: 'underline', fontSize: 15, cursor: 'pointer', textAlign: 'center', mt: 2 }} onClick={handleReservation}>해당숙소 예약 확인하기</Typography>
+
                     </Box>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <Button variant="contained" sx={[{ bgcolor: 'black', mt: 2, borderRadius: 3 }, { '&:hover': { bgcolor: '#333' } }]} onClick={handleDelChk}>숙소 삭제하기</Button>
-                    <Button variant="contained" sx={[{ bgcolor: 'black', mt: 2, borderRadius: 3 }, { '&:hover': { bgcolor: '#333' } }]} onClick={handleReservation}>예약 확인하기</Button>
+
+                <Box>
+
+
+                    <Button variant="contained" fullWidth sx={[{ bgcolor: 'black', borderRadius: 5, mt: 2 }, { '&:hover': { bgcolor: '#333' } }]} onClick={handleDelChk}>숙소 삭제하기</Button>
                 </Box>
-
-
-
 
             </Box>}
 
@@ -118,8 +133,21 @@ function HostRoom({ datas, onRefresh }: any) {
                         <Typography sx={{ fontSize: 'medium', fontWeight: '100', mb: 1 }}>{data?.user!.email}님이 등록하신 <b style={{ textDecoration: 'underline' }}>{datas.title}</b>을 삭제하시겠습니까?</Typography>
                         <Button variant="contained" fullWidth sx={[{ bgcolor: 'black', borderRadius: 5 }, { '&:hover': { bgcolor: '#333' } }]} onClick={handleDelete}>완전히 삭제하기</Button>
                     </>
-                        : <><Typography sx={{ fontSize: 'large', fontWeight: 'bold', mb: 1 }}>예약자가 있습니다.</Typography>
-                            <Typography sx={{ fontSize: 'medium', fontWeight: '100', mb: 1 }}>예약자가 있을 경우 삭제가 제한됩니다.</Typography>
+                        : <>
+
+                            <Box sx={{ border: '2px solid #ddd', pr: 4, pl: 4, pt: 1, pb: 1, mb: 1, borderRadius: 3 }}>
+                                {reservationData.map((one) => {
+                                    if (new Date(one.checkout) >= new Date()) {
+                                        return (<><Typography sx={{ fontWeight: '300' }}>{new Date(one.checkin).toLocaleDateString('ko', { year: 'numeric', month: 'long', day: 'numeric' })} </Typography></>)
+                                    }
+
+
+                                })}
+                            </Box>
+
+                            <Typography sx={{ fontSize: 'large', fontWeight: 'bold', mb: 1 }}>{after.length}건의 예약이 존재합니다.</Typography>
+
+                            <Typography sx={{ fontSize: 'medium', fontWeight: '100', mb: 1 }}>체크아웃 날짜가 지나지 않은 예약자가 존재할 경우 삭제가 제한됩니다.</Typography>
                             <Button variant="contained" fullWidth sx={[{ bgcolor: 'black', borderRadius: 5 }, { '&:hover': { bgcolor: '#333' } }]} onClick={() => { setReservationModal(true); setModal(false) }}>예약 확인하기</Button>
                             <></>
                         </>}
@@ -141,7 +169,24 @@ function HostRoom({ datas, onRefresh }: any) {
                     <Typography variant="h5">예약내역</Typography>
                 </Box>
                 <Divider></Divider>
-                {reservationData?.length > 0 ? <>{reservationData.map((one, index) => { return (<ReservationList datas={one} key={index} />) })}
+                {reservationData?.length > 0 ? <>{reservationData.map((one, index) => {
+                    if (new Date(one.checkout) >= new Date()) {
+                        return (<ReservationList datas={one} key={index} />)
+                    }
+
+                })}
+
+                    <Button sx={{ color: 'black', textDecoration: 'underline' }} onClick={() => { setTotal(current => !current) }}> 전체 예약내역 확인하기</Button>
+                    {total &&
+                        <>
+                            {reservationData.map((one, index) => {
+                                return (<ReservationList datas={one} key={index} />)
+                            })}
+                        </>
+                    }
+
+
+
                 </>
 
                     : <Typography>예약내역이 없습니다.</Typography>}
@@ -149,7 +194,7 @@ function HostRoom({ datas, onRefresh }: any) {
                     display: 'flex', flexDirection: 'column',
                     alignItems: 'center', mt: 2, mb: 1
                 }}>
-                    <Box>{ }</Box>
+
                 </Box>
             </Box>
         </Modal>

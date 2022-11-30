@@ -2,15 +2,18 @@ import { Box, Button, Card, CardContent, CardMedia, Divider, Typography } from "
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/layout/header";
 import TripCard from "../../components/ui/trip/trip-card";
+import { BackDropContext } from "../_app";
 
 
 
 
 function Trip() {
 
+
+const backCtx = useContext(BackDropContext);
     let { status } = useSession();
     const [totalData, setTotalData] = useState<any[]>([])
     const [cover, setCover] = useState<string>()
@@ -23,10 +26,12 @@ function Trip() {
         if (json.result) {
             setTotalData(json.data)
             setCover(json.data)
+            backCtx.setBackDrop(false)
         }
     }
 
     useEffect(() => {
+        backCtx.setBackDrop(true)
         if(status === 'authenticated'){
             findReservationData();
         }
@@ -38,8 +43,8 @@ function Trip() {
         <Head><title>여행상세페이지</title></Head>
         <Header />
         {status === 'authenticated' ?
-            <>
-                <Typography sx={{}}>예약숙소</Typography>
+            <Box sx={{margin:2}}>
+                <Typography variant="h4">예약숙소</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     {totalData.length > 0 && totalData.map((one,index) => {
                         if (new Date(one.checkin) > new Date()) {
@@ -48,7 +53,8 @@ function Trip() {
                     })}
                 </Box>
 
-                <Typography sx={{}}>지난 숙소</Typography>
+    
+                <Typography variant="h4" >지난 숙소</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     {totalData.length > 0 && totalData.map((one,index) => {
                         if (new Date(one.checkin) <= new Date()) {
@@ -57,11 +63,8 @@ function Trip() {
                     })}
                 </Box>
 
-                <Link href={'/'}>
-                    <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { bgcolor: '#333' } }]}>숙소 검색하기</Button>
-                </Link>
 
-            </>
+            </Box>
             : <Typography>로그인 후 이용해주세요</Typography>}
     </>
 

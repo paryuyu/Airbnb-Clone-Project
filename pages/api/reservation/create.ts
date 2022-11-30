@@ -23,6 +23,7 @@ const handler: NextApiHandler<RstData> = async (req, res) => {
         if(findproductId.length > 0){
             //여기서 결제 취소코드가 들어가야함.
             res.status(422).json({ result: false });
+            
         } else {
             let create = await reservation.create(req.body);
             res.status(200).json({ result: true, data: create });

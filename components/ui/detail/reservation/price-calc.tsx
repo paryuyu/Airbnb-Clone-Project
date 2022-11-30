@@ -21,7 +21,7 @@ function PriceCalc() {
     return (<>
         <Divider />
         <Box sx={{ ...boxStyle }}>
-            <Typography sx={{ fontSize: 18, fontWeight: '100', mt: 1, mb: 1 }}>₩{ctx.price} X {ctx.night}박</Typography>
+            <Typography sx={{ fontSize: 18, fontWeight: '100', mt: 1, mb: 1 }}>{formatter.format(ctx.price)} X {ctx.night}박</Typography>
             <Typography sx={{ fontSize: 18, fontWeight: 'bold', mt: 1, mb: 1 }}>{formatter.format(ctx.price*ctx.night)}</Typography>
         </Box>
         <Box sx={{ ...boxStyle }}>
