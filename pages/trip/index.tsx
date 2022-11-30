@@ -12,12 +12,13 @@ import TripCard from "../../components/ui/trip/trip-card";
 function Trip() {
 
     let { status } = useSession();
-    const [totalData, setTotalData] = useState<string[]>([])
+    const [totalData, setTotalData] = useState<any[]>([])
     const [cover, setCover] = useState<string>()
+
     async function findReservationData() {
         let res = await fetch('/api/reservation/find');
         let json = await res.json();
-        console.log(json, '왜 안나오니')
+     
 
         if (json.result) {
             setTotalData(json.data)
@@ -25,9 +26,11 @@ function Trip() {
         }
     }
 
-    console.log(totalData, '???????')
     useEffect(() => {
-        findReservationData();
+        if(status === 'authenticated'){
+            findReservationData();
+        }
+
     }, [status])
 
 
@@ -36,22 +39,27 @@ function Trip() {
         <Header />
         {status === 'authenticated' ?
             <>
-
+                <Typography sx={{}}>예약숙소</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                    {totalData.length > 0 && totalData.map(one => {
-                        return (<><TripCard datas={one} /></>)
+                    {totalData.length > 0 && totalData.map((one,index) => {
+                        if (new Date(one.checkin) > new Date()) {
+                            return (<><TripCard datas={one} key={index} /></>)
+                        }
+                    })}
+                </Box>
+
+                <Typography sx={{}}>지난 숙소</Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                    {totalData.length > 0 && totalData.map((one,index) => {
+                        if (new Date(one.checkin) <= new Date()) {
+                            return (<><TripCard datas={one} key={index}/></>)
+                        }
                     })}
                 </Box>
 
                 <Link href={'/'}>
                     <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { bgcolor: '#333' } }]}>숙소 검색하기</Button>
                 </Link>
-
-
-
-
-
-
 
             </>
             : <Typography>로그인 후 이용해주세요</Typography>}

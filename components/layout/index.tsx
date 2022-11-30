@@ -2,16 +2,17 @@ import { Divider, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
+import { CategoryProvider } from "../../context/category-context";
 import Footer from "./footer";
 import Header from "./header";
 import MainPage from "./Main";
 import Nav from "./nav";
 
 export default function Layout({ children }: { children: ReactNode }) {
-
-
     const {data, status} = useSession();
+    
     return (
+        <CategoryProvider>
         <Container disableGutters={true} maxWidth={false}>
 
             <header>
@@ -31,6 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </footer>
 
         </Container>
+        </CategoryProvider>
     );
 }
 

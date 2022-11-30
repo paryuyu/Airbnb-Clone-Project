@@ -28,12 +28,13 @@ function PreviewPhoto(props: any) {
 
 
     return (
-        <Box sx={{ border: '1px dotted', position: 'relative', height: 140, width: 180 }}>
+        <Box sx={{ border: '1px dotted', position: 'relative', height: 150, width: 200 }}>
             <IconButton sx={{ position: 'absolute', top: 2, left: 1 }} onClick={handleDel} >
                 <HighlightOffIcon sx={{ fontSize: 20, color: 'grey' }} />
             </IconButton>
-            <Box ref={ref} >
-                <img src={imgurl} style={{ minWidth:175,maxWidth:178 , maxHeight:140 }} />
+
+            <Box ref={ref} sx={{}} >
+                <img src={imgurl} style={{ minWidth:'100%',maxWidth:'100%' , maxHeight:'100%' }} />
             </Box>
         </Box>
     );

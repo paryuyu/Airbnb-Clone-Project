@@ -20,8 +20,8 @@ export default function Stay() {
     const [cover, setCover] = useState<string>('')
     const [total, setTotal] = useState<number>(0)
     const [title, setTitle] = useState<string>('')
-    const [orderId, setOrderID] = useState<string>('')
-    const [payerId, setPayerId] = useState<string>('')
+    // const [orderId, setOrderID] = useState<string>('')
+    // const [payerId, setPayerId] = useState<string>('')
     const [payState, setPayState] = useState<boolean>(false)
     const [findState, setFindState] = useState<boolean>(false);
     let { productId } = router.query;
@@ -31,10 +31,12 @@ export default function Stay() {
     let guestCurrency = router.query.guestCurrency as string;
     let numberOfInfants = router.query.numberOfInfants;
     let numberOfPets = router.query.numberOfPets;
-    let numberOfAdults = router.query.numberOfAdults;
-    let numberOfChildren = router.query.numberOfChildren;
+    let numberOfAdults = router.query.numberOfAdults as any;
+    let numberOfChildren = router.query.numberOfChildren as any;
     let numberOfGuests = router.query.numberOfGuests;
+    const date = new Date(checkin);
 
+    console.log(new Date(checkin).toLocaleDateString('ko', { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' }), 'date')
     async function findRoomInfo() {
         let response = await fetch('/api/accomodation/roomIdFind', {
             method: 'post',
@@ -58,8 +60,7 @@ export default function Stay() {
         }
     }
 
-
-    async function PayDataReq() {
+    async function PayDataReq(orderId: any, payerId: any) {
 
 
         let reservationData = {
@@ -90,7 +91,7 @@ export default function Stay() {
         setPayState(false)
         if (json.result) {
             setPayState(false)
-            router.push('/detail/trip')
+            router.push('/trip')
         }
     }
 
@@ -117,40 +118,48 @@ export default function Stay() {
         <Head><title>예약요청</title></Head>
         <Header />
 
-        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2 }}>
-            <IconButton>
+        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2, justifyContent: 'start' }}>
+
+            <IconButton onClick={() => { router.push('/detail?_id=' + productId) }}>
                 <ArrowBackIosIcon sx={{ color: 'black' }} />
             </IconButton>
             <Typography variant="h4">예약요청</Typography>
         </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 'auto', width: '80vw', gap: 5, mb: 2 }}>
 
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
 
-            <Box>
-                <Typography variant="h4" sx={{ fontWeight: '500' }} >예약정보</Typography>
+            <Box sx={{ width: '50%' }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }} >예약정보</Typography>
+                <Divider sx={{ mb: 2 }}></Divider>
+
                 <Box>
-                    <Typography sx={{ fontWeight: 'bold' }}>날짜</Typography>
-                    <Typography>{checkin}~{checkout}</Typography>
+                    <Typography sx={{ fontWeight: 'bold' }}>체크인</Typography>
+                    <Typography sx={{ mb: 1 }}>{new Date(checkin).toLocaleDateString('ko', { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' })}</Typography>
+
+                    <Typography sx={{ fontWeight: 'bold' }}>체크아웃</Typography>
+                    <Typography sx={{ mb: 1 }}>{new Date(checkout).toLocaleDateString('ko', { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' })}</Typography>
+
                 </Box>
+
                 <Typography sx={{ fontWeight: 'bold' }}>게스트</Typography>
-                <Typography>게스트 {numberOfGuests} 명</Typography>
+                <Typography>게스트 {parseInt(numberOfAdults) + parseInt(numberOfChildren)} 명</Typography>
             </Box>
 
 
             {findState &&
-                <Card sx={{ maxWidth: 250 }}>
+                <Card sx={{ maxWidth: 400 }} >
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <CardMedia
                             component='img'
-                            sx={{ height: 120, width: 120 }}
+                            sx={{ height: 150, width: 150 }}
                             image={cover}
                             alt="cover"
                         ></CardMedia>
                         <Typography variant="h5">{title}</Typography>
                     </Box>
                     <CardContent>
-
                         <Typography sx={{ fontWeight: 'bold' }} >요금 세부정보</Typography>
+                        <Divider></Divider>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography>{formatter.format(roomPrice)} X {night}박</Typography>
                             <Typography>{formatter.format(roomPrice * night)}</Typography>
@@ -161,58 +170,63 @@ export default function Stay() {
                         </Box>
                         <Divider></Divider>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Typography>총 합계({guestCurrency?.toUpperCase()})</Typography>
-                            <Typography>{formatter.format(total)}</Typography>
+                            <Typography sx={{ fontWeight: 'bold' }}>총 합계({guestCurrency?.toUpperCase()})</Typography>
+                            <Typography sx={{ fontWeight: 'bold' }}>{formatter.format((roomPrice * night) + (roomPrice * night * 0.14))}</Typography>
                         </Box>
                     </CardContent>
+
+
+                    <Box sx={{ margin: 2 }}>
+                        <PayPalScriptProvider options={{
+                            "client-id": "ATbKgZ9iRjFUD_DBVzm6Jph9O7JgRTy-XFBV52a8RFCKTkbADrTJM7ZqxWoN-qnab0PaeMNGcDV_VHv-",
+                            intent: 'authorize'
+                        }}>
+                            <PayPalButtons style={{ layout: "horizontal" }}
+
+                                createOrder={(data, actions) => {
+
+
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                description: '숙소예약금',
+                                                amount: {
+                                                    value: "5.99",
+                                                },
+                                            },
+                                        ],
+                                    });
+                                }}
+                                onApprove={async (data, actions) => {
+
+                                    console.log('----------------결제완료 후')
+
+
+                                    if (data) {
+                                        actions.order?.authorize()
+
+                                        setPayState(true);
+                                        console.log(data.orderID)
+                                        console.log(data.payerID)
+                                        if (data.payerID && data.orderID) {
+                                            PayDataReq(data.orderID, data.payerID)
+                                        }
+                                    }
+
+                                    console.log(data, 'data')
+                                    console.log(actions, 'actions')
+                                    console.log('----------------결제완료 후')
+                                }}
+
+
+
+                            />
+                        </PayPalScriptProvider>
+                    </Box>
                 </Card>
-
             }
+
         </Box>
-
-
-        <PayPalScriptProvider options={{
-            "client-id": "ATbKgZ9iRjFUD_DBVzm6Jph9O7JgRTy-XFBV52a8RFCKTkbADrTJM7ZqxWoN-qnab0PaeMNGcDV_VHv-",
-            intent: 'authorize'
-        }}>
-            <PayPalButtons style={{ layout: "horizontal" }}
-            
-                createOrder={(data, actions) => {
-
-
-                    return actions.order.create({
-                        purchase_units: [
-                            {
-                                description: '숙소예약금',
-                                amount: {
-                                    value: "5.99",
-                                },
-                            },
-                        ],
-                    });
-                }}
-                onApprove={async (data, actions) => {
-                    
-                    console.log('----------------결제완료 후')
-
-
-                    if (data) {
-                        actions.order?.authorize()
-                        setOrderID(data.orderID!);
-                        setPayerId(data.payerID!);
-                        setPayState(true);
-                        PayDataReq()
-                    }
-
-                    console.log(data, 'data')
-                    console.log(actions, 'actions')
-                    console.log('----------------결제완료 후')
-                }}
-
-
-
-            />
-        </PayPalScriptProvider>
 
     </>);
 }

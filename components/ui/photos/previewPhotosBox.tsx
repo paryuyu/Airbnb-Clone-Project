@@ -4,14 +4,14 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { useContext, useEffect, useRef, useState } from "react";
 import PreviewPhoto from "./previewPhots";
 import AddIcon from '@mui/icons-material/Add';
-type props={
-    target:File[];
-    onFile:(file:any)=>void;
-    onDel:(t:any)=>void;
-    onLoading:()=>void
+type props = {
+    target: File[];
+    onFile: (file: any) => void;
+    onDel: (t: any) => void;
+    onLoading: () => void
 }
 
-export default function PreviewPhotoBox({ target, onFile ,onDel ,onLoading }:props) {
+export default function PreviewPhotoBox({ target, onFile, onDel, onLoading }: props) {
 
     const [emptyBox, setEmptyBox] = useState(false);
 
@@ -21,25 +21,30 @@ export default function PreviewPhotoBox({ target, onFile ,onDel ,onLoading }:pro
         evt.preventDefault();
         evt.stopPropagation();
         const arr = Array.from(evt.dataTransfer.files);
-        onFile((current:any) => [...current, ...arr]);
+        onFile((current: any) => [...current, ...arr]);
 
     }
 
     const fileSelectHandle: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
         console.log(evt.target.files)
         const arr2 = Array.from(evt.target.files!)
-        onFile((current:any) => [...current, ...arr2]);
+        onFile((current: any) => [...current, ...arr2]);
     }
     return (
         <Box sx={{
-            display: 'flex', gap: 2, felxWrap: 'wrap'
+            display: 'flex',  flexDirection: 'row', gap: 2
         }} >
-            {target.map((one) => {
-                return <PreviewPhoto one={one} key={one.lastModified} onDel={onDel} />
-            })}
 
 
-            <Box sx={{ border: '1px dotted', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 140, width: 180, cursor: 'pointer' }} onClick={() => { fileRef.current?.click() }}
+            <Box  sx={{
+            display: 'flex', flexWrap:'wrap', gap: 2,justifyContent: 'center'
+        }} >
+                {target.map((one, index) => {
+                    return <PreviewPhoto one={one} key={index} onDel={onDel} />
+                })}
+            
+
+            <Box sx={{ border: '1px dotted', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 150, width: 200, cursor: 'pointer' }} onClick={() => { fileRef.current?.click() }}
                 onDragOver={(evt) => {
                     evt.preventDefault();
                     evt.stopPropagation();
@@ -47,10 +52,10 @@ export default function PreviewPhotoBox({ target, onFile ,onDel ,onLoading }:pro
                 }}
                 onDrop={dropHandle}
             >
-
                 <AddIcon sx={{ fontSize: 40, color: 'grey' }} />
                 <input type='file' accept="image/*" ref={fileRef} style={{ display: 'none' }} onChange={fileSelectHandle}></input>
 
+            </Box>
             </Box>
         </Box>
 

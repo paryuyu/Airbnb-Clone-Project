@@ -18,8 +18,8 @@ function Photos() {
     const { itemId } = router.query;
     const [loading, setLoading] = useState(false);
     const [bt, setBt] = useState<boolean>(true)
+
     const NextHandle = async () => {
-        console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
         setLoading(true)
         const formData = new FormData();
         formData.append('itemId', itemId as string);
@@ -43,9 +43,18 @@ function Photos() {
 
     const handleFile = (file: File[]) => {
         setFiles(file)
+        
     }
 
+    useEffect(()=>{
+        console.log(files,"flies")
+        if(files.length<5){
+            setLoading(true)
+        } else if(files.length>4){
+            setLoading(false)
+        }
 
+    },[files])
 
     const BackHandle = () => {
         router.push('/become-a-host/' + itemId + '/amenities')
@@ -63,6 +72,7 @@ function Photos() {
     const exitHandle = () => {
         setOpen(true)
     }
+
     return (
         <>
 

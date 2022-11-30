@@ -1,14 +1,15 @@
 import { ConstructionOutlined } from "@mui/icons-material";
-import { Box, Chip, Divider, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import {useState, useEffect} from 'react'
 import { AccomodationData } from "../../../lib/model/accomodation";
+import HostingChip from "./amenity-chip";
 
 type Location = {
     lat: string;
     lng: string;
 }
-export default function LastHosting({item}:any) {
+export default function LastHosting({item, onClose}:any) {
     console.log(item,'dkfjdkfjk')
     let [photos, setPhotos] = useState<string>('');
     let [title,setTitle]  = useState<string>('');
@@ -72,9 +73,9 @@ export default function LastHosting({item}:any) {
 
         <Box sx={{display:'flex', flexDirection:'column'}}>
 
-        <Box>
+        <Box sx={{ display:'flex', justifyContent:'center' , border:'1px solid #333' , padding:2, borderRadius:2 }}>
           {photos && <Image alt='cover' src={photos}
-            width={400} height={400}
+            width={300} height={300}
             />}
         </Box>
 
@@ -87,14 +88,15 @@ export default function LastHosting({item}:any) {
         
         <Divider sx={{mb:1.5, mt:1.5}}/>
 
-        {description.map(one => <Chip label={one} sx={{mr:1}}/>)}
+        {description.map((one,index) => <Chip label={one} sx={{mr:1}} key={index}/>)}
+
         <Divider sx={{mb:1.5, mt:1.5}}/>
 
         <Typography variant="h6"  sx={{mt:2,mb:2, color:'#333', fontWeight:'bold'}}>편의시설</Typography>
 
-        {fac.map(one=><Box><Typography sx={{fontSize:14,mb:1,ml:1}}>{one}</Typography><Divider sx={{mb:1}}/></Box>)}
-        {sp.map(one=><Box><Typography sx={{fontSize:14,mb:1,ml:1}}>{one}</Typography><Divider sx={{mb:1}}/></Box>)}
-        {sft.map(one=><Box><Typography sx={{fontSize:14,mb:1,ml:1}}>{one}</Typography><Divider sx={{mb:1}}/></Box>)}
+        {fac.map((one,index)=><HostingChip key={index} one={one}/>)}
+        {sp.map((one,index)=><HostingChip key={index} one={one}/>)}
+        {sft.map((one,index)=><HostingChip key={index} one={one}/>)}
         
         <Typography variant="h6"  sx={{mt:2,mb:1, color:'#333', fontWeight:'bold'}}>위치</Typography>
         <Typography  sx={{fontSize:14, color:'#333',ml:1, fontWeight:'bold'}}>{ad}</Typography>
@@ -103,8 +105,12 @@ export default function LastHosting({item}:any) {
         
         </Box>
         </Box>
+
+        <Button variant="contained" fullWidth sx={[{mt:1, bgcolor:'black', borderRadius:5 },{'&:hover':{bgcolor:'#333'}}]} onClick={()=>{onClose()}}>닫기</Button>
+
     </Box> );
 };
+
 
 const outline = {
 position: "absolute" as "absolute",

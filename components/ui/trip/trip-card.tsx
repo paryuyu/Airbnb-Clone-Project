@@ -14,13 +14,12 @@ export default function TripCard({ datas }: any) {
             let d2 = new Date(datas.checkin) as any;
             let date = (d1-d2)/(1000*60*60*24);
             setNight(date)
-
         }
     },[datas])
 
 
     return (<>
-       {datas && <Card sx={{mt:1, maxWidth:300 , padding:2 ,marginBottom:1}}>
+       {datas.product.length>0 && <Card sx={{mt:1, maxWidth:300 , padding:2 ,marginBottom:1}}>
         <Box sx={{display:'flex'}}>
             <CardMedia
                   component='img'

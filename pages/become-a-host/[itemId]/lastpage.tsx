@@ -115,7 +115,7 @@ export default function LastPage() {
             open={modalOpen}
             onClose={closeHandle}
         >
-            <LastHosting item={item} />
+            <LastHosting item={item}  onClose={closeHandle}/>
         </Modal>
         </Box>
         <Box sx={{ ...buttonBox }}>
