@@ -33,7 +33,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
        <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdrop}
-        // onClick={handleClose}
+        onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

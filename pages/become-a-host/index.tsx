@@ -9,6 +9,8 @@ import Link from "next/link";
 import { AccomodationData } from "../../lib/model/accomodation";
 import RoomList from "../../components/ui/hosting-first/list";
 import Head from "next/head";
+import HeaderTwo from "../../components/layout2/header2";
+import FooterTwo from "../../components/layout2/footer2";
 export default function BecomeAHostPropertyTypeGroup() {
     const [userId, setUserId] = React.useState<string>('')
     const { data, status } = useSession();
@@ -45,6 +47,7 @@ export default function BecomeAHostPropertyTypeGroup() {
             <Head>
                 <title>호스팅 시작하기</title>
             </Head>
+            <HeaderTwo />
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Box sx={{ ...outlineBox }}>
 
@@ -71,11 +74,8 @@ export default function BecomeAHostPropertyTypeGroup() {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mr: 3 }}>
-                    <Link href={"/"}>
-                        <Button variant="contained" sx={{ ...buttonSt }}>나가기</Button>
-                    </Link>
-                </Box>
+
+
             </Box>
 
         </>

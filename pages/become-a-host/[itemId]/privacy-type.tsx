@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Head from "next/head";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 import PrivacyList from "../../../components/ui/property/privacyList";
+import FooterTwo from "../../../components/layout2/footer2";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
 export default function Privacy() {
 
     const router = useRouter();
@@ -39,8 +42,8 @@ export default function Privacy() {
 
     const handleItem = (that: string) => {
         setPri(that)
-
     }
+    
     const handleNext = () => {
         if (itemId && pri !== "") {
             PrivacyTypeUpdate()
@@ -51,22 +54,15 @@ export default function Privacy() {
     return (
         <>
             <Head><title>호스팅_</title></Head>
+            <HeaderTwo />
+            <NavTwo onExit={exitHandle} />
 
-            <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-                <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-            </Box>
+
             <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>게스트가 사용할 숙소  유형</Typography>
 
             <Box sx={{ ...outlineBox }}>
                 {arr.map((one, index) => <PrivacyList item={one} key={index} onItem={handleItem} pri={pri} />)}
 
-            </Box>
-
-
-
-            <Box sx={{ ...buttonBox }}>
-                <Button variant="contained" sx={[{ ...button }, { '&:hover': { bgcolor: '#333' } }]} onClick={BackHandle}>뒤로</Button>
-                <Button variant="contained" disabled={pri===""} onClick={handleNext} sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]}>다음</Button>
             </Box>
 
             <Modal
@@ -76,6 +72,8 @@ export default function Privacy() {
                     <HostingModal onModal={handleModal} />
                 </Box>
             </Modal>
+
+            <FooterTwo onBack={BackHandle} onNext={handleNext} datas={pri} step={4} />
 
         </>);
 }
@@ -100,7 +98,7 @@ const outlineBox = {
     width: '90%',
     gap: 2,
     padding: 2,
-    margin:'auto'
+    margin: 'auto'
 }
 
 const buttonBox = {
