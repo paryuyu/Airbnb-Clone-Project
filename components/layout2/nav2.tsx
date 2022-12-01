@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 function NavTwo({onExit}:any) {
 
 
-  return ( <> <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
+  return ( <> <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2 ,mt:1}}>
   <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={()=>{onExit()}}>저장 후 나가기</Button>
 </Box>
 </> );

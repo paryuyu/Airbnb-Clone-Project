@@ -3,78 +3,17 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useContext } from 'react';
 import { AmenityData } from "../../../lib/model/accomodation";
+import FooterTwo from "../../layout2/footer2";
 import AmenityOne from '../amenities/amenity-one'
 import AmenityThree from "./amenity-three";
 import AmenityTwo from "./amenity-two";
-export default function AmenitiesFirst() {
+export default function AmenitiesFirst({onFac, onSp, onSafty , sp, safty, fac}:any) {
     //업데이트
 
     let router = useRouter();
     let { itemId } = router.query;
-    let [facilities, setFacitlities] = useState<string[]>([]) 
-    let [sp,setsp]=useState<string[]>([]);
-    let [safty,setSafty]=useState<string[]>([]);
-    //type Handlefacility = {(val:string[])=>void}
+    
 
-    let handlefacility= (val:string)=>{
-        if(facilities.includes(val)){
-            setFacitlities(facilities.filter(one => val !== one))
-        }else{
-            setFacitlities([...facilities,val])
-        }
-    } 
-
-    let handleSpecial = (val:string)=>{
-        if(sp.includes(val)){
-            setsp(sp.filter(one => val !== one))
-        }else{
-            setsp([...sp,val])
-        }
-    }
-
-
-    let handleSafty = (val:string)=>{
-        if(safty.includes(val)){
-            setSafty(safty.filter(one=> one !== val))
-        }else{
-            setSafty([...safty,val])
-        }
-    }
-
-
-    async function AmenityUpdate() {
-
-
-        let amenity = {
-            facilities: facilities,
-            special: sp,
-            safty: safty
-        } as AmenityData
-        
-        let res = await fetch('/api/accomodation/newUpdate?_id='+itemId, {
-            method: 'post',
-            body: JSON.stringify({amenities:amenity}),
-            headers: { 'Content-type': 'application/json' }
-        })
-        
-        let json = await res.json();
-        console.log(json, "update")
-        if (json.result) {
-            router.push('/become-a-host/' + itemId + '/photos')
-        }
-
-    }
-
-
-
-    const NextHanldle = () => {
-        AmenityUpdate()
-    }
-
-
-    const BackHandle = () => {
-        router.push('/become-a-host/' + itemId + '/floor-plan')
-    }
 
 
     let spArr = ['수영장', '온수욕조', '파티오', '바비큐 그릴', '야외 식사공간', '화로', '당구대', '실내 벽난로', '피아노', '운동기구', '해변과 인접', '스키로 탄 채로 출입 가능', '야외 샤워 시설'];
@@ -91,7 +30,7 @@ export default function AmenitiesFirst() {
 
         <Box sx={{ ...outlineBox }}>
             {facArr.map((item) => {
-                return (<> <AmenityOne fac={facilities} item={item} onFac={handlefacility}/></>)
+                return (<> <AmenityOne fac={fac} item={item} onFac={onFac}/></>)
             })}
         </Box>
 
@@ -100,7 +39,7 @@ export default function AmenitiesFirst() {
 
             {spArr.map((one) => {
                 return (<>
-                    <AmenityTwo item={one} sp={sp} onSp={handleSpecial}/>
+                    <AmenityTwo item={one} sp={sp} onSp={onSp}/>
                 </>)
             })
             }
@@ -111,16 +50,13 @@ export default function AmenitiesFirst() {
             {safArr.map((one) => {
 
                 return (<>
-                    <AmenityThree safty={safty} item={one} onSafty={handleSafty}/>
+                    <AmenityThree safty={safty} item={one} onSafty={onSafty}/>
                 </>)
             })}
 
         </Box>
-        <Box sx={{ ...buttonBox }}>
-            <Button variant="contained" sx={{ ...button }} onClick={BackHandle} >뒤로</Button>
-            <Button variant="contained" sx={{ ...button }} onClick={NextHanldle} >다음</Button>
-        </Box>
 
+       
     </Box>);
 }
 

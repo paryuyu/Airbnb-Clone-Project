@@ -2,9 +2,13 @@ import { Box, Button, Checkbox, Grid, IconButton, Modal, Typography } from "@mui
 import { useRouter } from "next/router";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { CheckBox } from "@mui/icons-material";
-import { useState } from 'react';
+import { useState ,useContext } from 'react';
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
+import FooterTwo from "../../../components/layout2/footer2";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
+import Head from "next/head";
+import { BackDropContext } from "../../_app";
 
 
 
@@ -20,18 +24,6 @@ const textStyle = {
 const iconStyle = {
     color: 'grey',
     fontSize: 25
-}
-
-const buttonBox = {
-    display: 'flex', justifyContent: 'space-between',
-    ml: 5, mr: 5
-}
-
-const button = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mt: 2,
-    '&:hover': { 'backgroundColor': '#333' }
 }
 
 const numStyle = {
@@ -50,30 +42,33 @@ const numboxStyle = {
 
 export default function Privacy() {
 
+    const backCtx = useContext(BackDropContext);
     const [guest, setGuest] = useState(4);
     const [bed, setBed] = useState(1);
     const [bedroom, setBedroom] = useState(1);
     const [bathroom, setBathroom] = useState(1);
-
+    const [open, setOpen] = useState<boolean>(false)
     const router = useRouter();
     const { itemId } = router.query;
 
     //fetch update시키기
 
     async function floorPlanUpdate() {
-        console.log("...")
+        backCtx.setBackDrop(true)
+
         let floor = {
             guest: guest, bed: bed, bedroom: bedroom, bathroom: bathroom
         }
+        
         let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
-            body: JSON.stringify({ floorPlan: floor }),
+            body: JSON.stringify({ floorPlan: floor , step:6  }),
             headers: { 'Content-type': 'application/json' }
         })
 
         let json = await res.json();
-        console.log(json)
         if (json.result) {
+            backCtx.setBackDrop(false)
             router.push("/become-a-host/" + itemId + "/amenities")
         }
 
@@ -133,7 +128,6 @@ export default function Privacy() {
         }
     }
 
-    const [open, setOpen] = useState<boolean>(false)
     const exitHandle = () => {
 
         setOpen(true)
@@ -143,12 +137,12 @@ export default function Privacy() {
 
     return (
         <>
-
-            <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-                <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-            </Box>
+        <Head><title>인원수</title></Head>
+            <HeaderTwo />
+            <NavTwo onExit={exitHandle} />
+            
             <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>숙소에서 맞이할 최대 인원수를 알려주세요.</Typography>
-            <Box sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Box sx={{ ...boxStyle }}>
 
                     <Typography sx={{ ...textStyle }}>게스트</Typography>
@@ -207,11 +201,9 @@ export default function Privacy() {
 
 
             </Box>
-            <Box sx={{ ...buttonBox }}>
-                <Button variant="contained" sx={{ ...button }} onClick={BackHandle}>뒤로</Button>
-                <Button variant="contained" sx={{ ...button }} onClick={NextHandle}>다음</Button>
-            </Box>
 
+
+            <FooterTwo onBack={BackHandle} onNext={NextHandle} datas={1} step={5} />
             <Modal
                 open={open}
                 onClose={() => {

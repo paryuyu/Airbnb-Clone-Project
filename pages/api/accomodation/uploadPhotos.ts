@@ -84,7 +84,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             //files{photos[filepath,filepath]}
             if (uriArr.length !== 0) {
-                const update = await accomodation.findByIdAndUpdate({ _id: fields.itemId }, { Photos: uriArr }, { returnDocument: 'after' })
+                const update = await accomodation.findByIdAndUpdate({ _id: fields.itemId }, { Photos: uriArr , step:7 }, { returnDocument: 'after' })
                 if (update) {
                 } else {
                     return res.status(500).json({ result: false });

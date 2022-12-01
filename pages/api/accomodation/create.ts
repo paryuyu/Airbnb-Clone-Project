@@ -8,10 +8,10 @@ type RstData = { result: Boolean; data?: UserData[], err?: Error }
 const handler: NextApiHandler<RstData> = async (req, res) => {
     await dbConnect()
     const token = await getToken({ req }) as JWT;
-    let { groupType } = req.body;
+    let { groupType, step , publish } = req.body;
 
     try {
-        let dataCreate = await accomodation.create({ groupType: groupType, email: token.email });
+        let dataCreate = await accomodation.create({ groupType: groupType, step: step, email: token.email , publish:publish});
 
         if (dataCreate !== null) {
             return res.status(200).json({ result: true, data: dataCreate });

@@ -1,26 +1,34 @@
 import { Typography, Box, Button, Modal } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Textarea } from '@mui/joy';
 import { useRouter } from "next/router";
 import ToggleButton from '@mui/material/ToggleButton';
 import DescriptionList from "../../../components/ui/description/description-list";
 import { Grid } from "@mui/material";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
+import FooterTwo from "../../../components/layout2/footer2";
+import Head from "next/head";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
+import { BackDropContext } from "../../_app";
 export default function () {
   const [description, setDescription] = useState<string[]>([]);
 
+  const BackCtx = useContext(BackDropContext);
   const router = useRouter();
   const itemId = router.query.itemId as string;
 
   async function descriptionUpdate() {
+    BackCtx.setBackDrop(true)
     let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
       method: 'post',
-      body: JSON.stringify({ description: description }),
+      body: JSON.stringify({ description: description , step:9 }),
       headers: { 'Content-type': 'application/json' }
     })
     let json = await response.json();
 
     if (json.result) {
+      BackCtx.setBackDrop(false)
       router.push('/become-a-host/' + itemId + '/price')
     }
 
@@ -54,10 +62,9 @@ export default function () {
 
 
   return (<>
-
-    <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-      <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-    </Box>
+    <Head><title>설명</title></Head>
+    <HeaderTwo />
+    <NavTwo onExit={exitHandle} />
 
     <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
       숙소의 특징이 잘 드러나는 문구를 선택해주세요.
@@ -69,10 +76,9 @@ export default function () {
         )
       })}
     </Box>
-    <Box sx={{ ...buttonBox }}>
-      <Button variant="contained" onClick={BackHandle} sx={{ ...button }}>뒤로</Button>
-      <Button variant="contained" onClick={NextHandle} disabled={description.length === 0} sx={{ ...button }}>다음</Button>
-    </Box>
+
+    <FooterTwo onBack={BackHandle} onNext={NextHandle} datas={description.length} step={9} />
+
     <Modal
       open={open}
       onClose={() => {
@@ -100,7 +106,7 @@ const outlineBox = {
   display: 'flex',
   flexWrap: 'wrap',
   width: '60vw',
-  margin:'auto',
+  margin: 'auto',
   gap: 2,
   padding: 2
 }

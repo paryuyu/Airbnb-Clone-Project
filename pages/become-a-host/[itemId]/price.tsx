@@ -2,14 +2,21 @@ import { Button, FormControl, IconButton, InputAdornment, Modal, OutlinedInput, 
 import { Box } from "@mui/system";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { useState } from 'react'
+import { useState , useContext} from 'react'
 import { useRouter } from "next/router";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
+import FooterTwo from "../../../components/layout2/footer2";
+import Head from "next/head";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
+import { BackDropContext } from "../../_app";
 export default function Price() {
     // 단위 셀렉트
     const [num, setNum] = useState(0)
     const router = useRouter()
     const { itemId } = router.query;
+    const backCtx = useContext(BackDropContext);
+
     const numChangeHandle: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
         setNum(Number(evt.currentTarget.value))
     }
@@ -29,15 +36,18 @@ export default function Price() {
         }
     }
     async function priceUpdate() {
+        backCtx.setBackDrop(true)
+
         let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
-            body: JSON.stringify({ price: num }),
+            body: JSON.stringify({ price: num , step:10}),
             headers: { 'Content-type': 'application/json' }
         });
         let json = await response.json();
 
         if (json.result) {
             router.push('/become-a-host/' + itemId + '/lastpage')
+            backCtx.setBackDrop(false)
         }
     }
     const NextHandle = () => {
@@ -52,10 +62,10 @@ export default function Price() {
 
 
     return (<Box>
+        <Head><title>가격</title></Head>
+        <HeaderTwo />
+        <NavTwo onExit={exitHandle} />
 
-        <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-            <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-        </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>이제 요금을 설정하세요</Typography>
 
@@ -90,11 +100,8 @@ export default function Price() {
             </Box>
         </Box>
 
-        <Box sx={{ ...buttonBox }}>
-            <Button variant="contained" sx={{ ...button }} onClick={BackHandle}>뒤로</Button>
-            <Button variant="contained" sx={{ ...button }} disabled={num === 0} onClick={NextHandle}
-            >다음</Button>
-        </Box>
+        <FooterTwo onBack={BackHandle} onNext={NextHandle} datas={num} step={10} />
+
         <Modal
             open={open}
             onClose={() => {

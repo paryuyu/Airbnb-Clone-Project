@@ -1,34 +1,37 @@
-import { Box, Button } from "@mui/material";
 import { useRouter } from "next/router";
 import {useContext, useEffect, useState} from 'react';
 import { LocationCtx } from "../../context/location-context";
+import { BackDropContext } from "../../pages/_app";
+import FooterTwo from "../layout2/footer2";
 
 function MoveButton() {
     const router = useRouter();
     const { itemId } = router.query;
     const ctx = useContext(LocationCtx);
-    console.log(ctx,'여기서는 나오니')
-    const [bt,setBt] =useState<boolean>(true);
+    const backCtx = useContext(BackDropContext);
+    
+    const [bt,setBt] =useState<boolean>(false);
     async function locationUpdate() {
-        setBt(true)
+        backCtx.setBackDrop(true)
+        setBt(false)
         let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
-            body: JSON.stringify({ location: ctx.mapNew }), //바디
+            body: JSON.stringify({ location: ctx.mapNew , step:4 }), //바디
             headers: { 'Content-type': 'application/json' }
         });
 
         let json = await res.json();
-        console.log(json, "location last-update result")
         if(json.result){
+            backCtx.setBackDrop(false)
             router.push("/become-a-host/" + itemId + "/floor-plan")
-            setBt(false)
+            setBt(true)
         }
     }
 
 
     useEffect(()=>{
         if(ctx.mapNew){
-            setBt(false)
+            setBt(true)
         }
     },[ctx.mapNew])
 
@@ -44,11 +47,7 @@ function MoveButton() {
 
 
     return (<>
-    <Box sx={{...buttonBox}}>
-        <Button variant="contained" sx={[{ ...button }, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={BackHandle}>뒤로</Button>
-    
-        <Button variant="contained" sx={[{...button}, { '&:hover': { 'backgroundColor': '#333' } }]} onClick={handleNext} disabled={bt}>다음</Button>   
-        </Box>
+    <FooterTwo onBack={BackHandle} onNext={handleNext} datas={bt} step={4} />
     </>);
 }
 

@@ -1,28 +1,37 @@
-import { Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { Box,  Modal, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Head from "next/head";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
 import PrivacyList from "../../../components/ui/property/privacyList";
 import FooterTwo from "../../../components/layout2/footer2";
 import HeaderTwo from "../../../components/layout2/header2";
 import NavTwo from "../../../components/layout2/nav2";
+import { BackDropContext } from "../../_app";
 export default function Privacy() {
 
+    const backCtx = React.useContext(BackDropContext);
     const router = useRouter();
     const { itemId } = router.query;
     const [pri, setPri] = useState<string>('')
 
-    async function PrivacyTypeUpdate() {
+    
+
+
+
+
+    async function PrivacyTypeUpdate() {  
+        backCtx.setBackDrop(true)
         let update = await fetch("/api/accomodation/newUpdate?_id=" + itemId, {
             method: "post",
-            body: JSON.stringify({ privacyType: pri }),
+            body: JSON.stringify({ privacyType: pri , step:3  }),
             headers: { "Content-type": "application/json" }
         })
 
         let finalRst = await update.json();
 
         if (finalRst) {
+            backCtx.setBackDrop(false)
             router.push("/become-a-host/" + itemId + "/location")
         }
     }
@@ -33,6 +42,7 @@ export default function Privacy() {
     }
 
     const [modalopen, setModalOpen] = useState<boolean>(false)
+
     const exitHandle = () => {
         setModalOpen(true)
     }
@@ -49,11 +59,12 @@ export default function Privacy() {
             PrivacyTypeUpdate()
         }
     }
-    console.log(pri)
     const arr = ['공간전체', '개인실', '다인실']
+
+
     return (
         <>
-            <Head><title>호스팅_</title></Head>
+            <Head><title>공간정보</title></Head>
             <HeaderTwo />
             <NavTwo onExit={exitHandle} />
 
@@ -73,7 +84,7 @@ export default function Privacy() {
                 </Box>
             </Modal>
 
-            <FooterTwo onBack={BackHandle} onNext={handleNext} datas={pri} step={4} />
+            <FooterTwo onBack={BackHandle} onNext={handleNext} datas={pri.length} step={3} />
 
         </>);
 }

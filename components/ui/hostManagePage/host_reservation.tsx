@@ -39,7 +39,7 @@ function ReservationList({ datas }: any) {
         <Typography>인원: {parseInt(datas.numberOfAdults) + parseInt(datas.numberOfChildren)}명</Typography>
         <Typography sx={{ fontSize: 'small', fontWeight: '100', color: 'grey' }}>게스트 인원은 어른과 어린이가 포함된 인원입니다.</Typography>
       { datas.numberOfInfants !==0 && <Typography>유아: {parseInt(datas.numberOfInfants)}명</Typography>}
-      { datas.numberOfPets !==0 && <Typography>유아: {parseInt(datas.numberOfPets)}마리</Typography>}
+      { datas.numberOfPets !==0 && <Typography>반려동물: {parseInt(datas.numberOfPets)}마리</Typography>}
        
 
       <Typography sx={{ fontSize: 'small', fontWeight: '100', color: 'grey' }}>기간: {night}박</Typography>

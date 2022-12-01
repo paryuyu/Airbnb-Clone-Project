@@ -1,35 +1,44 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useRouter } from "next/router";
 import React from "react";
 import { AccomodationData } from "../../lib/model/accomodation";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { Dummy } from "../../lib/model/dummy";
 import Head from 'next/head'
 import GroupType from "../../components/ui/property/groupType";
 import HeaderTwo from "../../components/layout2/header2";
 import FooterTwo from '../../components/layout2/footer2';
+import { BackDropContext } from "../_app";
 export default function PropertyGroup() {
     const [chk, setChk] = React.useState<string>('');
     const [rstData, setRstData] = React.useState<AccomodationData>();
-    const [findData, setFindData] = React.useState<Dummy[]>();
+    const [findData, setFindData] = React.useState<Dummy[]>([]);
     let { data, status } = useSession();
-
+    
+    const backCtx = React.useContext(BackDropContext);
     const router = useRouter();
 
+    async function DummyFind() {
+        let res = await fetch("/api/accomodation/dummyfound");
+        let json = await res.json();
+        if(json.result){
+            setFindData(json.data)
+            backCtx.setBackDrop(false)
+        }
+
+    }
+
     React.useEffect(() => {
-        fetch("/api/accomodation/dummyfound")
-            .then(rc => rc.json())
-            .then(rst => setFindData(rst.data))
+        DummyFind()
     }, [])
 
 
     async function CreateData() {
+        backCtx.setBackDrop(true)
         let create = await fetch("/api/accomodation/create", {
             method: "post",
-            body: JSON.stringify({ groupType: chk }),
+            body: JSON.stringify({ groupType: chk , step:1 ,publish:false}),
             headers: { "Content-type": "application/json" }
         })
 
@@ -37,12 +46,13 @@ export default function PropertyGroup() {
         setRstData(rst.data);
 
         if (rst.data) {
+            backCtx.setBackDrop(false)
             router.push("/become-a-host/" + rst.data._id + "/property-type")
         }
 
     }
 
-    const handleChk = (one:any) => {
+    const handleChk = (one: any) => {
         setChk(one)
     }
 
@@ -54,16 +64,16 @@ export default function PropertyGroup() {
 
     }
 
-    const handleNext = ()=>{
+    const handleNext = () => {
         CreateData()
     }
 
     return (
         <>
             <Head>
-                <title>호스팅_</title>
+                <title>숙소유형</title>
             </Head>
-            <HeaderTwo/>
+            <HeaderTwo />
 
             <Box sx={{ width: '60vw', margin: 'auto', display: 'flex', flexDirection: 'column' }} >
 
@@ -76,15 +86,12 @@ export default function PropertyGroup() {
                         return (
                             <>
                                 <GroupType one={one} onChk={handleChk} chk={chk} />
-
                             </>
                         )
                     })}
-
                 </Box>
-                
             </Box>
-<FooterTwo onBack={handleClick} onNext={handleNext} datas={chk} step={1}/>
+            <FooterTwo onBack={handleClick} onNext={handleNext} datas={chk.length} step={1} />
         </>);
 }
 

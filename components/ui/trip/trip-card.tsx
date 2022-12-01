@@ -5,26 +5,28 @@ import { useEffect , useState } from 'react';
 
 export default function TripCard({ datas }: any) {
     let [night,setNight] = useState<number>()
-   console.log(datas,'datas')
+    let [product,setProduct] =useState<any[]>([])
   let {data, status} = useSession();
-
+console.log(datas)
     useEffect(()=>{
         if(datas){
             let d1 = new Date(datas.checkout) as any;
             let d2 = new Date(datas.checkin) as any;
             let date = (d1-d2)/(1000*60*60*24);
             setNight(date)
+            setProduct(datas.product)
         }
+
     },[datas])
 
 
     return (<>
-       {datas.product.length>0 && <Card sx={{mt:1, maxWidth:300 , padding:2 ,marginBottom:1}}>
+       {product.length > 0 && <Card sx={{mt:1, maxWidth:300 , padding:2 ,marginBottom:1}}>
         <Box sx={{display:'flex'}}>
             <CardMedia
                   component='img'
                   sx={{ height: 120, width: 120 }}
-                  image={datas.product[0].Photos[0]}
+                  image={product[0].Photos[0]}
                   alt="cover"
                 ></CardMedia>
                 <Box>

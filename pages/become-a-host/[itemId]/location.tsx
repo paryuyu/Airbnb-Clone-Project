@@ -3,27 +3,30 @@ import React, { useState } from "react";
 import { Box } from "@mui/system";
 import ComboBox from "../../../components/location/addressAuto";
 import { Maap } from "../../../components/location/map";
-import { Button, Grid, Modal, Typography } from "@mui/material";
+import {  Modal, Typography } from "@mui/material";
 import { LocationProvider } from "../../../context/location-context";
 import MoveButton from "../../../components/location/location-button";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
+import Head from "next/head";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
 
 export default function Location() {
 
     const [open, setOpen] = useState<boolean>(false)
     const exitHandle = () => {
-
         setOpen(true)
     }
 
     //4단계
     return (
-        <LocationProvider>
 
+        <LocationProvider>
+            <Head><title>주소찾기</title></Head>
+            <HeaderTwo/>
+            <NavTwo onExit={exitHandle} />
             <Box>
-                <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-                    <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-                </Box>
+                
                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
                     숙소 위치는 어디인가요?
                 </Typography>
@@ -33,11 +36,9 @@ export default function Location() {
                     정확한 위치를 찍어주세요.
                 </Typography>
 
-
-
                 <Maap />
 
-                <Box sx={{ left: '40vw', top: 200, position: 'absolute' }}>
+                <Box sx={{ left: '40vw', top: '30vh', position: 'absolute' }}>
                     <ComboBox />
                 </Box>
             </Box>
@@ -62,6 +63,5 @@ export default function Location() {
 const buttonSt = {
     bgcolor: 'black',
     borderRadius: 5,
-  
     mb: 2
 }

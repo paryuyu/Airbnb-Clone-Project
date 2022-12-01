@@ -127,7 +127,7 @@ currency:'krw'})
         <Modal
             open={calmodal}
             onClose={() => { setcalmodal(false) }}
-        ><Box>
+        ><Box sx={{bgcolor:'white', width:'100%', padding:2, display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Calender />
             </Box></Modal>
 

@@ -1,33 +1,39 @@
 import { Typography, Box, Button, Modal } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext} from "react";
 import { Textarea } from '@mui/joy';
 import { useRouter } from "next/router";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
+import FooterTwo from "../../../components/layout2/footer2";
+import Head from "next/head";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
+import { BackDropContext } from "../../_app";
 
 export default function () {
   const [title, setTitle] = useState('');
   const [error, setError] = useState(false);
   const router = useRouter();
   const itemId = router.query.itemId as string;
-
+  const BackCtx = useContext(BackDropContext);
   useEffect(() => {
     if (title.length >= 32) {
       setError(true)
     }
-
   }, [title])
 
 
   async function titleUpdate() {
+    BackCtx.setBackDrop(true)
     let response = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
       method: 'post',
-      body: JSON.stringify({ title: title }),
+      body: JSON.stringify({ title: title , step:8 }),
       headers: { 'Content-type': 'application/json' }
     })
     let json = await response.json();
 
     if (json.result) {
       router.push('/become-a-host/' + itemId + '/description')
+      BackCtx.setBackDrop(false)
     }
   }
 
@@ -51,9 +57,10 @@ export default function () {
   }
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-        <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-      </Box>
+      <Head><title>제목</title></Head>
+      <HeaderTwo />
+      <NavTwo onExit={exitHandle} />
+      
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
         <Box sx={{ ...outlineBox }}>
@@ -77,24 +84,21 @@ export default function () {
           />
           <Typography sx={{ fontSize: 13, fontWeight: '100', color: 'grey', mt: 1, textAlign: 'end' }}>32글자를 초과할 수 없습니다.
           </Typography>
-          </Box>
         </Box>
+      </Box>
 
 
+      <FooterTwo onBack={BackHandle} onNext={NextHandle} datas={title} step={8} />
 
-        <Box sx={{ ...buttonBox }}>
-          <Button onClick={BackHandle} variant='contained' sx={{ ...button }}>뒤로</Button>
-          <Button onClick={NextHandle} variant='contained' sx={{ ...button }} disabled={title.length === 0}>다음</Button>
-        </Box>
 
-        <Modal
-          open={open}
-          onClose={() => {
-            setOpen(false)
-          }
-          }>
-          <HostingModal onModal={() => { setOpen(false) }} />
-        </Modal>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false)
+        }
+        }>
+        <HostingModal onModal={() => { setOpen(false) }} />
+      </Modal>
     </>);
 }
 
@@ -118,6 +122,6 @@ const outlineBox = {
 const buttonSt = {
   bgcolor: 'black',
   borderRadius: 5,
- 
+
   mb: 2
 }

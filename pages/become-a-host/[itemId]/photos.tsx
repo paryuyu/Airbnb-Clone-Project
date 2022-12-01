@@ -1,7 +1,6 @@
-import { Button, Modal, Typography } from "@mui/material";
-
+import { Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState ,useContext } from "react";
 import EmptyPhotos from "../../../components/ui/photos/emptyPhoto";
 import PreviewPhotoBox from "../../../components/ui/photos/previewPhotosBox";
 import { useRouter } from "next/router";
@@ -10,17 +9,27 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { firebaseApp } from "../../../lib/firebase-config";
 import { uuidv4 } from "@firebase/util";
 import HostingModal from '../../../components/ui/hosting_modal/HostingModal'
+import FooterTwo from "../../../components/layout2/footer2";
+import HeaderTwo from "../../../components/layout2/header2";
+import NavTwo from "../../../components/layout2/nav2";
+import Head from "next/head";
+import { BackDropContext } from "../../_app";
+
+
 function Photos() {
-    const [files, setFiles] = useState<File[]>([])
-    const [draging, setDraging] = useState(false)
-    const fileRef = useRef<HTMLInputElement>(null);
+    
+    const backCtx = useContext(BackDropContext);
     const router = useRouter();
+    const [files, setFiles] = useState<File[]>([])
+    const fileRef = useRef<HTMLInputElement>(null);
+
     const { itemId } = router.query;
     const [loading, setLoading] = useState(false);
-    const [bt, setBt] = useState<boolean>(true)
+    const [bt, setBt] = useState<boolean>(true);
 
     const NextHandle = async () => {
-        setLoading(true)
+        backCtx.setBackDrop(true)
+        setLoading(false)
         const formData = new FormData();
         formData.append('itemId', itemId as string);
 
@@ -36,25 +45,26 @@ function Photos() {
 
         if (res.ok) {
             router.push('/become-a-host/' + itemId + '/title')
-            setLoading(false)
-        } 
+            setLoading(true)
+            backCtx.setBackDrop(false)
+        }
     }
 
 
     const handleFile = (file: File[]) => {
         setFiles(file)
-        
+
     }
 
-    useEffect(()=>{
-        console.log(files,"flies")
-        if(files.length<5){
-            setLoading(true)
-        } else if(files.length>4){
+    useEffect(() => {
+        console.log(files, "flies")
+        if (files.length < 5) {
             setLoading(false)
+        } else if (files.length > 4) {
+            setLoading(true)
         }
 
-    },[files])
+    }, [files])
 
     const BackHandle = () => {
         router.push('/become-a-host/' + itemId + '/amenities')
@@ -75,26 +85,21 @@ function Photos() {
 
     return (
         <>
+            <Head><title>사진추가</title></Head>
+            <HeaderTwo />
+            <NavTwo onExit={exitHandle} />
 
-            <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2, mt: 5 }}>
-                <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={exitHandle}>저장 후 나가기</Button>
-            </Box>
             <Box sx={{ ...outlineBox }}>
                 <Typography sx={{ fontSize: 30, fontWeight: 'bold', mb: 2 }}>숙소 사진 추가하기</Typography>
                 <Typography sx={{ fontSize: 15, fontWeight: '100', color: 'grey', mb: 5 }}>숙소 등록을 시작하려면 사진 5장을 제출하셔야 합니다. 나중에 추가하거나 변경하실 수 있습니다.</Typography>
 
                 {files.length == 0 ?
                     <EmptyPhotos onFile={handleFile} /> :
-                    <PreviewPhotoBox target={files} onFile={handleFile} onDel={removeFile} onLoading={() => { setLoading(true) }} />
+                    <PreviewPhotoBox target={files} onFile={handleFile} onDel={removeFile} onLoading={() => { setLoading(false) }} />
                 }
 
             </Box>
-            <Box sx={{ ...buttonBox }}>
-                <Button variant="contained" sx={{ ...button }} onClick={BackHandle}>뒤로</Button>
-                <Button variant="contained" sx={{ ...button }} disabled={loading} onClick={NextHandle}
-                >다음</Button>
-
-            </Box>
+            <FooterTwo onBack={BackHandle} onNext={NextHandle} datas={loading} step={7} />
             <Modal
                 open={open}
                 onClose={() => {
@@ -109,24 +114,8 @@ function Photos() {
 
 export default Photos;
 
-const buttonBox = {
-    display: 'flex', justifyContent: 'space-between', 
-    ml: 5, mr: 5
-}
 
-const button = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mt: 2, mb: 2,
-    '&:hover': { 'backgroundColor': '#333' }
-}
 const outlineBox = {
     display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '70vh', alignItems: 'center'
 }
 
-
-const buttonSt = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mb: 2
-}

@@ -23,8 +23,9 @@ await dbConnect()
                     return res.status(500).json({ result: false })
                 }
                 break;
+
             case "GET":
-                let find = await accomodation.find({ email: token.email});
+                let find = await accomodation.find({ email: token.email });
                 console.log(find)
                 if (find !== null) {
                     return res.status(200).json({ result: true, data: find });

@@ -78,9 +78,6 @@ export default function ComboBox() {
             <Box sx={{ width: '100%', bgcolor: 'background.paper', mt: 0 }}>
 
                 <nav aria-label="secondary mailbox folders">
-
-
-
                     {inputVal.length > 1 && listopen ?
                         <List sx={{ border: '1px solid black' }}>
 
@@ -109,12 +106,6 @@ export default function ComboBox() {
                         </List>
                         : <></>
                     }
-
-
-
-
-
-
                 </nav>
             </Box>
 

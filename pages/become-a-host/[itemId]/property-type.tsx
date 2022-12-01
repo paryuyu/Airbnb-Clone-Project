@@ -1,8 +1,7 @@
-import { Box, Button, Chip, Grid, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AccomodationData } from "../../../lib/model/accomodation";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Types } from "../../../lib/model/dummy";
 import Head from "next/head";
 import HostingModal from "../../../components/ui/hosting_modal/HostingModal";
@@ -10,19 +9,20 @@ import PropertyList from "../../../components/ui/property/propertyList"
 import FooterTwo from "../../../components/layout2/footer2";
 import HeaderTwo from "../../../components/layout2/header2";
 import NavTwo from "../../../components/layout2/nav2";
+import { BackDropContext } from "../../_app";
 export default function Property() {
 
+    const backCtx = React.useContext(BackDropContext);
     const router = useRouter();
     const { itemId } = router.query;
 
     const [arr, setArr] = useState<string>('');
     const [propertyTypeData, setPropertyTypeData] = React.useState<Types[]>();
     const [propertyChoose, setPropertyChoose] = React.useState<AccomodationData>();
-    //경로를 그냥 끌고 들어오면 ???3
     const [modalopen, setModalOpen] = useState<boolean>(false)
 
     React.useEffect(() => {
-
+        backCtx.setBackDrop(true)
         if (itemId) {
 
             !async function () {
@@ -35,6 +35,7 @@ export default function Property() {
                 let rstdata = await a.json();
                 if (rstdata !== null && rstdata.data) {
                     setPropertyTypeData(rstdata.data.types)
+                    backCtx.setBackDrop(false)
                 }
             }();
 
@@ -45,16 +46,17 @@ export default function Property() {
 
 
     async function PropertyUpdate(propertyType: string) {
-
+        backCtx.setBackDrop(true)
         let update = await fetch("/api/accomodation/newUpdate?_id=" + itemId, {
             method: "post",
-            body: JSON.stringify({ propertyType: propertyType }),
+            body: JSON.stringify({ propertyType: propertyType , step:2}),
             headers: { "Content-type": "application/json" }
         })
 
         let finalRst = await update.json();
         setPropertyChoose(finalRst);
         if (finalRst) {
+            backCtx.setBackDrop(false)
             router.push("/become-a-host/" + itemId + "/privacy-type")
         }
     }
@@ -91,7 +93,7 @@ export default function Property() {
 
     return (
         <>
-            <Head><title>호스팅_</title></Head>
+            <Head><title>상세숙소유형</title></Head>
             <HeaderTwo />
             <NavTwo onExit={exitHandle}/>
 
@@ -113,7 +115,7 @@ export default function Property() {
                 </Box>
             </Modal>
 
-            <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr} step={3} />
+            <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr.length} step={2} />
 
         </>);
 }

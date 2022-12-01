@@ -1,22 +1,22 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from "next/router";
 import React from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { AccomodationData } from "../../lib/model/accomodation";
 import RoomList from "../../components/ui/hosting-first/list";
 import Head from "next/head";
 import HeaderTwo from "../../components/layout2/header2";
-import FooterTwo from "../../components/layout2/footer2";
+import { BackDropContext } from "../_app";
 export default function BecomeAHostPropertyTypeGroup() {
     const [userId, setUserId] = React.useState<string>('')
     const { data, status } = useSession();
     const [rstdata, setrstdata] = React.useState<AccomodationData[]>([]);
     const router = useRouter();
 
+    const backCtx = React.useContext(BackDropContext);
     const handleNew = () => {
         router.push("/become-a-host/property-type-group");
     }
@@ -26,12 +26,15 @@ export default function BecomeAHostPropertyTypeGroup() {
         let rst = await find.json();
         console.log(rst)
         if (rst.data.length > 0) {
+            backCtx.setBackDrop(false)
             setrstdata(rst.data);
+
+
         }
     }
 
     React.useEffect(() => {
-
+        backCtx.setBackDrop(true)
         if (data && status === "authenticated") {
             let email = data?.user!.email as any;
             let arr = email?.split('@')

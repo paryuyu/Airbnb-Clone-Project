@@ -11,7 +11,7 @@ import StepConnector, {
 import { StepIconProps } from "@mui/material/StepIcon";
 
 function FooterTwo({ onBack, onNext ,datas, step}: any) {
-  
+    console.log(datas,'조건걸어주기')
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,
@@ -142,7 +142,7 @@ function ColorlibStepIcon(props: StepIconProps) {
 }
 
 
-  const steps=[1,2,3,4,5,6,7,8,9,10]
+  const steps=[1,2,3,4,5,6,7,8,9,10,11]
   return (<>
   <Divider></Divider>
 
@@ -160,9 +160,9 @@ function ColorlibStepIcon(props: StepIconProps) {
       <Button variant="contained" sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]} onClick={() => { onBack() }}>뒤로</Button>
 
       <Button variant="contained" 
-      disabled={datas.length ===0}
+      disabled={datas == 0 }
       sx={[{ ...button }, { '&:hover': { backgroundColor: '#333' } }]}
-       onClick={() => { onNext() }}> 다음 </Button>
+      onClick={() => { onNext() }}> 다음 </Button>
 
   </Box> 
 
