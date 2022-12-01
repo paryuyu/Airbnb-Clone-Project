@@ -65,8 +65,12 @@ function Trip() {
     return (<>
         <Head><title>여행상세페이지</title></Head>
         <Header />
+
+
         {status === 'authenticated' ?
+
             <Box sx={{ margin: 2 }}>
+{totalData.length == 0 ?<Typography>예약내역이 없습니다.</Typography> :<> 
                 {future.length > 0 && <Typography variant="h4">예약숙소</Typography>}
 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
@@ -82,10 +86,14 @@ function Trip() {
                         return (<><TripCard datas={one} key={index} /></>)
 
                     })}
-                </Box>
 
+
+</Box>
+                    
+</> }
 
             </Box>
+
             : <Typography>로그인 후 이용해주세요</Typography>}
     </>
 
