@@ -9,12 +9,12 @@ import { BackDropContext } from "../_app";
 function HostPage() {
     let { status, data } = useSession()
     let [roomData, setRoomData] = useState<any[]>([])
-    let [refresh, setRefresh] =useState<boolean>(false)
+    let [refresh, setRefresh] = useState<boolean>(false)
     let backCtx = useContext(BackDropContext);
     async function RoomFindReq() {
         let res = await fetch('/api/accomodation/roomtypefind')
         let json = await res.json();
-   
+
         if (json.result) {
             backCtx.setBackDrop(false)
             setRoomData(json.data)
@@ -28,31 +28,40 @@ function HostPage() {
             RoomFindReq()
         }
 
-    }, [status,refresh])
+    }, [status, refresh])
 
     //숙소관리
     // 1. 숙소 삭제
     // 2. 예약 관리
-    const handleRefresh = ()=>{
-        setRefresh((current)=>!current)
+    const handleRefresh = () => {
+        setRefresh((current) => !current)
         console.log('//12121')
     }
 
     return (<>
         <Head><title>호스트페이지</title></Head>
-        <Header/>
+        <Header />
         {status === 'authenticated' ?
-            <Box sx={{margin:2}} >
 
-                {roomData.length > 0 && <>
-                    <Typography variant="h4">숙소관리</Typography>
-                    <Divider ></Divider>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 , mt:2}}>
-                        {roomData.map((one, index) => {
-                            return <HostRoom datas={one} key={index} onRefresh={handleRefresh}/>
-                        })
-                        }
-                    </Box>
+            <Box sx={{ margin: 2 }} >
+
+                {roomData.length == 0 ? <Typography>등록된 숙소가 없습니다.</Typography> : <>
+                    {roomData.length > 0 && <>
+                        <Typography variant="h4">숙소관리</Typography>
+                        <Divider ></Divider>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
+                            {roomData.map((one, index) => {
+                                return <HostRoom datas={one} key={index} onRefresh={handleRefresh} />
+                            })
+                            }
+                        </Box>
+
+                    </>}
+
+
+
+
+
                 </>
 
                 }
