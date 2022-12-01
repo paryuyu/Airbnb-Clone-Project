@@ -136,7 +136,7 @@ currency:'krw'})
 }
 
 export default ReservationCard;
-
+//마무리
 const boxStyle = { border: '1px solid #ddd', cursor: 'pointer', mt: 2, borderRadius: 1, height: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
 
 const bt = { backgroundColor: 'black', mt: 2 }
