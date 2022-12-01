@@ -29,26 +29,7 @@ return(
       <HowToRegIcon fontSize="small" sx={{ mr: 1.8 }} /> 회원가입
     </ListItemIcon>
   </MenuItem>
-  <Divider />
-
-  <MenuItem>
-    <ListItemIcon>
-      <CottageIcon fontSize="small" />
-    </ListItemIcon>
-    숙소 호스트 되기
-  </MenuItem>
-  <MenuItem>
-    <ListItemIcon>
-      <DriveFileRenameOutlineIcon fontSize="small" />
-    </ListItemIcon>
-    체험 호스팅하기
-  </MenuItem>
-  <MenuItem >
-    <ListItemIcon>
-      <HelpOutlineIcon fontSize="small" />
-    </ListItemIcon>
-    도움말
-  </MenuItem></>
+  </>
 )
    
 }

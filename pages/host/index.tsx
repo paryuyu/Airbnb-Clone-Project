@@ -45,9 +45,9 @@ function HostPage() {
 
             <Box sx={{ margin: 2 }} >
 
-                {roomData.length == 0 ? <Typography>등록된 숙소가 없습니다.</Typography> : <>
-                    {roomData.length > 0 && <>
                         <Typography variant="h4">숙소관리</Typography>
+                        
+                    {roomData.length > 0 ? <>
                         <Divider ></Divider>
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
                             {roomData.map((one, index) => {
@@ -56,15 +56,12 @@ function HostPage() {
                             }
                         </Box>
 
-                    </>}
+                    </> : <Typography>등록된 숙소정보가 없습니다.</Typography>}
 
 
 
 
 
-                </>
-
-                }
             </Box> : <Typography>로그인 후 사용해주세요.</Typography>}
 
     </>);
