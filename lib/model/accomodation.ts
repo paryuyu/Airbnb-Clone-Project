@@ -59,11 +59,11 @@ const AccomodationSchema = new mongoose.Schema<AccomodationData>({
     step:{type: Number}
 })
 
-AccomodationSchema.virtual('reservationData',{
-    localField:'_id',
-    foreignField:'productId',
-    ref:'reservation'
-})
+// Accomodation.virtual('reservationData',{
+//     localField:'_id',
+//     foreignField:'productId',
+//     ref:'reservation'
+// })
 
 
 export default mongoose.models.accomodation || mongoose.model<AccomodationData>("accomodation", AccomodationSchema);
