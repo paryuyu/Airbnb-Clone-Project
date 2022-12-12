@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Airbnb Clone Project
 
-## Getting Started
+> 사용기술
 
-First, run the development server:
+`TypeScript` `Mongoose` `Nextjs` `Mui`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<br>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 기능
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+| no | 페이지 | 기능 | 내용 |
+| :--: | :--: | :--: | :-- |
+| 1 | 홈 | 등록된 숙소들 보기 | 카테고리 별로 모아보기 가능 |
+| 2 | 모달 | 회원가입 | 로컬 회원가입 및 소셜로그인 후 회원가입 가능 |
+| 3 | 모달 | 로그인 | 소셜 로그인 가능 |
+| 4 | 호스팅 페이지 | 호스팅 | 10단계를 걸쳐 호스팅 가능 <br> 호스팅을 도중에 그만둬도 저장됨 |
+| 5 | 숙소 상세 페이지 | 상세보기 및 예약 | 예약 날짜 선택 가능 <br> 인원 선택 가능 |
+| 6 | 결제 페이지 | 결제 | 페이팔로 가능 - 개발공부용 홈페이지라 테스트용 계정에서만 가능 | 
+| 7 | 숙소 관리 페이지 | 관리 | 예약 확인 가능 & 숙소 삭제 가능 - 예약이 없는 숙소만 삭제 가능 |
+| 8 | 예약 관리 페이지 | 관리 | 예약한 숙소 확인 가능 |
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<br>
 
-## Learn More
+> 개발 진행 중인 기능
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 카카오 로그인 개발 중
