@@ -1,5 +1,9 @@
 # Airbnb Clone Project
 
+> 소개
+
+- Nextjs 와 TypeScript의 학습을 위한 클론 프로젝트
+
 > 사용기술
 
 `TypeScript` `Mongoose` `Nextjs` `Mui`
