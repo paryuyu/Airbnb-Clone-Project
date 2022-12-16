@@ -8,6 +8,7 @@ import { isConstructorDeclaration } from 'typescript';
 import { hash } from 'bcryptjs';
 import { json } from 'stream/consumers';
 import { signIn, useSession } from 'next-auth/react';
+import { setYear } from 'date-fns/esm';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -103,7 +104,7 @@ export const SignUp: React.FC<SignupProps> = ({ email, onMove, firstname, lastna
     const [firstError, setFirstError] = React.useState(false);
     const [dateError, setDateError] = React.useState(false);
     const [passWordError, setPassWordError] = React.useState(false);
-
+ const [yearErr, setYearErr] = React.useState(false);
 
     //버튼 클릭 시 에러체크
     const clickHandle = () => {
@@ -198,6 +199,20 @@ export const SignUp: React.FC<SignupProps> = ({ email, onMove, firstname, lastna
         }
 
     }
+    const handleDate = (evt:React.ChangeEvent<HTMLInputElement>) =>{
+
+        setDate(evt.target.value);
+        
+        let year = Number((evt.target.value).slice(0,4));
+        let currentYear = new Date().getFullYear();
+
+        if(year >= (currentYear-18)){
+            setDateError(true)
+        }else{
+            setDateError(false)
+        }
+
+    }
 
 
 
@@ -245,10 +260,10 @@ export const SignUp: React.FC<SignupProps> = ({ email, onMove, firstname, lastna
                         type="date"
                         sx={{ mb: 1.8 }}
                         helperText="만 18세 이상만 에어비앤비를 이용할 수 있습니다. 다른 사용자에게 회원님의 생년월일이 공개되지 않습니다."
-                        onChange={(evt) => { setDate(evt.target.value) }}
+                        onChange={handleDate}
                         value={date}
                     />
-
+            
                     <TextField
                         fullWidth
                         id="outlined-required"
@@ -301,7 +316,7 @@ export const SignUp: React.FC<SignupProps> = ({ email, onMove, firstname, lastna
                 </Box>
 
 
-                <Button variant="contained" fullWidth sx={{ mt: 3, borderRadius: 3, bgcolor: "black" }} color="error" onClick={clickHandle}>동의 및 계속하기</Button>
+                <Button variant="contained" fullWidth sx={[{ mt: 3, borderRadius: 3, bgcolor: "black" },{'&:hover':{bgcolor:'#333'}}]} color="error" onClick={clickHandle}>동의 및 계속하기</Button>
 
             </Box>
 

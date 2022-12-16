@@ -106,9 +106,9 @@ export const FinalAgreeForm: React.FC<FinalAgree> = ({ onMove, email }) => {
 
           <Typography>마음이 바뀌면 언제든지 에어비앤비 서비스 약관과 커뮤니티 차별반대 서약에 동의하고 회원 가입을 완료하실 수 있습니다.</Typography>
         </Box>
-        <Button variant="contained" fullWidth sx={{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "grey" }} onClick={handleClick} >돌아가기</Button>
+        <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "grey" },{'&:hover':{bgcolor:'#ddd',color:'white'}}]} onClick={handleClick} >돌아가기</Button>
         
-        <Button variant="contained" fullWidth sx={{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "white" , color:"black" }} onClick={handleUserDelete}>가입 취소하기</Button>
+        <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "white" , color:"black" },{'&:hover':{bgcolor:'#333'}}]} onClick={handleUserDelete}>가입 취소하기</Button>
       </Box>
     </Container>
 

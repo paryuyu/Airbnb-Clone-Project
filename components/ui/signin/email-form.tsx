@@ -34,14 +34,14 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
     const [error, setError] = React.useState(false)
     const [movechk, setMoveChk] = React.useState(null)
     const { data, status } = useSession();
-
+    const [loginErr, setLoginErr] = React.useState(false)
     //이메일 정규식
     let pattern: RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let regtest = pattern.test(emailtest);
 
     React.useEffect(() => {
         if (emailtest.length > 1) {
-                setError(true)
+            setError(true)
             console.log(error, "error")
             if (regtest) {
                 setError(false)
@@ -50,23 +50,27 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
     }, [emailtest, regtest])
 
     async function emailfind() {
-      
+
         let res = await fetch('/api/account/emailFind', {
             method: "post",
             body: JSON.stringify({ email: emailtest }),
             headers: { "Content-type": "application/json" }
         });
         let json = await res.json();
-        console.log(json,'?????SDASDASDASD')
-        if(json.result){
-            
+        console.log(json, '?????SDASDASDASD')
+        if (json.result) {
             setMoveChk(json.result);
             Move(json.result);
+        } else {
+            setLoginErr(true)
+            onMove("register")
         }
+
+        console.log(json, '!@!@!@')
     }
 
     const handleChoiceMove = () => {
-        console.log(regtest,'regtest')
+        console.log(regtest, 'regtest')
         if (regtest) {
             console.log('!!!')
             onEmail(emailtest);
@@ -95,7 +99,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         let left = screenY + screen.width / 2 - 550 / 2;
 
         //팝업창으로 띄우기
-        window.open(url+"/popup/g-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
+        window.open(url + "/popup/g-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
         onModal(false);
     }
 
@@ -105,7 +109,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         let left = screenY + screen.width / 2 - 550 / 2;
 
         //팝업창으로 띄우기
-        window.open(url+"/popup/k-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
+        window.open(url + "/popup/k-auth", "popup", `width=550, height=830, top=${top}, left=${left}`);
 
         //타입넣기
         onModal(false);
@@ -124,10 +128,10 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
         //console.log(finalRst,"finalRst")
         if (!finalRst.result) {
             onMove("register")
-            
+
         } else {
-            console.log(finalRst,"final")
-            if (finalRst.data.AntiDiscrimination == "degree" && status == "authenticated" ) {
+            console.log(finalRst, "final")
+            if (finalRst.data.AntiDiscrimination == "degree" && status == "authenticated") {
                 //onMove("firstAgree")
             } else {
                 onModal(false)
@@ -174,7 +178,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
                     />
 
                     {error ? <small style={{ color: "red" }}>이메일을 확인해주세요.</small> : <></>}
-
+                    {loginErr && <small style={{ color: "red" }}>로그인이 실패했습니다.</small>}
                 </Box>
                 <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "black", color: "white" }, { "&:hover": { "backgroundColor": "grey", "color": "black" } }]}
                     onClick={handleChoiceMove}
@@ -187,10 +191,10 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
                     <Typography flexGrow={1} fontSize={13}>구글로 로그인</Typography>
                 </Button>
                 <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "white", color: "black" }, { "&:hover": { "backgroundColor": "gold", "color": "white" } }]}
-                    onClick={handleKaKao}
+                    //onClick={handleKaKao}
                     startIcon={<RiKakaoTalkFill />}
                 >
-                    <Typography flexGrow={1} fontSize={13}>카카오로 로그인</Typography>
+                    <Typography flexGrow={1} fontSize={13}>서비스 개발 중</Typography>
                 </Button>
 
             </Box>

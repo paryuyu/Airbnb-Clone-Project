@@ -73,8 +73,8 @@ export const AgreeForm: React.FC<AgreeForm> = ({ onMove, email }) => {
 
           <Typography>인종, 종교, 출신 국가, 민족, 피부색, 장애, 성별, 성 정체성, 성적 지향, 연령 등과 관계없이 에어비앤비 커뮤니티의 모든 사람을 존중하며 편견이나 선입견 없이 대하는 것에 동의합니다.</Typography>
         </Box>
-        <Button variant="contained" fullWidth sx={{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "black" }} onClick={agreeClick} >동의 및 계속하기</Button>
-        <Button variant="contained" fullWidth sx={{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "white", color: "black" }} onClick={degreeClick}> 거절하기</Button>
+        <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "black" },{'&:hover':{bgcolor:'#333'}}]} onClick={agreeClick} >동의 및 계속하기</Button>
+        <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "white", color: "black" },{'&:hover':{bgcolor:'#ddd', color:'white'}}]} onClick={degreeClick}> 거절하기</Button>
       </Box>
     </Container>
 

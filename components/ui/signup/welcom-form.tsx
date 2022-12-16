@@ -52,7 +52,7 @@ export const WelcomeForm: React.FC<WelcomeForm> = ({ onMove, onModal }) => {
           <Typography fontSize={26} fontWeight={"bold"} align={"center"}>에어비앤비에 오신 것을 환영합니다.</Typography>
 
           <Typography align='center' marginTop={2}>전 세계 숙소, 현지 레스토랑 및 독특한 체험을 찾아보세요.</Typography>
-          <Button variant="contained" fullWidth sx={{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "black" }} onClick={() => onModal(false)}>완료</Button>
+          <Button variant="contained" fullWidth sx={[{ mt: 3, bt: 5, borderRadius: 3, bgcolor: "black" }, { '&:hover': { bgcolor: '#333' } }]} onClick={() => onModal(false)}>완료</Button>
         </Box>
       </Box>
     </Container>
