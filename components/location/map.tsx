@@ -65,10 +65,9 @@ function MapComponents({ }) {
 
 
 export const Maap = ({ }) => {
-
-    let GoogleAppKey = "AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs";
+let key = process.env.GOOGLE_APP_KEY as string;
     return (
-        <Wrapper apiKey={"AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs"}>
+        <Wrapper apiKey={key}>
             <MapComponents />
         </Wrapper>
     )

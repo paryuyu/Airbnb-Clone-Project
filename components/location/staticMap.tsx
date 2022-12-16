@@ -12,7 +12,7 @@ export const StaticMap: React.FC= () => {
     //스태틱 맵
     function createStaticMap() {
         
-        let GoogleAppKey = 'AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs';
+        let GoogleAppKey = process.env.GOOGLE_APP_KEY;
         //결제정보 업데이트하고 스태틱 지도 받아오기.(배경)
         //1. 위도경도를 지오코딩에서 받아오기.
         return `https://maps.googleapis.com/maps/api/staticmap?center=${ctx.what.lat},${ctx.what.lng}&zoom=18&size=300x300&markers=size:mid%7Ccolor:green%7Clabel:S%7C${ctx.what.lat},${ctx.what.lng}&key=${GoogleAppKey}`;

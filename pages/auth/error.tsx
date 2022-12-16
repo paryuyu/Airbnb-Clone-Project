@@ -22,8 +22,8 @@ export default function AuthError() {
 
 export const getServerSideProps: GetServerSideProps = async (props) => {
     console.log(props.query);
+    let uri = process.env.MONGODB_URI as string;
 
-    let uri = "mongodb+srv://mernyuyu:wkdrnahr777@cluster0.qeg74yn.mongodb.net/?retryWrites=true&w=majority"
     await mongoose.connect(uri, { dbName: `airbnbClone` })
 
     return {

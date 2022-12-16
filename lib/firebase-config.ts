@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs",
+  apiKey: process.env.GOOGLE_APP_KEY,
   authDomain: "able-campaign-367901.firebaseapp.com",
   projectId: "able-campaign-367901",
   storageBucket: "able-campaign-367901.appspot.com",

@@ -10,24 +10,27 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { AddressInputModal } from './addressInput';
 
-type matched_substrings ={length: number, offset: number};
+type matched_substrings = { length: number, offset: number };
 
-type terms = {offset: number,value:string}
+type terms = { offset: number, value: string }
 
-type main_text_matched_substrings = {length: number,offset:string}
+type main_text_matched_substrings = { length: number, offset: string }
 
-type structured_formatting = {main_text:string;
-main_text_matched_substrings:main_text_matched_substrings[]
-secondary_text:string}
+type structured_formatting = {
+    main_text: string;
+    main_text_matched_substrings: main_text_matched_substrings[]
+    secondary_text: string
+}
 
 
-type rst = {description:string;
+type rst = {
+    description: string;
     matched_substrings: matched_substrings[];
-    place_id:string;
-    reference:string;
-    structured_formatting :structured_formatting;
-    terms:terms[];
-    types:string[];
+    place_id: string;
+    reference: string;
+    structured_formatting: structured_formatting;
+    terms: terms[];
+    types: string[];
 }
 
 
@@ -35,7 +38,7 @@ export default function ComboBox() {
     const [inputVal, setInputVal] = React.useState<string>("")
     const [arrRst, setArrRst] = React.useState<rst[]>([]);
     const [modalopen, setmodalopen] = React.useState(false);
-    const [foundrst, setFound] = React.useState<rst|null>(null);
+    const [foundrst, setFound] = React.useState<rst | null>(null);
     const [listopen, setlistopen] = React.useState(false);
 
 
@@ -44,13 +47,14 @@ export default function ComboBox() {
     React.useEffect(() => {
         const timerId = setTimeout(async () => {
 
-            const endPoint = `/google/autoComplete?input=${inputVal}&types=geocode&key=AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs&language=ko&components=country:kr&types=address`
+            let key = process.env.GOOGLE_APP_KEY;
+            const endPoint = `/google/autoComplete?input=${inputVal}&types=geocode&key=${key}&language=ko&components=country:kr&types=address`
             const response = await fetch(endPoint);
             const json = await response.json();
-          
+
             let arr = json.predictions;
             setArrRst(arr)
-            
+
         }, 500) //0.5초 딜레이 발생하게 유도.
 
 
@@ -65,7 +69,7 @@ export default function ComboBox() {
         setmodalopen(false)
     }
 
-    const handlerstAddress = (val:string) => {
+    const handlerstAddress = (val: string) => {
         setInputVal(val)
         setlistopen(false)
     }
@@ -73,7 +77,7 @@ export default function ComboBox() {
 
     return (
         <>
-            <TextField placeholder='주소를 입력하세요' sx={{ ...TextFieldStyle}} value={inputVal} onChange={(evt) => { setInputVal(evt.target.value); setlistopen(true) }}></TextField>
+            <TextField placeholder='주소를 입력하세요' sx={{ ...TextFieldStyle }} value={inputVal} onChange={(evt) => { setInputVal(evt.target.value); setlistopen(true) }}></TextField>
 
             <Box sx={{ width: '100%', bgcolor: 'background.paper', mt: 0 }}>
 
@@ -81,12 +85,12 @@ export default function ComboBox() {
                     {inputVal.length > 1 && listopen ?
                         <List sx={{ border: '1px solid black' }}>
 
-                            { arrRst && arrRst.length > 0 && arrRst.map(one => {
+                            {arrRst && arrRst.length > 0 && arrRst.map(one => {
                                 return (
                                     <>
                                         <ListItem disablePadding>
-                                            <ListItemButton onClick={() => { setFound(one); setmodalopen(true); setInputVal("");  }}>
-                                                <ListItemText primary={one.description}  /> 
+                                            <ListItemButton onClick={() => { setFound(one); setmodalopen(true); setInputVal(""); }}>
+                                                <ListItemText primary={one.description} />
                                             </ListItemButton>
                                         </ListItem>
                                         <Divider />
@@ -100,7 +104,7 @@ export default function ComboBox() {
                                 <ListItemButton onClick={() => { setmodalopen(true); setFound(null); setInputVal(""); }}>
 
                                     <ListItemText primary="주소 직접 입력하기" />
-                                    
+
                                 </ListItemButton>
                             </ListItem>
                         </List>
@@ -115,7 +119,7 @@ export default function ComboBox() {
                 aria-labelledby="parent-modal-title"
                 aria-describedby="parent-modal-description" >
 
-                <AddressInputModal onClose={handleClose} found={foundrst} onRst={handlerstAddress}/>
+                <AddressInputModal onClose={handleClose} found={foundrst} onRst={handlerstAddress} />
 
             </Modal>
         </>
@@ -123,6 +127,6 @@ export default function ComboBox() {
 }
 
 
-const TextFieldStyle={
-    bgcolor: 'white', borderRadius: 2,width:250,
+const TextFieldStyle = {
+    bgcolor: 'white', borderRadius: 2, width: 250,
 }

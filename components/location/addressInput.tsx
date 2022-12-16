@@ -65,8 +65,8 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
     useEffect(() => {
         if (found) {
             const timerId = setTimeout(async () => {
-
-                const endPoint = `/google/details?place_id=${found.place_id}&key=AIzaSyAXTs6QeXQ0EZ4B5pCOv93vnnCx0LwEKIs&language=ko`
+                let key = process.env.GOOGLE_APP_KEY;
+                const endPoint = `/google/details?place_id=${found.place_id}&key=${key}&language=ko`
 
                 const response = await fetch(endPoint);
                 const json = await response.json();
