@@ -26,6 +26,8 @@ export default function MainPage() {
       setMainData(json.data)
       if(json){
         setLoading(false)
+      }else{
+        setLoading(true)
       }
     }();
 
@@ -36,11 +38,12 @@ console.log(loading)
     <Head>
       <title>메인페이지</title>
     </Head>
-    {mainData && mainData.length > 0 ?
+    { mainData.length > 0 &&
       <Box sx={mainPage}>
         {mainData.map((one, index) => <MainCard item={one} key={index} />)}
-      </Box> : 
-      loading ?
+      </Box> }
+
+    { loading ?
       <Box sx={mainPage}>
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 

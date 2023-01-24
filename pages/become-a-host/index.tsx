@@ -17,8 +17,6 @@ export default function BecomeAHostPropertyTypeGroup() {
     const [userId, setUserId] = React.useState<string>('')
     const [rstdata, setrstdata] = React.useState<AccomodationData[]>([]);
 
-    // const backCtx = React.useContext(BackDropContext);
-
     const handleNew = () => {
         router.push("/become-a-host/property-type-group");
     }
@@ -27,8 +25,6 @@ export default function BecomeAHostPropertyTypeGroup() {
     async function IncompleteData() {
         let find = await fetch("/api/accomodation/roomtypefind")
         let rst = await find.json();
-        console.log(rst.result,'rst')
-
 
         if (rst.result ) {
             setrstdata(rst.data);
