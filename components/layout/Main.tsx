@@ -35,7 +35,7 @@ export default function MainPage() {
     {mainData && mainData.length > 0 ?
       <Box sx={mainPage}>
         {mainData.map((one, index) => <MainCard item={one} key={index} />)}
-      </Box> : <Box>
+      </Box> : <Box sx={mainPage}>
         
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
