@@ -11,7 +11,7 @@ import StepConnector, {
 import { StepIconProps } from "@mui/material/StepIcon";
 
 function FooterTwo({ onBack, onNext ,datas, step}: any) {
-    console.log(datas,'조건걸어주기')
+    // console.log(datas,'조건걸어주기')
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,

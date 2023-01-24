@@ -69,7 +69,7 @@ export const PasswordLogin: React.FC<SignupProps> = ({ onMove, email, onModal })
             email: email, password: passWord
         }) as typeof signInRst
 
-        console.log(result,'result---pw')
+        // console.log(result,'result---pw')
 
         if(result !== null && result!.ok){
             setSignInRst(result)
@@ -81,7 +81,7 @@ export const PasswordLogin: React.FC<SignupProps> = ({ onMove, email, onModal })
 
     React.useEffect(()=>{
         if(signInRst !==null && signInRst!.ok){
-           console.log(signInRst,"signInRst")
+        //    console.log(signInRst,"signInRst")
             fetch("/api/account/emailFind",{
                 method:"post",
                 body:JSON.stringify({email:email}),
@@ -94,7 +94,7 @@ export const PasswordLogin: React.FC<SignupProps> = ({ onMove, email, onModal })
                         break;
                     case "agree":
                         onModal(false)
-                        console.log("로그인!")
+                        // console.log("로그인!")
                         break;
         }})
     }

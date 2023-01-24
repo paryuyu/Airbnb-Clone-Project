@@ -108,7 +108,7 @@ export const SignUp: React.FC<SignupProps> = ({ email, onMove, firstname, lastna
 
     //버튼 클릭 시 에러체크
     const clickHandle = () => {
-        console.log(last, first, date, finalEmail, passWord)
+        // console.log(last, first, date, finalEmail, passWord)
 
         if (last.length < 1) {
             setlastError(true)

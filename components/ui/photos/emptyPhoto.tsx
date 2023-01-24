@@ -47,8 +47,8 @@ function EmptyPhotos({ onFile }:props) {
     const dropHandle: React.DragEventHandler = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
-        console.log('drop-event')
-        console.log(evt.dataTransfer.files);
+        // console.log('drop-event')
+        // console.log(evt.dataTransfer.files);
         const arr = Array.from(evt.dataTransfer.files);
         onFile(arr)
         //드래그 후 드랍이벤트 발생
@@ -58,7 +58,7 @@ function EmptyPhotos({ onFile }:props) {
 
     const fileSelectHandle: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
         //인풋타입 체인지이벤트 파일선택할 때
-        console.log(evt.target.files)
+        // console.log(evt.target.files)
         const arr2 = Array.from(evt.target.files!)
         onFile(arr2)
         
@@ -69,7 +69,7 @@ function EmptyPhotos({ onFile }:props) {
             <Box sx={{ ...photoBox }} onDragOver={(evt) => {
                 evt.preventDefault();
                 evt.stopPropagation();
-                console.log("drag-event")
+                // console.log("drag-event")
             }}
                 onDrop={dropHandle}
               //  onDragEnter={(evt) => { setDraging(true) }}

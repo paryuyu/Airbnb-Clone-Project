@@ -20,9 +20,7 @@ export default function Header() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [modalopen, setModalOpen] = React.useState<boolean>(false);
-  console.log(data)
-  console.log(status)
-  //메뉴  
+
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

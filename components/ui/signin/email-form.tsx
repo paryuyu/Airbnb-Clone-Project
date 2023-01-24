@@ -42,7 +42,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
     React.useEffect(() => {
         if (emailtest.length > 1) {
             setError(true)
-            console.log(error, "error")
+            // console.log(error, "error")
             if (regtest) {
                 setError(false)
             }
@@ -57,7 +57,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
             headers: { "Content-type": "application/json" }
         });
         let json = await res.json();
-        console.log(json, '?????SDASDASDASD')
+        // console.log(json, '?????SDASDASDASD')
         if (json.result) {
             setMoveChk(json.result);
             Move(json.result);
@@ -66,13 +66,13 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
             onMove("register")
         }
 
-        console.log(json, '!@!@!@')
+        // console.log(json, '!@!@!@')
     }
 
     const handleChoiceMove = () => {
-        console.log(regtest, 'regtest')
+        // console.log(regtest, 'regtest')
         if (regtest) {
-            console.log('!!!')
+            // console.log('!!!')
             onEmail(emailtest);
             emailfind()
         }
@@ -81,19 +81,19 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
     function Move(move: boolean) {
         //console.log(move, "왜 안되니")
         if (move) {
-            console.log(move, "!@!@")
+            // console.log(move, "!@!@")
             onMove("password")
         } else {
-            console.log(move, "#$#$")
+            // console.log(move, "#$#$")
             onMove("register")
         }
 
     }
 
     const handleGoogle = () => {
-        console.log("google!")
-        console.log(screenX, "screen") // 결과값 : 0
-        console.log(screenY, "screen") // 결과값 : 0
+        // console.log("google!")
+        // console.log(screenX, "screen") // 결과값 : 0
+        // console.log(screenY, "screen") // 결과값 : 0
         //popup 정중앙으로 보내는 공식
         let top = screenX + screen.height / 2 - 830 / 2;
         let left = screenY + screen.width / 2 - 550 / 2;
@@ -116,7 +116,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
     }
 
     async function FindEmail(email: string) {
-        console.log(email, "email")
+        // console.log(email, "email")
 
         let rst = await fetch("api/account/emailFind", {
             method: "post",
@@ -130,7 +130,7 @@ export const EmailLogin: React.FC<SignupProps> = ({ onModal, onMove, onEmail }) 
             onMove("register")
 
         } else {
-            console.log(finalRst, "final")
+            // console.log(finalRst, "final")
             if (finalRst.data.AntiDiscrimination == "degree" && status == "authenticated") {
                 //onMove("firstAgree")
             } else {

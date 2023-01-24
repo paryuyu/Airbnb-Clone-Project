@@ -10,7 +10,7 @@ type props = {
 }
 
 export default function GroupType({ one, onChk, chk }: props) {
-    console.log(one.group,'이상하네')
+    // console.log(one.group,'이상하네')
     return (<>
 
         {chk === one.group ?

@@ -41,7 +41,8 @@ export default function PropertyGroup() {
             body: JSON.stringify({ groupType: chk , step:1 ,publish:false}),
             headers: { "Content-type": "application/json" }
         })
-
+        
+        console.log(create)
         let rst = await create.json();
         setRstData(rst.data);
 
@@ -97,14 +98,3 @@ export default function PropertyGroup() {
 
 PropertyGroup.layout = "L2";
 
-
-const buttonBox = {
-    display: 'flex', justifyContent: 'space-between', ml: 5, mr: 5,
-
-}
-
-const button = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mt: 2
-}

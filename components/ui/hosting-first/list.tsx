@@ -10,7 +10,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function RoomList({ item }: any) {
     //여기서 Pulish가 있는데 트루인 애들은 빼주고 없는 애들만 뿌려주기.
-    console.log(item.step, '??!?@?!@?!@?')
+    // console.log(item.step, '??!?@?!@?!@?')
     const router = useRouter();
 
 

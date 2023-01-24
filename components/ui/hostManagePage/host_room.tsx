@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import ReservationList from "./host_reservation";
 function HostRoom({ datas, onRefresh }: any) {
     let { data, status } = useSession();
-    console.log(datas)
+    // console.log(datas)
     //숙소 삭제
     //예약 확인
     const [total, setTotal] = useState<boolean>(false)
@@ -72,7 +72,7 @@ function HostRoom({ datas, onRefresh }: any) {
         )
         let filterArr = dateArr.filter((one: any) => new Date(one) >= new Date())
         setAfter(filterArr)
-        console.log(filterArr, 'filterArr')
+        // console.log(filterArr, 'filterArr')
 
         if (filterArr.length > 0) {
             setModal(true)
