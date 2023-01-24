@@ -51,6 +51,7 @@ console.log(loading)
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
       </Box>
       :
+      mainData.length === 0 &&
       <Box sx={mainPage}>
       <Typography>해당 카테고리와 일치하는 데이터가 없습니다.</Typography>
       </Box>
@@ -71,5 +72,5 @@ const mainPage = {
   justifyContent: 'center',
   pl: 2,
   mt: 2,
-  height:'100vh'
+  height:'78vh'
 }
