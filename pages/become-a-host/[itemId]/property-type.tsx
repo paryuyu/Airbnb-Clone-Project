@@ -92,7 +92,7 @@ export default function Property() {
 
 
     return (
-        <Box>
+        <Box sx={{...ContainerStyle,width:'100vw'}}>
             <Head><title>상세숙소유형</title></Head>
             <HeaderTwo />
             <NavTwo onExit={exitHandle}/>
