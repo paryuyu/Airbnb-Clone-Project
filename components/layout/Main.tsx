@@ -17,20 +17,7 @@ export default function MainPage() {
   const ctx = useContext(CategoryCtx);
 
 
-  async function MainReq() {
-
-    let res = await fetch('/api/main/find?publish=true&category=' + ctx.category);
-    let json = await res.json();
-    setMainData(json.data)
-    if(json){
-      setLoading(false)
-    }
-    
-  };
-
-
   useEffect(() => {
-    // MainReq()
     setLoading(true);
     !async function() {
     
