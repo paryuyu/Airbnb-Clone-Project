@@ -51,9 +51,24 @@ const descriptionStyle = {
 
 const style = {
   border: '3px solid #ddd',
-  padding: 3,
-  maxWidth: '300px'
+  padding: 2,
+  maxWidth: '250px',
+  marginBottom:2,
+  borderRadius:5,
+  justifyContent: 'center',
+  display:'flex',
+  flexDirection:'column',
+  alignItems: 'center',
 }
 
 const styletwo = {
+  border: '3px solid #333',
+  padding: 2,
+  maxWidth: '250px',
+  marginBottom:2,
+  borderRadius:5,
+  justifyContent: 'center',
+  display:'flex',
+  flexDirection:'column',
+  alignItems: 'center',
 }
