@@ -10,7 +10,7 @@ import FooterTwo from "../../../components/layout2/footer2";
 import HeaderTwo from "../../../components/layout2/header2";
 import NavTwo from "../../../components/layout2/nav2";
 import { BackDropContext } from "../../_app";
-import { ContainerStyle } from "../../../components/containerStyle";
+import { ContainerStyle, outlinedBox } from "../../../components/containerStyle";
 export default function Property() {
 
     const backCtx = React.useContext(BackDropContext);
@@ -92,9 +92,8 @@ export default function Property() {
 
 
     return (
-        <Container
-        disableGutters={true}
-        sx={ContainerStyle}>
+        <Box
+        sx={outlinedBox}>
             <Head><title>상세숙소유형</title></Head>
             <HeaderTwo />
             <NavTwo onExit={exitHandle}/>
@@ -119,21 +118,9 @@ export default function Property() {
 
             <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr.length} step={2} />
 
-        </Container>);
+        </Box>);
 }
 
-
-const buttonSt = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mb: 2
-}
-
-const button = {
-    bgcolor: 'black',
-    borderRadius: 5,
-    mt: 2
-}
 
 const outlineBox = {
     display: 'flex',
@@ -142,9 +129,4 @@ const outlineBox = {
     gap: 2,
     padding: 2,
     margin: 'auto'
-}
-
-const buttonBox = {
-    display: 'flex', justifyContent: 'space-between', ml: 5, mr: 5
-
 }
