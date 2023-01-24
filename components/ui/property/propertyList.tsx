@@ -21,14 +21,16 @@ function PropertyList({ item, onItem, arr }: props) {
   return (<>
     {item.property === arr ?
 
-      <Box sx={[{ ...styletwo }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
+      <Box 
+      sx={[{ ...styletwo }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
         <Typography fontSize={20} fontWeight={'bold'}>{item.property}</Typography>
         <Typography fontSize={15}>{item.description}</Typography>
 
       </Box> :
+
       <Box sx={[{ ...style }, { "&:hover": { borderColor: "black" } }]} onClick={handleClick}>
-        <Typography sx={{...propertyStyle}}>{item.property}</Typography>
-        <Typography sx={{...descriptionStyle}}>{item.description}</Typography>
+        <Typography sx={{ ...propertyStyle }}>{item.property}</Typography>
+        <Typography sx={{ ...descriptionStyle }}>{item.description}</Typography>
 
       </Box>
 
@@ -39,35 +41,19 @@ function PropertyList({ item, onItem, arr }: props) {
 export default PropertyList;
 
 const propertyStyle = {
-  fontWeight:'bold',
-  fontSize:20
-  
+  fontWeight: 'bold',
+  fontSize: 20
 }
 const descriptionStyle = {
-  fontSize:15
+  fontSize: 15
 
 }
 
 const style = {
-    display: 'flex',
-    border: '3px solid #ddd',
-    borderRadius: '10px',
-    width: 'calc((100% - 32px) / 3)',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
-    padding: 3,
+  border: '3px solid #ddd',
+  padding: 3,
+  maxWidth: '300px'
 }
 
 const styletwo = {
-  display: 'flex',
-  border: '3px solid black',
-  borderRadius: '10px',
-  width: 'calc((100% - 32px) / 3)',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  cursor: 'pointer',
-  padding: 3,
 }

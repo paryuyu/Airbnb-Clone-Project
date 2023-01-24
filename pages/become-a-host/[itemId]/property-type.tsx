@@ -50,7 +50,7 @@ export default function Property() {
         backCtx.setBackDrop(true)
         let update = await fetch("/api/accomodation/newUpdate?_id=" + itemId, {
             method: "post",
-            body: JSON.stringify({ propertyType: propertyType , step:2}),
+            body: JSON.stringify({ propertyType: propertyType, step: 2 }),
             headers: { "Content-type": "application/json" }
         })
 
@@ -71,6 +71,7 @@ export default function Property() {
 
 
     const BackHandle = () => {
+        //데이터 날려주기.
         fetch("/api/accomodation/room-delete?id=" + itemId)
             .then(rc => rc.json)
             .then(rst => console.log(rst))
@@ -89,23 +90,24 @@ export default function Property() {
     const handleItem = (val: string) => {
         setArr(val)
     }
-
+    // console.log(arr, "arrrr")
 
     return (
-        <Box sx={{...ContainerStyle,width:'100vw'}}>
+        <>
             <Head><title>상세숙소유형</title></Head>
             <HeaderTwo />
-            <NavTwo onExit={exitHandle}/>
-            <Box sx={{...outlinedBox,width:"100%"}}>
-                
-            <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
+            <NavTwo onExit={exitHandle} />
+            <Box sx={{...outlinedBox, width:'90vw'}} >
 
+            <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3, mt: 5 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
 
+            <Box sx={{display:'flex',flexWrap:'wrap', bgcolor:'red'}}>
                 {propertyTypeData && propertyTypeData.map((one, index) => {
                     return (<PropertyList item={one} arr={arr} onItem={handleItem} key={index} />)
                 })}
-
             </Box>
+            </Box>
+            <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr.length} step={2} />
 
             <Modal
                 open={modalopen}
@@ -115,17 +117,19 @@ export default function Property() {
                 </Box>
             </Modal>
 
-            <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr.length} step={2} />
+        </>);
+}
 
-        </Box>);
+const outlineBox = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '90%',
+    gap: 2,
+    padding: 2,
+    margin: 'auto',
+    height: '80vh',
+    justifyContent: 'center',
+    alignItems: 'center',
 }
 
 
-// const outlineBox = {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//     width: '90%',
-//     gap: 2,
-//     padding: 2,
-//     margin: 'auto'
-// }

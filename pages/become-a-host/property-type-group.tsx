@@ -97,11 +97,3 @@ export default function PropertyGroup() {
 }
 
 PropertyGroup.layout = "L2";
-
-// const outlinedBox = {
-//     width: '50vw', 
-//     margin: 'auto',
-//     display: 'flex', 
-//     flexDirection: 'column', 
-//     height:'83vh'
-// }
