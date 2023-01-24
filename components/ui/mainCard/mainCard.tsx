@@ -2,8 +2,6 @@ import { Card, CardContent, CardMedia, Typography, CardActionArea } from "@mui/m
 import { formatDistance } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useRouter } from "next/router";
-import { AccomodationData } from "../../../lib/model/accomodation";
-import PersonList from "../detail/reservation/guests";
 
 export default function MainCard({ item }: any) {
     const router = useRouter()
@@ -13,7 +11,14 @@ export default function MainCard({ item }: any) {
         currency:'krw'
     })
 
-    return (<> <Card sx={{ width: 250, height:300 }} onClick={() => { router.push('detail?_id=' + item._id) }}>
+    const cardClickhandle = ()=>{
+        router.push('detail?_id=' + item._id)
+    }
+
+    
+    return (<> 
+    
+    <Card sx={{ width: 250, height:300 }} onClick={cardClickhandle}>
         <CardActionArea>
             <CardMedia
                 component='img'

@@ -36,13 +36,13 @@ export const ModalForm: React.FC<ModalProps> = ({ isShown }) => {
 
     const moveHandle = (move: string) => {
         setMoveType(move)
-        console.log(move)
+        // console.log(move)
     }
 
     
  
     React.useEffect(() => {
-        console.log(modal, "modal");
+        // console.log(modal, "modal");
         if (!modal) {
             setModal(true)
             isShown(true)
@@ -55,14 +55,14 @@ export const ModalForm: React.FC<ModalProps> = ({ isShown }) => {
 
         {moveType == "email" ? <EmailLogin
             onMove={moveHandle}
-            onModal={(modal) => { isShown(modal); console.log(modal); }}
-            onEmail={(email) => { setEmail(email); console.log(email); }} /> : <></>
+            onModal={(modal) => { isShown(modal);  }}
+            onEmail={(email) => { setEmail(email);  }} /> : <></>
         }
 
 
         {moveType == "password" ? <PasswordLogin
             onMove={moveHandle}
-            onModal={(modal) => { isShown(modal); console.log(modal); }}
+            onModal={(modal) => { isShown(modal);}}
             email={email}
         /> : <></>
         }
@@ -88,7 +88,7 @@ export const ModalForm: React.FC<ModalProps> = ({ isShown }) => {
 
         {moveType == "deleteNotice" ?
             <DeleteNotice
-                onModal={(modal) => { isShown(modal); console.log(modal); }}
+                onModal={(modal) => { isShown(modal);}}
                 onMove={moveHandle}
 
             /> : <></>
@@ -96,7 +96,7 @@ export const ModalForm: React.FC<ModalProps> = ({ isShown }) => {
 
 {moveType == "welcomeForm" ?
             <WelcomeForm
-                onModal={(modal) => { isShown(modal); console.log(modal); }}
+                onModal={(modal) => { isShown(modal);}}
                 onMove={moveHandle}
             /> : <></>
         }

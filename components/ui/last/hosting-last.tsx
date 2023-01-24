@@ -10,7 +10,7 @@ type Location = {
     lng: string;
 }
 export default function LastHosting({item, onClose}:any) {
-    console.log(item,'dkfjdkfjk')
+    // console.log(item,'dkfjdkfjk')
     let [photos, setPhotos] = useState<string>('');
     let [title,setTitle]  = useState<string>('');
 

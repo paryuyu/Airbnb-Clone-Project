@@ -38,7 +38,7 @@ export const AgreeForm: React.FC<AgreeForm> = ({ onMove, email }) => {
 
 
   const agreeClick = async () => {
-    console.log(email, "email")
+    // console.log(email, "email")
     
     fetch("api/account/update", {
       method: "post",

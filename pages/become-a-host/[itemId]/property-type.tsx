@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Container, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AccomodationData } from "../../../lib/model/accomodation";
@@ -10,6 +10,7 @@ import FooterTwo from "../../../components/layout2/footer2";
 import HeaderTwo from "../../../components/layout2/header2";
 import NavTwo from "../../../components/layout2/nav2";
 import { BackDropContext } from "../../_app";
+import { ContainerStyle } from "../../../components/containerStyle";
 export default function Property() {
 
     const backCtx = React.useContext(BackDropContext);
@@ -70,7 +71,6 @@ export default function Property() {
 
 
     const BackHandle = () => {
-        //데이터 날려주기.
         fetch("/api/accomodation/room-delete?id=" + itemId)
             .then(rc => rc.json)
             .then(rst => console.log(rst))
@@ -89,10 +89,12 @@ export default function Property() {
     const handleItem = (val: string) => {
         setArr(val)
     }
-    console.log(arr, "arrrr")
+
 
     return (
-        <>
+        <Container
+        disableGutters={true}
+        sx={ContainerStyle}>
             <Head><title>상세숙소유형</title></Head>
             <HeaderTwo />
             <NavTwo onExit={exitHandle}/>
@@ -117,9 +119,8 @@ export default function Property() {
 
             <FooterTwo onBack={BackHandle} onNext={handleClick} datas={arr.length} step={2} />
 
-        </>);
+        </Container>);
 }
-
 
 
 const buttonSt = {

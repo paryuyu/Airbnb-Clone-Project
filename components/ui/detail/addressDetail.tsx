@@ -30,7 +30,7 @@ export default function DetailAddress({ location }: any) {
         if (location) {
             Location();
             let createMap = createStaticMap();
-            console.log(createMap)
+            // console.log(createMap)
             setImg(createMap)
         }
     }, [location])

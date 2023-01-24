@@ -73,7 +73,7 @@ export default function ComboBox() {
         setInputVal(val)
         setlistopen(false)
     }
-    console.log(arrRst)
+    // console.log(arrRst)
 
     return (
         <>

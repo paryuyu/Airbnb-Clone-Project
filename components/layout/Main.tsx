@@ -1,32 +1,49 @@
-import { Backdrop, Card, CardContent, CardMedia, CircularProgress, Skeleton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { useEffect, useState, useContext } from "react";
-import accomodation, { AccomodationData } from "../../lib/model/accomodation";
-import { useRouter } from "next/router";
-import MainCard from "../ui/mainCard/mainCard";
 import Head from "next/head";
+
+import {  Skeleton, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
+import  { AccomodationData } from "../../lib/model/accomodation";
+import MainCard from "../ui/mainCard/mainCard";
+
 import { CategoryCtx } from "../../context/category-context";
-import { BackDropContext } from "../../pages/_app";
-import dbConnect from "../../lib/db_connect";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+
 
 export default function MainPage() {
+
   const [mainData, setMainData] = useState<AccomodationData[]>([]);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const ctx = useContext(CategoryCtx);
-  const backCtx = useContext(BackDropContext);
 
 
   async function MainReq() {
+
     let res = await fetch('/api/main/find?publish=true&category=' + ctx.category);
     let json = await res.json();
     setMainData(json.data)
+    if(json){
+      setLoading(false)
+    }
+    
   };
 
+
   useEffect(() => {
-    MainReq()
+    // MainReq()
+    setLoading(true);
+    !async function() {
+    
+      let res = await fetch('/api/main/find?publish=true&category=' + ctx.category);
+      let json = await res.json();
+      setMainData(json.data)
+      if(json){
+        setLoading(false)
+      }
+    }();
+
+console.log(loading)
   }, [ctx.category])
-  console.log(mainData)
 
   return (<>
     <Head>
@@ -35,15 +52,18 @@ export default function MainPage() {
     {mainData && mainData.length > 0 ?
       <Box sx={mainPage}>
         {mainData.map((one, index) => <MainCard item={one} key={index} />)}
-      </Box> : <Box sx={mainPage}>
-        
+      </Box> : 
+      loading ?
+      <Box sx={mainPage}>
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
-  
       </Box>
-
+      :
+      <Box sx={mainPage}>
+      <Typography>해당 카테고리와 일치하는 데이터가 없습니다.</Typography>
+      </Box>
     }
   </>);
 }

@@ -8,7 +8,7 @@ export const StaticMap: React.FC= () => {
     
     const [img, setImg] = React.useState("")
     const ctx = React.useContext(LocationCtx)
-    console.log(ctx)
+    // console.log(ctx)
     //스태틱 맵
     function createStaticMap() {
         
