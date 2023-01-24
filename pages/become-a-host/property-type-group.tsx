@@ -10,6 +10,7 @@ import GroupType from "../../components/ui/property/groupType";
 import HeaderTwo from "../../components/layout2/header2";
 import FooterTwo from '../../components/layout2/footer2';
 import { BackDropContext } from "../_app";
+import { outlinedBox } from "../../components/containerStyle";
 export default function PropertyGroup() {
     const [chk, setChk] = React.useState<string>('');
     const [rstData, setRstData] = React.useState<AccomodationData>();
@@ -75,8 +76,7 @@ export default function PropertyGroup() {
                 <title>숙소유형</title>
             </Head>
             <HeaderTwo />
-
-            <Box sx={{ width: '60vw', margin: 'auto', display: 'flex', flexDirection: 'column' }} >
+            <Box sx={outlinedBox} >
 
                 <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3, mt: 5 }}>
                     호스팅 할 숙소 유형을 알려주세요
@@ -98,3 +98,10 @@ export default function PropertyGroup() {
 
 PropertyGroup.layout = "L2";
 
+// const outlinedBox = {
+//     width: '50vw', 
+//     margin: 'auto',
+//     display: 'flex', 
+//     flexDirection: 'column', 
+//     height:'83vh'
+// }
