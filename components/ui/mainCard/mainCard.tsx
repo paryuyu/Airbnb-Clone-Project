@@ -13,7 +13,7 @@ export default function MainCard({ item }: any) {
         currency:'krw'
     })
 
-    return (<> <Card sx={{ width: 250 }} onClick={() => { router.push('detail?_id=' + item._id) }}>
+    return (<> <Card sx={{ width: 250, height:300 }} onClick={() => { router.push('detail?_id=' + item._id) }}>
         <CardActionArea>
             <CardMedia
                 component='img'
