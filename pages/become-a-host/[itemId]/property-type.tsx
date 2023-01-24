@@ -99,7 +99,7 @@ export default function Property() {
 
             <Typography sx={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center', mb: 3 }}>다음 중 숙소를 가장 잘 설명하는 것은 무⁠엇⁠인⁠가⁠요?</Typography>
 
-            <Box sx={outlinedBox}>
+            <Box sx={{...outlinedBox,width:"70%"}}>
 
                 {propertyTypeData && propertyTypeData.map((one, index) => {
                     return (<PropertyList item={one} arr={arr} onItem={handleItem} key={index} />)
