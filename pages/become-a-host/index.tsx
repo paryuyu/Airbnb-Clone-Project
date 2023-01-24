@@ -27,9 +27,10 @@ export default function BecomeAHostPropertyTypeGroup() {
     async function IncompleteData() {
         let find = await fetch("/api/accomodation/roomtypefind")
         let rst = await find.json();
-        console.log(rst)
-        if (rst.data === []) {
-            // backCtx.setBackDrop(false)
+        console.log(rst.result,'rst')
+
+
+        if (rst.result ) {
             setrstdata(rst.data);
         }else{
             return;
