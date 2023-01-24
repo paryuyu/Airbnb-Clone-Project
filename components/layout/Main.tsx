@@ -41,8 +41,7 @@ export default function MainPage() {
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
         <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
-        <Skeleton variant="rectangular" width={270} height={300} sx={skeletonStyle} /> 
-
+  
       </Box>
 
     }
