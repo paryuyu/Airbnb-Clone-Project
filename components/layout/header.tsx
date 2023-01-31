@@ -1,20 +1,17 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
 
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import { AppBar, Button, Divider, Toolbar } from '@mui/material';
-import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { AppBar, Button, Divider, Toolbar, Box, Menu, IconButton, Tooltip, Modal } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { FaAirbnb } from 'react-icons/fa';
-import { Modal } from '@mui/material';
-import { useSession } from 'next-auth/react';
+
 import { UnAuthMenu } from '../ui/menu/unauth-menu';
 import { AuthMenu } from '../ui/menu/auth-menu';
 import { ModalForm } from '../ui/signup/modal-form';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+
 export default function Header() {
   const { data, status } = useSession();
   const router = useRouter();
@@ -22,6 +19,7 @@ export default function Header() {
   const [modalopen, setModalOpen] = React.useState<boolean>(false);
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -30,13 +28,9 @@ export default function Header() {
     setAnchorEl(null);
   };
 
-  //모달
   const handleModalClose = () => {
     setModalOpen(false)
   }
-
-
-
 
 
   React.useEffect(() => {
@@ -55,13 +49,16 @@ export default function Header() {
 
   }, [status])
 
-
   let url = process.env.NEXT_PUBLIC_SERVER_URL;
+  const iconBtnClick = () => {
+    router.push('/')
+  }
+
   return (
     <>
       <AppBar position="sticky" elevation={0}>
-        <Toolbar variant="dense" sx={{ bgcolor: "white", color: "black", display: "flex", justifyContent: "space-between" }}  >
-          <IconButton edge="start" color="inherit" sx={{ mr: 0 }} onClick={() => { router.push('/') }}>
+        <Toolbar variant="dense" sx={ToolbarStyle}  >
+          <IconButton edge="start" color="inherit" sx={iconButtonStyle} onClick={iconBtnClick}>
             <FaAirbnb />
           </IconButton>
 
@@ -69,7 +66,7 @@ export default function Header() {
 
             {status === 'authenticated' &&
               <Link href={"/become-a-host"} >
-                <Button variant="outlined" sx={[{backgroundColor:'white',color:'black',borderColor:'black',borderWidth:1, borderRadius:5},{'&:hover':{color:'#333',borderColor:'#333',borderWidth:2,backgroundColor:'white'}}]}>호스트 되기</Button>
+                <Button variant="outlined" sx={authBtnStyle}>호스트 되기</Button>
               </Link>
             }
 
@@ -95,35 +92,12 @@ export default function Header() {
             onClick={handleClose}
             PaperProps={{
               elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
+              sx: menuStyle,
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-
           >
-            
+
             {status == "unauthenticated" ? <UnAuthMenu onModal={(modal) => { setModalOpen(modal) }} /> : <AuthMenu onModal={(modal) => { setModalOpen(modal) }} />}
           </Menu>
 
@@ -136,9 +110,58 @@ export default function Header() {
       >
         <ModalForm isShown={(modal) => setModalOpen(modal)} />
       </Modal>
-<Divider/>
+      <Divider />
     </>
 
   );
 }
 
+
+const ToolbarStyle = {
+  bgcolor: "white", 
+  color: "black", 
+  display: "flex", 
+  justifyContent: "space-between"
+}
+
+const iconButtonStyle = {
+  mr: 0
+}
+
+const authBtnStyle = {
+  backgroundColor: 'white',
+  color: 'black', 
+  borderColor: 'black', 
+  borderWidth: 1, 
+  borderRadius: 5,
+  "&:hover":{
+    color: '#333',
+    borderColor: '#333', 
+    borderWidth: 2, 
+    backgroundColor: 'white' 
+  }
+}
+
+const menuStyle = {
+  overflow: 'visible',
+  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+  mt: 1.5,
+  '& .MuiAvatar-root': {
+    width: 32,
+    height: 32,
+    ml: -0.5,
+    mr: 1,
+  },
+  '&:before': {
+    content: '""',
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    right: 14,
+    width: 10,
+    height: 10,
+    bgcolor: 'background.paper',
+    transform: 'translateY(-50%) rotate(45deg)',
+    zIndex: 0,
+  },
+}

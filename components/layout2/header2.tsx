@@ -13,7 +13,6 @@ import { useSession } from 'next-auth/react';
 import { UnAuthMenu } from '../ui/menu/unauth-menu';
 import { AuthMenu } from '../ui/menu/auth-menu';
 import { ModalForm } from '../ui/signup/modal-form';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function HeaderTwo() {
@@ -21,9 +20,7 @@ export default function HeaderTwo() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [modalopen, setModalOpen] = React.useState<boolean>(false);
-  // console.log(data)
-  // console.log(status)
-  //메뉴  
+
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -33,7 +30,6 @@ export default function HeaderTwo() {
     setAnchorEl(null);
   };
 
-  //모달
   const handleModalClose = () => {
     setModalOpen(false)
   }
@@ -57,20 +53,23 @@ export default function HeaderTwo() {
     }();
 
   }, [status])
+
+
+
   
   let url = process.env.NEXT_PUBLIC_SERVER_URL;
+
   return (
     <>
-      <AppBar position="sticky" elevation={0}>
-        <Toolbar variant="dense" sx={{ bgcolor: "white", color: "black", display: "flex", justifyContent: "space-between" }}  >
+      <AppBar elevation={0} sx={appbarStyle}>
+        <Toolbar variant="dense" sx={ToolbarStyle}  >
           <IconButton edge="start" color="inherit" sx={{ mr: 0 }} onClick={() => { router.push('/') }}>
             <FaAirbnb />
           </IconButton>
 
-          <Box display={"flex"} flexDirection={"row"}>
+          <Box sx={boxStyle}>
 
-
-            <Box sx={{ flexGrow: 0 }}>
+           
               <Tooltip title="Account settings">
                 <IconButton onClick={handleClick}
                   size="small"
@@ -81,7 +80,8 @@ export default function HeaderTwo() {
                   <AccountCircleIcon />
                 </IconButton>
               </Tooltip>
-            </Box>
+    
+
           </Box>
           <Menu
             anchorEl={anchorEl}
@@ -91,29 +91,7 @@ export default function HeaderTwo() {
             onClick={handleClose}
             PaperProps={{
               elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
+              sx: menuStyle,
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -137,4 +115,42 @@ export default function HeaderTwo() {
 
   );
 }
+const appbarStyle = {
+  position:'sticky'
+}
 
+const ToolbarStyle = {
+  bgcolor: "white",
+  color: "black", 
+  display: "flex", 
+  justifyContent: "space-between"
+}
+
+const boxStyle ={
+  display:'flex',
+  flexDirection:'row'
+}
+
+const menuStyle ={
+  overflow: 'visible',
+  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+  mt: 1.5,
+  '& .MuiAvatar-root': {
+    width: 32,
+    height: 32,
+    ml: -0.5,
+    mr: 1,
+  },
+  '&:before': {
+    content: '""',
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    right: 14,
+    width: 10,
+    height: 10,
+    bgcolor: 'background.paper',
+    transform: 'translateY(-50%) rotate(45deg)',
+    zIndex: 0,
+  },
+}

@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import Head from "next/head";
 
-import {  Skeleton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import {  Skeleton, Typography,Box } from "@mui/material";
 
 import  { AccomodationData } from "../../lib/model/accomodation";
 import MainCard from "../ui/mainCard/mainCard";

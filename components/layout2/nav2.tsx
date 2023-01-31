@@ -1,19 +1,29 @@
 import { Box, Button } from "@mui/material";
 
-function NavTwo({onExit}:any) {
+export default function NavTwo({onExit}:any) {
 
+  const handleExit = ()=>{
+    onExit()
+  }
 
-  return ( <> <Box sx={{ display: 'flex', justifyContent: 'end', mr: 2 ,mt:1}}>
-  <Button variant="contained" sx={[{ ...buttonSt }, { '&:hover': { backgroundColor: '#333' } }]} onClick={()=>{onExit()}}>저장 후 나가기</Button>
+  return ( <> <Box sx={boxStyle}>
+  <Button variant="contained" sx={buttonSt} onClick={handleExit}>저장 후 나가기</Button>
 </Box>
 </> );
 }
 
-export default NavTwo;
-
-
 const buttonSt = {
   bgcolor: 'black',
   borderRadius: 5,
-  mb: 2
+  mb: 2,
+  "&:hover":{
+    backgroundColor: '#333' 
+  }
+}
+
+const boxStyle = {
+  display: 'flex', 
+  justifyContent: 'end',
+   mr: 2,
+   mt:1
 }

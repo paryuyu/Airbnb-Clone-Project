@@ -11,18 +11,13 @@ import Divider from '@mui/material/Divider';
 import { AddressInputModal } from './addressInput';
 
 type matched_substrings = { length: number, offset: number };
-
 type terms = { offset: number, value: string }
-
 type main_text_matched_substrings = { length: number, offset: string }
-
 type structured_formatting = {
     main_text: string;
     main_text_matched_substrings: main_text_matched_substrings[]
     secondary_text: string
 }
-
-
 type rst = {
     description: string;
     matched_substrings: matched_substrings[];
@@ -35,6 +30,7 @@ type rst = {
 
 
 export default function ComboBox() {
+
     const [inputVal, setInputVal] = React.useState<string>("")
     const [arrRst, setArrRst] = React.useState<rst[]>([]);
     const [modalopen, setmodalopen] = React.useState(false);
@@ -42,8 +38,6 @@ export default function ComboBox() {
     const [listopen, setlistopen] = React.useState(false);
 
 
-
-    //스태틱 맵
     React.useEffect(() => {
         const timerId = setTimeout(async () => {
 
@@ -55,12 +49,11 @@ export default function ComboBox() {
             let arr = json.predictions;
             setArrRst(arr)
 
-        }, 500) //0.5초 딜레이 발생하게 유도.
+        }, 500)
 
 
         return () => {
-            // console.log(timerId + "...canceled") //여기 timerId의 리턴값은 숫자(시간)이 뜸.
-            clearTimeout(timerId); //이렇게 해놨지만 타이머를 해제를 해버린 거라 콘솔이 반응을 안함. -> 언마운트...?
+            clearTimeout(timerId); 
         }
 
     }, [inputVal])
@@ -73,7 +66,6 @@ export default function ComboBox() {
         setInputVal(val)
         setlistopen(false)
     }
-    // console.log(arrRst)
 
     return (
         <>
