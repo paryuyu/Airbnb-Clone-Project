@@ -60,8 +60,7 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
 
 
     const ctx = useContext(LocationCtx);
-    // console.log(ctx, 'ctx')
-    //스로틀처리
+   
     useEffect(() => {
         if (found) {
             const timerId = setTimeout(async () => {
@@ -70,8 +69,7 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
 
                 const response = await fetch(endPoint);
                 const json = await response.json();
-                //반복문 돌려서 밸류 넣어주기.
-
+                
                 if (json && json.result) {
                     ctx.setWhat({ lat: json.result.geometry.location.lat, lng: json.result.geometry.location.lng })
 
@@ -111,31 +109,28 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
                     setStreetText("")
                 }
 
-            }, 500) //0.5초 딜레이 발생하게 유도.
+            }, 500) 
 
 
             return () => {
-                // console.log(timerId + "...canceled") //여기 timerId의 리턴값은 숫자(시간)이 뜸.
-                clearTimeout(timerId); //이렇게 해놨지만 타이머를 해제를 해버린 거라 콘솔이 반응을 안함. -> 언마운트...?
+                clearTimeout(timerId);
             }
         }
 
     }, [])
+    
     const router = useRouter()
-
-    // console.log(router.query, "????????????")
     let { itemId } = router.query;
 
     async function locationUpdate() {
 
         let res = await fetch('/api/accomodation/newUpdate?_id=' + itemId, {
             method: 'post',
-            body: JSON.stringify({ location: ctx.what }), //바디
+            body: JSON.stringify({ location: ctx.what }),
             headers: { 'Content-type': 'application/json' }
         });
 
         let json = await res.json();
-        // console.log(json, "location update result")
     }
 
     const handleNext = () => {
@@ -192,16 +187,12 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
             <Typography fontSize={20} fontWeight="bold">주소 확인</Typography>
         </Box>
         <Divider sx={{ mb: 3 }} />
+
         <TextField fullWidth label="주/도" style={{ marginBottom: 10 }} error={judo} onChange={(evt) => { setJudoText(evt.target.value) }} value={judoText} />
-
         <TextField fullWidth label="도시" style={{ marginBottom: 10 }} error={city} onChange={(evt) => { setCityText(evt.target.value) }} value={cityText} />
-
         <TextField fullWidth label="읍/면/동" style={{ marginBottom: 10 }} error={street} onChange={(evt) => { setStreetText(evt.target.value) }} value={streetText} />
-
         <TextField fullWidth label="아파트 이름, 동호수 등 (선택사항)" onChange={(evt) => { setExtra(evt.target.value) }} value={extra} style={{ marginBottom: 10 }} />
-
         <TextField fullWidth label="우편번호" style={{ marginBottom: 10 }} error={postNum} onChange={(evt) => { setPostNumText(evt.target.value) }} value={postNumText} />
-
         <TextField fullWidth label="국가/지역" style={{ marginBottom: 10 }} error={nation} onChange={(evt) => { setNationText(evt.target.value) }} value={nationText} />
 
 
@@ -228,6 +219,14 @@ export const AddressInputModal: React.FC<Addressprops> = ({ onClose, found, onRs
                 <Divider sx={{ mb: 2 }} />
             </Box>
             : <></>}
-        <Button onClick={handleNext} variant="contained" sx={[{ bgcolor: "black" }, { "&:hover": { "backgroundColor": "#333", "color": "white" } }]}>확인</Button>
+        <Button onClick={handleNext} variant="contained" sx={btnStyle}>확인</Button>
     </Box>);
+}
+
+const btnStyle = {
+    bgcolor: "black" ,
+    "&:hover":{
+        "backgroundColor": "#333", 
+        "color": "white"
+    }
 }

@@ -13,7 +13,6 @@ function MapComponents({ }) {
     React.useEffect(() => {
         !async function () {
             let lat, lng;
-            //지금 위치 
             if (!ctx?.what?.lat) {
                 const result : {lat : number, lng : number}= await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(function (pos) {

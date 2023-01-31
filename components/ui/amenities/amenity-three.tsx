@@ -1,12 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useState } from 'react'
+import { Box, Typography } from "@mui/material";
 
 type props = {
   item: string;
-  onSafty:(val:string)=>void;
-  safty:string[];
+  onSafty: (val: string) => void;
+  safty: string[];
 }
-function AmenityThree({ item , onSafty , safty}: props) {
+function AmenityThree({ item, onSafty, safty }: props) {
 
   const handleClick = () => {
     onSafty(item)
@@ -53,7 +52,6 @@ const amenityBox = {
 const hover = { 'border': '3px solid black' }
 
 const text = {
-  fontSize:16,
+  fontSize: 16,
   textAlign: 'center'
-
 }

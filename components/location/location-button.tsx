@@ -37,7 +37,6 @@ function MoveButton() {
 
 
     const handleNext = ()=>{
-        //여기서 업데이트를 한번 더 시키긴 해야 함.
         locationUpdate();
     }
 

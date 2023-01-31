@@ -1,5 +1,7 @@
 import { Box, Divider, Tab, Tabs } from "@mui/material";
 import React from "react";
+
+
 import FireplaceIcon from '@mui/icons-material/Fireplace';
 import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
 import PoolIcon from '@mui/icons-material/Pool';
@@ -23,8 +25,15 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
-import { CategoryCtx } from "../../context/category-context";
 import HomeIcon from '@mui/icons-material/Home';
+
+
+import { CategoryCtx } from "../../context/category-context";
+
+
+
+
+
 export default function Nav() {
     const [value, setValue] = React.useState(0);
     const ctx = React.useContext(CategoryCtx);

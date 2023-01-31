@@ -1,20 +1,7 @@
 import * as React from 'react';
-import { Box, Button, Divider, IconButton, Container, FormControl, InputLabel, OutlinedInput, InputAdornment, Typography, Chip } from '@mui/material';
+import { Box, Button, Divider, IconButton, Container, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { signIn } from "next-auth/react";
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-};
 
 type FinalAgree = {
   onMove: (move: string) => void,
@@ -114,3 +101,16 @@ export const FinalAgreeForm: React.FC<FinalAgree> = ({ onMove, email }) => {
 
   );
 }
+
+
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+};

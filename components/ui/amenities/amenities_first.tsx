@@ -1,36 +1,30 @@
-import { safeGet } from "@firebase/util";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useContext } from 'react';
-import { AmenityData } from "../../../lib/model/accomodation";
-import FooterTwo from "../../layout2/footer2";
 import AmenityOne from '../amenities/amenity-one'
 import AmenityThree from "./amenity-three";
 import AmenityTwo from "./amenity-two";
-export default function AmenitiesFirst({onFac, onSp, onSafty , sp, safty, fac}:any) {
-    //업데이트
+
+export default function AmenitiesFirst({ onFac, onSp, onSafty, sp, safty, fac }: any) {
+
 
     let router = useRouter();
     let { itemId } = router.query;
-    
-
-
 
     let spArr = ['수영장', '온수욕조', '파티오', '바비큐 그릴', '야외 식사공간', '화로', '당구대', '실내 벽난로', '피아노', '운동기구', '해변과 인접', '스키로 탄 채로 출입 가능', '야외 샤워 시설'];
-
     let safArr = ['화재경보기', '구급상자', '소화기', '침실문', '일산화탄소 경보기']
-
     let facArr = ['무선인터넷', 'TV', '세탁기', '건물 내 무료 주차', '건물 내 유료 주차', '에어컨', '업무 전용 공간'];
 
-    
-    return (<Box sx={{ overflow: 'scroll' , width:'60vw' }}>
+
+
+
+    return (<Box sx={{ overflow: 'scroll', width: '60vw' }}>
 
         <Typography sx={{ fontSize: 25, fontWeight: 'bold', mt: 3, mb: 1 }}>숙소 편의시설 정보를 추가하세요</Typography>
         <Typography sx={{ fontSize: 15, fontWeight: '100', mt: 3, mb: 1 }}>여기에 추가하려는 편의시설이 보이지 않더라도 걱정하지 마세요! 숙소를 등록한 후에 편의시설을 추가할 수 있습니다.</Typography>
 
         <Box sx={{ ...outlineBox }}>
             {facArr.map((item) => {
-                return (<> <AmenityOne fac={fac} item={item} onFac={onFac}/></>)
+                return (<> <AmenityOne fac={fac} item={item} onFac={onFac} /></>)
             })}
         </Box>
 
@@ -39,7 +33,7 @@ export default function AmenitiesFirst({onFac, onSp, onSafty , sp, safty, fac}:a
 
             {spArr.map((one) => {
                 return (<>
-                    <AmenityTwo item={one} sp={sp} onSp={onSp}/>
+                    <AmenityTwo item={one} sp={sp} onSp={onSp} />
                 </>)
             })
             }
@@ -50,13 +44,13 @@ export default function AmenitiesFirst({onFac, onSp, onSafty , sp, safty, fac}:a
             {safArr.map((one) => {
 
                 return (<>
-                    <AmenityThree safty={safty} item={one} onSafty={onSafty}/>
+                    <AmenityThree safty={safty} item={one} onSafty={onSafty} />
                 </>)
             })}
 
         </Box>
 
-       
+
     </Box>);
 }
 
@@ -97,6 +91,6 @@ const button = {
     bgcolor: 'black',
     borderRadius: 5,
     mt: 2,
-    mb:2,
+    mb: 2,
     '&:hover': { 'backgroundColor': '#333' }
 }
